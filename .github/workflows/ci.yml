@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+# A superseded run tells us nothing; let the newest push cancel it.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+    - uses: actions/checkout@v5
+      with:
+        fetch-depth: 0
+        # This job never pushes.
+        persist-credentials: false
+    - uses: actions/setup-python@v6
+      with:
+        python-version: '3.13'
+    - uses: actions/setup-go@v6
+      with:
+        go-version: '1.25'
+    - uses: peaceiris/actions-hugo@v3
+      with:
+        hugo-version: '0.165.0'
+        extended: true
+    - uses: typst-community/setup-typst@v4
+      with:
+        typst-version: '0.15.1'
+    - uses: cocogitto/cocogitto-action@v3
+
+    # typstyle and actionlint are built from source, which costs minutes on
+    # every run. Cache the binaries themselves: `make deps/install` skips a
+    # tool that is already on PATH, so a cache hit means no build at all.
+    - id: tools
+      run: echo "key=$(make -s deps/versions)" >> "$GITHUB_OUTPUT"
+    - uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cargo/bin/typstyle
+          ~/go/bin/actionlint
+        key: lint-tools-${{ runner.os }}-${{ steps.tools.outputs.key }}
+
+    - name: Install validators
+      run: make deps/install
+    - name: Build and test
+      run: make ci
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: cv-preview
+        path: |
+          build/site
+          build/pdf
+        if-no-files-found: error
+        retention-days: 7

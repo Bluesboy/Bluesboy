@@ -1,6 +1,10 @@
 # =============================================================================
 # CONFIGURATION
 # =============================================================================
+SHELL        := /usr/bin/env bash
+.SHELLFLAGS  := -eu -o pipefail -c
+.DELETE_ON_ERROR:
+
 PROJECT_NAME ?= Bluesboy
 BUILD_DIR    ?= build
 SITE_DIR     ?= $(BUILD_DIR)/site
@@ -14,6 +18,9 @@ COG          ?= cog
 GH           ?= gh
 PYTHON       ?= python3
 PORT         ?= 1313
+PIP_PACKAGES ?= jsonschema[format-nongpl] PyYAML yamllint
+ACTIONLINT_VERSION ?= v1.7.7
+TYPSTYLE_VERSION   ?= 0.15.1
 
 PDF_EN := $(PDF_DIR)/shamil-sattarov-resume-en.pdf
 PDF_RU := $(PDF_DIR)/shamil-sattarov-resume-ru.pdf
@@ -119,17 +126,21 @@ check: lint test/schema ## Run static checks
 # =============================================================================
 # DEPENDENCIES
 # =============================================================================
-.PHONY: deps deps/install deps/verify
+.PHONY: deps deps/install deps/verify deps/versions
 
 #-- Dependencies
 deps/install: ## Install Python validation and lint dependencies
-	$(PYTHON) -m pip install --user 'jsonschema[format-nongpl]' PyYAML yamllint
-	@command -v actionlint >/dev/null || go install github.com/rhysd/actionlint/cmd/actionlint@v1.7.7
-	@command -v typstyle >/dev/null || cargo install typstyle --version 0.15.1 --locked
+	@$(PYTHON) -m pip install --user $(PIP_PACKAGES) \
+		|| $(PYTHON) -m pip install --user --break-system-packages $(PIP_PACKAGES)
+	@command -v actionlint >/dev/null || go install github.com/rhysd/actionlint/cmd/actionlint@$(ACTIONLINT_VERSION)
+	@command -v typstyle >/dev/null || cargo install typstyle --version $(TYPSTYLE_VERSION) --locked
 
-deps/verify: ## Verify required build dependencies
-	@for tool in $(HUGO) $(TYPST) $(COG) $(GH) $(PYTHON) sha256sum; do command -v $$tool >/dev/null || { echo "Missing dependency: $$tool" >&2; exit 1; }; done
+deps/verify: ## Verify required build and lint dependencies
+	@for tool in $(HUGO) $(TYPST) $(COG) $(GH) $(PYTHON) sha256sum yamllint actionlint typstyle; do command -v $$tool >/dev/null || { echo "Missing dependency: $$tool" >&2; exit 1; }; done
 	@$(PYTHON) -c 'import jsonschema, yaml'
+
+deps/versions: ## Print pinned tool versions (CI builds its cache key from this)
+	@echo "actionlint-$(ACTIONLINT_VERSION)-typstyle-$(TYPSTYLE_VERSION)"
 
 deps: deps/install deps/verify ## Install and verify dependencies
 
@@ -146,7 +157,7 @@ fonts/build: ## Regenerate bundled IBM Plex Sans faces (needs fonttools, brotli)
 # =============================================================================
 # VERSIONING / RELEASE
 # =============================================================================
-.PHONY: version version/next version/patch version/minor version/major version/release release
+.PHONY: version version/next version/plan version/patch version/minor version/major version/release release
 
 #-- Versioning
 version: ## Show current version
@@ -164,9 +175,22 @@ version/minor: ## Preview minor version bump
 version/major: ## Preview major version bump
 	$(COG) bump --major --dry-run
 
-version/release: ## Create and push next tag; bootstrap at v1.0.0
+version/plan: ## Print the tag the next release would carry, or nothing
 	@if git describe --tags --abbrev=0 >/dev/null 2>&1; then \
-		$(COG) bump --auto >&2; \
+		$(COG) bump --auto --dry-run 2>/dev/null | grep -E '^v[0-9]' || true; \
+	else \
+		echo v1.0.0; \
+	fi
+
+version/release: ## Create and push the next tag when commits warrant one
+	@if git describe --tags --abbrev=0 >/dev/null 2>&1; then \
+		before=$$(git describe --tags --abbrev=0); \
+		$(COG) bump --auto >&2 || true; \
+		if [ "$$before" = "$$(git describe --tags --abbrev=0)" ]; then \
+			echo "no bump-worthy commits since $$before; skipping release" >&2; \
+			printf 'tag=\n'; \
+			exit 0; \
+		fi; \
 	else \
 		git tag v1.0.0; \
 	fi; \

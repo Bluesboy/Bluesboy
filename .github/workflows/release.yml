@@ -1,0 +1,97 @@
+name: Release and deploy
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+# Pages accepts one deployment at a time, and a half-finished one should
+# not be cancelled.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+permissions: {}
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      pages: write
+    outputs:
+      tag: ${{ steps.plan.outputs.tag }}
+    steps:
+    - uses: actions/checkout@v5
+      with:
+        fetch-depth: 0
+    - uses: actions/setup-python@v6
+      with:
+        python-version: '3.13'
+    - uses: actions/setup-go@v6
+      with:
+        go-version: '1.25'
+    - uses: peaceiris/actions-hugo@v3
+      with:
+        hugo-version: '0.165.0'
+        extended: true
+    - uses: typst-community/setup-typst@v4
+      with:
+        typst-version: '0.15.1'
+    - uses: cocogitto/cocogitto-action@v3
+
+    - id: tools
+      run: echo "key=$(make -s deps/versions)" >> "$GITHUB_OUTPUT"
+    - uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cargo/bin/typstyle
+          ~/go/bin/actionlint
+        key: lint-tools-${{ runner.os }}-${{ steps.tools.outputs.key }}
+    - name: Install validators
+      run: make deps/install
+
+    # Predict the tag without creating it, so the build runs first and a
+    # failed build cannot leave a tag behind.
+    - id: plan
+      run: echo "tag=$(make -s version/plan)" >> "$GITHUB_OUTPUT"
+    - name: Build and test
+      env:
+        TAG: ${{ steps.plan.outputs.tag }}
+      run: make ci ${TAG:+VERSION=$TAG}
+
+    - name: Configure release identity
+      if: steps.plan.outputs.tag != ''
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+    - name: Create version tag
+      if: steps.plan.outputs.tag != ''
+      run: make --no-print-directory version/release
+    - name: Publish GitHub Release
+      if: steps.plan.outputs.tag != ''
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: make release VERSION=${{ steps.plan.outputs.tag }}
+
+    # The site deploys on every push to master; only the PDFs wait for a bump.
+    - uses: actions/configure-pages@v5
+    - uses: actions/upload-pages-artifact@v4
+      with:
+        path: build/site
+
+  deploy:
+    needs: release
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+    - name: Deploy GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4

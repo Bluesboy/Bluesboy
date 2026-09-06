@@ -111,6 +111,8 @@
 ## Build interface
 
 - Use the `Makefile` as the local and CI entry point.
+- Recipes run under `bash -eu -o pipefail`; do not rely on a failed command being ignored.
+- `make lint` skips a missing linter, so gate CI on `deps/verify` instead.
 - `make preview`: Hugo development server.
 - `make build`: website and both PDFs.
 - `make fmt`: format Typst.
@@ -125,6 +127,10 @@
 - Cocogitto creates a tag on the merge commit; it does not create a bump commit.
 - A merge to `master` builds, releases both PDFs plus `SHA256SUMS`, and deploys Pages.
 - Keep release and Pages deployment in one workflow.
+- Build before tagging: `version/plan` predicts the tag so a failed build leaves none behind.
+- Deploy Pages on every push to master; release PDFs only when a bump is warranted.
+- Grant `permissions` per job, never workflow-wide.
+- Keep pinned tool versions in the Makefile; CI derives its cache key from `deps/versions`.
 - Keep Git history checkout complete with `fetch-depth: 0`.
 - Do not add GoReleaser or tracked copies of generated PDFs.
 
