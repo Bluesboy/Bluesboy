@@ -1,0 +1,11 @@
+{{- $lang := .lang | default "en" -}}
+{{- $period := .period -}}
+{{- $start := time.AsTime (printf "%s-01" $period.start) -}}
+{{- $startText := partial "month-year.html" (dict "date" $start "lang" $lang) -}}
+{{- if $period.end -}}
+  {{- $end := time.AsTime (printf "%s-01" $period.end) -}}
+  {{- $endText := partial "month-year.html" (dict "date" $end "lang" $lang) -}}
+  {{- printf "%s — %s" $startText $endText -}}
+{{- else -}}
+  {{- printf "%s — %s" $startText (partial "label.html" (dict "key" "present" "lang" $lang)) -}}
+{{- end -}}

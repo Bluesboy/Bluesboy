@@ -1,0 +1,61 @@
+{{ $title := .Title | default site.Title }}
+{{/* The page description is the CV summary, so the meta tag, the share
+     card and the JSON-LD cannot drift from what the page itself says.
+     hugo.toml used to carry a third, near-identical copy. */}}
+{{ $desc := partial "localized.html" (dict "value" (index hugo.Data.cv.summary 0) "lang" site.Language.Lang) }}
+{{ $css := resources.Get "css/main.css" | minify | fingerprint }}
+{{/* Share card is 1.91:1 to match the declared twitter:card type; JPEG
+     rather than WebP because link unfurlers are inconsistent about it.
+     Icons are their own small variants — the tab icon used to be the
+     full 1254x1254 master. */}}
+{{ $share := partial "image.html" (dict "spec" "fill 1200x630 center jpg q82") }}
+{{ $icon32 := partial "image.html" (dict "spec" "resize 32x32 png") }}
+{{ $icon180 := partial "image.html" (dict "spec" "resize 180x180 png") }}
+{{/* Bundled in assets/fonts, not fetched from a CDN, and the same faces
+     Typst embeds in the PDF. Latin + Cyrillic subset, two weights — see
+     scripts/build_fonts.py. */}}
+{{ $sans := resources.Get "fonts/IBMPlexSans-Regular.woff2" | fingerprint }}
+{{ $sansBold := resources.Get "fonts/IBMPlexSans-Bold.woff2" | fingerprint }}
+{{ $canonical := .Permalink }}
+{{ $xdefault := .Permalink }}
+{{ range .AllTranslations }}{{ if eq .Language.Lang "en" }}{{ $xdefault = .Permalink }}{{ end }}{{ end }}
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ $title }}</title>
+<meta name="description" content="{{ $desc }}">
+<link rel="canonical" href="{{ $canonical }}">
+{{ if eq .Kind "404" }}<meta name="robots" content="noindex">{{ end }}
+{{/* Matches --page. The theme is chosen in-page, not by the OS, so this
+     tracks the light default rather than prefers-color-scheme. */}}
+<meta name="theme-color" content="#e8eeef">
+{{ range .AllTranslations }}
+<link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}">
+{{ end }}
+<link rel="alternate" hreflang="x-default" href="{{ $xdefault }}">
+<meta property="og:site_name" content="{{ site.Params.siteName }}">
+<meta property="og:type" content="profile">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $desc }}">
+<meta property="og:url" content="{{ $canonical }}">
+<meta property="og:image" content="{{ $share.Permalink }}">
+<meta property="og:image:width" content="{{ $share.Width }}">
+<meta property="og:image:height" content="{{ $share.Height }}">
+<meta property="og:image:alt" content="{{ $title }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $desc }}">
+<meta name="twitter:image" content="{{ $share.Permalink }}">
+<meta name="twitter:image:alt" content="{{ $title }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ $icon32.RelPermalink }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ $icon180.RelPermalink }}">
+<link rel="preload" href="{{ $sans.RelPermalink }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ $sansBold.RelPermalink }}" as="font" type="font/woff2" crossorigin>
+<style>
+  /* swap, not block: the CV is readable in the fallback stack while the
+     subset loads, and both faces are preloaded above. */
+  @font-face { font-family: "IBM Plex Sans"; src: url("{{ $sans.RelPermalink }}") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+  @font-face { font-family: "IBM Plex Sans"; src: url("{{ $sansBold.RelPermalink }}") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+</style>
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+{{ partial "jsonld.html" . }}

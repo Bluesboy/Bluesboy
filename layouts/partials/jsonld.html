@@ -1,0 +1,51 @@
+{{ $lang := site.Language.Lang }}
+{{ $data := hugo.Data.cv }}
+{{ $name := partial "localized.html" (dict "value" $data.personal.full_name "lang" $lang) }}
+{{ $title := partial "localized.html" (dict "value" $data.target.position "lang" $lang) }}
+{{/* addressLocality is the city alone and addressCountry is the ISO code
+     from the data — the old shape put "Ufa, Russia" in the locality and
+     repeated the country, with "RU" hardcoded here. */}}
+{{ $city := partial "localized.html" (dict "value" $data.personal.location.city "lang" $lang) }}
+{{ $image := partial "image.html" (dict "spec" "resize 440x jpg q82") }}
+{{ $profile := dict "@context" "https://schema.org" "@type" "Person" "name" $name "jobTitle" $title "url" site.Home.Permalink "image" $image.Permalink "email" (printf "mailto:%s" $data.personal.email) "address" (dict "@type" "PostalAddress" "addressLocality" $city "addressCountry" $data.personal.location.country_code) }}
+{{ with index $data.summary 0 }}
+  {{ $profile = merge $profile (dict "description" (partial "localized.html" (dict "value" . "lang" $lang))) }}
+{{ end }}
+{{ with $data.personal.phone }}{{ $profile = merge $profile (dict "telephone" .) }}{{ end }}
+{{ with $data.personal.profiles }}{{ $profile = merge $profile (dict "sameAs" (apply . "index" "." "url")) }}{{ end }}
+
+{{/* Current employer — the single entry with an open period. */}}
+{{ range $data.experience }}
+  {{ if not .period.end }}
+    {{ $org := dict "@type" "Organization" "name" (partial "localized.html" (dict "value" .company "lang" $lang)) }}
+    {{ with partial "website-url.html" (dict "url" .website) }}
+      {{ $org = merge $org (dict "url" .) }}
+    {{ end }}
+    {{ $org = merge $org (dict "address" (dict "@type" "PostalAddress" "addressLocality" (partial "localized.html" (dict "value" .location.city "lang" $lang)) "addressCountry" .location.country_code)) }}
+    {{ $profile = merge $profile (dict "worksFor" $org) }}
+  {{ end }}
+{{ end }}
+
+{{ $alumni := slice }}
+{{ range $data.education }}
+  {{ $alumni = $alumni | append (dict "@type" "EducationalOrganization" "name" (partial "localized.html" (dict "value" .institution "lang" $lang))) }}
+{{ end }}
+{{ with $alumni }}{{ $profile = merge $profile (dict "alumniOf" .) }}{{ end }}
+
+{{/* The stack is the most searchable thing on the page and was the
+     largest part of cv.yaml the graph ignored. */}}
+{{ $knows := slice }}
+{{ range $data.skills }}
+  {{ range .items }}
+    {{ $knows = $knows | append . }}
+  {{ end }}
+{{ end }}
+{{ with $knows }}{{ $profile = merge $profile (dict "knowsAbout" (uniq .)) }}{{ end }}
+
+{{ $spoken := slice }}
+{{ range $data.languages }}
+  {{ $spoken = $spoken | append (dict "@type" "Language" "name" (partial "localized.html" (dict "value" .language "lang" $lang)) "alternateName" (partial "localized.html" (dict "value" .level "lang" $lang))) }}
+{{ end }}
+{{ with $spoken }}{{ $profile = merge $profile (dict "knowsLanguage" .) }}{{ end }}
+
+<script type="application/ld+json">{{ $profile | jsonify | safeJS }}</script>

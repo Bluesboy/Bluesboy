@@ -1,0 +1,19 @@
+{{/*
+  Resolves the avatar declared in data/cv.yaml (personal.avatar) and
+  returns one processed variant.
+
+  Single place that touches the image path: head.html, avatar.html and
+  jsonld.html used to each call `resources.Get "images/avatar.png"` with
+  the path hardcoded, while personal.avatar sat unread. Also the only
+  place image processing happens — the source is a 1254x1254 master, and
+  every consumer needs something much smaller.
+
+  Params:
+    spec  image processing spec, e.g. "resize 440x webp q80"
+*/}}
+{{- $avatar := hugo.Data.cv.personal.avatar -}}
+{{- $src := resources.Get (strings.TrimPrefix "assets/" $avatar) -}}
+{{- if not $src -}}
+  {{- errorf "partials/image.html: personal.avatar %q not found under assets/" $avatar -}}
+{{- end -}}
+{{- return ($src.Process .spec) -}}

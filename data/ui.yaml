@@ -1,0 +1,112 @@
+---
+# Interface strings for both renderers.
+#
+# data/cv.yaml holds the CV itself; this file holds the chrome around it.
+# Both the Hugo site (layouts/partials/label.html) and the Typst resume
+# (resume.typ) read it, so a label exists exactly once and the two
+# artifacts cannot drift apart the way they had.
+#
+# Where the website and the PDF genuinely need different wording, the
+# difference is a separate key rather than a second copy of the same one.
+
+# Shared by both renderers.
+experience:
+  en: Experience
+  ru: Опыт работы
+education:
+  en: Education
+  ru: Образование
+languages:
+  en: Languages
+  ru: Языки
+present:
+  en: present
+  ru: настоящее время
+# Marks a job that was done remotely, shown beside its city.
+remote:
+  en: Remote
+  ru: Удалённо
+
+# Website only.
+skip:
+  en: Skip to content
+  ru: Перейти к содержанию
+languageSwitch:
+  en: Language switch
+  ru: Переключение языка
+theme:
+  en: Dark theme
+  ru: Тёмная тема
+heroEyebrow:
+  en: Platform engineering profile
+  ru: Профиль платформенного инженера
+location:
+  en: Location
+  ru: Локация
+availability:
+  en: Availability
+  ru: Доступность
+citizenship:
+  en: Citizenship
+  ru: Гражданство
+format:
+  en: Work format
+  ru: Формат работы
+employment:
+  en: Employment
+  ru: Занятость
+details:
+  en: Details
+  ru: Детали
+salary:
+  en: Desired salary
+  ru: Желаемая зарплата
+contacts:
+  en: Contacts
+  ru: Контакты
+resume:
+  en: Resume · PDF
+  ru: Резюме · PDF
+summary:
+  en: Summary
+  ru: Кратко
+stack:
+  en: Stack
+  ru: Стек
+highlights:
+  en: Highlights
+  ru: Ключевое
+about:
+  en: About
+  ru: О себе
+notFoundTitle:
+  en: Page not found
+  ru: Страница не найдена
+notFoundBody:
+  en: That address does not exist on this site.
+  ru: Такого адреса на сайте нет.
+notFoundHome:
+  en: Open the CV
+  ru: Открыть CV
+
+# PDF only.
+earlier:
+  en: Earlier experience
+  ru: Предыдущий опыт
+responsibilities:
+  en: Responsibilities
+  ru: Обязанности
+achievements:
+  en: Achievements
+  ru: Достижения
+coreSkills:
+  en: Core skills
+  ru: Навыки
+# Month names. The site spells them out, the resume abbreviates.
+months:
+  long:
+    en: [January, February, March, April, May, June, July, August, September, October, November, December]
+    ru: [январь, февраль, март, апрель, май, июнь, июль, август, сентябрь, октябрь, ноябрь, декабрь]
+  short:
+    en: [Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+    ru: [янв, фев, мар, апр, май, июн, июл, авг, сен, окт, ноя, дек]

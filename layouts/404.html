@@ -1,0 +1,17 @@
+{{ define "body" }}
+{{ $lang := site.Language.Lang }}
+{{/* GitHub Pages serves this for every miss regardless of path, so it
+     offers both languages rather than assuming one. */}}
+<main id="main" class="notfound" tabindex="-1">
+  <p class="kicker">404</p>
+  <h1>{{ partial "label.html" (dict "key" "notFoundTitle" "lang" $lang) }}</h1>
+  <p class="headline">{{ partial "label.html" (dict "key" "notFoundBody" "lang" $lang) }}</p>
+  <div class="notfound-actions">
+    {{ range site.Home.AllTranslations }}
+      <a class="download-link" href="{{ .RelPermalink }}" lang="{{ .Language.Lang }}" hreflang="{{ .Language.Lang }}">
+        {{ partial "label.html" (dict "key" "notFoundHome" "lang" .Language.Lang) }} · {{ upper .Language.Lang }}
+      </a>
+    {{ end }}
+  </div>
+</main>
+{{ end }}

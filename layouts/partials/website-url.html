@@ -1,0 +1,17 @@
+{{/*
+  Normalises an employer website into an absolute URL.
+
+  data/cv.yaml stores bare hostnames ("funnelflux.com"), and both the
+  experience card and the JSON-LD graph need a scheme in front. Employers
+  whose site is gone carry an empty string; those return "" so callers can
+  skip the link with a plain `with`.
+
+  Params:
+    url  value of experience[].website
+*/}}
+{{- $url := .url -}}
+{{- $absolute := "" -}}
+{{- if $url -}}
+  {{- $absolute = cond (hasPrefix $url "http") $url (printf "https://%s" $url) -}}
+{{- end -}}
+{{- return $absolute -}}

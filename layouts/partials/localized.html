@@ -1,0 +1,3 @@
+{{- $value := .value -}}
+{{- $lang := .lang | default "en" -}}
+{{- index $value $lang | default (index $value "en") -}}

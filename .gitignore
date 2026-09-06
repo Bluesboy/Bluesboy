@@ -1,0 +1,23 @@
+/build/
+/public/
+/sources/
+/resources/_gen/
+/AVATAR.png
+/resume_data.json
+/resume_data.yaml
+/*.doc
+/*.rtf
+/*.html
+.hugo_build.lock
+*.tmp
+*.bak
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# Editors and OS
+.idea/
+.vscode/
+.DS_Store

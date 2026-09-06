@@ -1,0 +1,36 @@
+{{ $item := .item }}
+{{ $lang := .lang }}
+{{ $company := partial "localized.html" (dict "value" $item.company "lang" $lang) }}
+{{ $position := partial "localized.html" (dict "value" $item.position "lang" $lang) }}
+{{ $location := partial "location.html" (dict "location" $item.location "lang" $lang) }}
+{{ $period := partial "period.html" (dict "period" $item.period "lang" $lang) }}
+<article class="experience-card">
+  <div class="experience-head">
+    <div>
+      <p class="mini-meta">{{ $period }}</p>
+      <h3>{{ $company }}</h3>
+    </div>
+    <p class="role">{{ $position }}</p>
+  </div>
+
+  <p class="mini-meta strong">{{ $location }}{{ if $item.remote }} · <span class="remote-flag">{{ partial "label.html" (dict "key" "remote" "lang" $lang) }}</span>{{ end }}{{ with partial "website-url.html" (dict "url" $item.website) }} · <a href="{{ . }}" rel="noopener">{{ $item.website }}</a>{{ end }}</p>
+
+  {{ with $item.responsibilities }}
+    <ul class="bullet-list">
+      {{ range . }}
+        <li>{{ index . $lang | default (index . "en") }}</li>
+      {{ end }}
+    </ul>
+  {{ end }}
+
+  {{ with $item.achievements }}
+    <div class="achievement-box">
+      <p class="mini-meta">{{ partial "label.html" (dict "key" "highlights" "lang" $lang) }}</p>
+      <ul class="bullet-list">
+        {{ range . }}
+          <li>{{ index . $lang | default (index . "en") }}</li>
+        {{ end }}
+      </ul>
+    </div>
+  {{ end }}
+</article>

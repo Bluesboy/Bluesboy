@@ -1,0 +1,25 @@
+{{ $person := .person }}
+{{ $lang := .lang }}
+{{/* Rendered at most 220 CSS px wide (.avatar-wrap in main.css), so 440
+     and 660 cover 2x and 3x. WebP for browsers that take it, JPEG for
+     the rest; the master is 1254x1254 and was previously shipped raw. */}}
+{{ $w440 := partial "image.html" (dict "spec" "resize 440x webp q80") }}
+{{ $w660 := partial "image.html" (dict "spec" "resize 660x webp q80") }}
+{{ $fallback := partial "image.html" (dict "spec" "resize 440x jpg q82") }}
+<figure class="avatar-wrap">
+  <picture>
+    <source
+      type="image/webp"
+      srcset="{{ $w440.RelPermalink }} 440w, {{ $w660.RelPermalink }} 660w"
+      sizes="220px">
+    <img
+      class="avatar"
+      src="{{ $fallback.RelPermalink }}"
+      width="{{ $fallback.Width }}"
+      height="{{ $fallback.Height }}"
+      alt="{{ $person }}"
+      loading="eager"
+      decoding="async">
+  </picture>
+  <figcaption>{{ partial "label.html" (dict "key" "heroEyebrow" "lang" $lang) }}</figcaption>
+</figure>

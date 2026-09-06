@@ -1,0 +1,16 @@
+{{/*
+  Formats a YYYY-MM date as a spelled-out month and year.
+
+  Month names come from data/ui.yaml, which the resume reads too — this
+  partial used to carry its own Russian table while resume.typ carried a
+  second, abbreviated one.
+
+  Params:
+    date  a time value
+    lang  current language code
+*/}}
+{{- $date := .date -}}
+{{- $lang := .lang | default "en" -}}
+{{- $months := index hugo.Data.ui.months.long $lang -}}
+{{- $index := sub (int (time.Format "1" $date)) 1 -}}
+{{- printf "%s %s" (index $months $index) (time.Format "2006" $date) -}}

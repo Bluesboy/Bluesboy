@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Bluesboy/Bluesboy/master/schema/cv.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["personal", "site", "target", "summary", "experience", "education", "languages", "skills", "about"],
+  "properties": {
+    "personal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["avatar", "full_name", "location", "citizenship", "availability", "email", "profiles"],
+      "properties": {
+        "avatar": { "type": "string" },
+        "full_name": { "$ref": "#/$defs/i18nString" },
+        "location": { "$ref": "#/$defs/location" },
+        "citizenship": { "$ref": "#/$defs/i18nString" },
+        "availability": { "$ref": "#/$defs/i18nString" },
+        "phone": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "profiles": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/profileItem" }
+        }
+      }
+    },
+    "site": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url"],
+      "properties": {
+        "url": { "type": "string", "format": "uri" }
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["position", "employment", "work_format", "salary"],
+      "properties": {
+        "position": { "$ref": "#/$defs/i18nString" },
+        "employment": { "$ref": "#/$defs/i18nArray" },
+        "work_format": { "$ref": "#/$defs/i18nString" },
+        "salary": { "$ref": "#/$defs/i18nString" }
+      }
+    },
+    "summary": { "$ref": "#/$defs/i18nStringArray" },
+    "experience": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/experienceItem" }
+    },
+    "education": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/educationItem" }
+    },
+    "languages": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/languageItem" }
+    },
+    "skills": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/skillGroup" }
+    },
+    "about": { "$ref": "#/$defs/i18nStringArray" }
+  },
+  "$defs": {
+    "i18nString": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["en", "ru"],
+      "properties": {
+        "en": { "type": "string" },
+        "ru": { "type": "string" }
+      }
+    },
+    "i18nStringArray": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/i18nString" }
+    },
+    "i18nArray": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["en", "ru"],
+      "properties": {
+        "en": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "ru": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+      }
+    },
+    "location": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["city", "country_code"],
+      "properties": {
+        "city": { "$ref": "#/$defs/i18nString" },
+        "country": { "$ref": "#/$defs/i18nString" },
+        "country_code": { "type": "string", "pattern": "^[A-Z]{2}$" }
+      }
+    },
+    "profileItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["network", "url"],
+      "properties": {
+        "network": { "type": "string", "minLength": 1 },
+        "label": { "type": "string", "minLength": 1 },
+        "url": { "type": "string", "format": "uri", "pattern": "^https?://" }
+      }
+    },
+    "skillGroup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["area", "items"],
+      "properties": {
+        "area": { "$ref": "#/$defs/i18nString" },
+        "items": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "period": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start", "end"],
+      "properties": {
+        "start": { "type": "string", "pattern": "^\\d{4}-\\d{2}$" },
+        "end": { "type": ["string", "null"], "pattern": "^\\d{4}-\\d{2}$" }
+      }
+    },
+    "experienceItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["company", "location", "website", "period", "position", "detailed", "responsibilities", "achievements"],
+      "properties": {
+        "company": { "$ref": "#/$defs/i18nString" },
+        "location": { "$ref": "#/$defs/location" },
+        "remote": { "const": true },
+        "website": { "type": ["string", "null"], "format": "uri-reference" },
+        "period": { "$ref": "#/$defs/period" },
+        "position": { "$ref": "#/$defs/i18nString" },
+        "detailed": { "type": "boolean" },
+        "responsibilities": { "$ref": "#/$defs/i18nStringArray" },
+        "achievements": { "$ref": "#/$defs/i18nStringArray" }
+      }
+    },
+    "educationItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["institution", "year", "level", "specialization"],
+      "properties": {
+        "institution": { "$ref": "#/$defs/i18nString" },
+        "year": { "type": "string", "pattern": "^\\d{4}$" },
+        "level": { "$ref": "#/$defs/i18nString" },
+        "specialization": { "$ref": "#/$defs/i18nString" }
+      }
+    },
+    "languageItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["language", "level", "rating"],
+      "properties": {
+        "language": { "$ref": "#/$defs/i18nString" },
+        "level": { "$ref": "#/$defs/i18nString" },
+        "rating": { "type": "integer", "minimum": 1, "maximum": 7 }
+      }
+    }
+  }
+}

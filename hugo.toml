@@ -1,0 +1,27 @@
+baseURL = "https://cv.shamil.pro/"
+title = "Shamil Sattarov CV"
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = false
+enableRobotsTXT = true
+disableKinds = ["taxonomy", "term", "rss"]
+
+# Set here rather than passed as --minify, so a bare `hugo` cannot
+# silently publish unminified output.
+[minify]
+  minifyOutput = true
+
+[params]
+  siteName = "Shamil Sattarov CV"
+  releaseDownloadURL = "https://github.com/Bluesboy/Bluesboy/releases/latest/download"
+
+[languages]
+  [languages.en]
+    locale = "en-US"
+    label = "English"
+    weight = 1
+    title = "Shamil Sattarov — Platform Engineer"
+  [languages.ru]
+    locale = "ru-RU"
+    label = "Русский"
+    weight = 2
+    title = "Шамиль Саттаров — платформенный инженер"

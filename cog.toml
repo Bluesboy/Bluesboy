@@ -1,0 +1,5 @@
+from_latest_tag = true
+tag_prefix = "v"
+branch_whitelist = ["master"]
+disable_changelog = true
+disable_bump_commit = true

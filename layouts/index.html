@@ -1,0 +1,152 @@
+{{ define "body" }}
+{{ $data := hugo.Data.cv }}
+{{ $lang := site.Language.Lang }}
+{{ $fullName := partial "localized.html" (dict "value" $data.personal.full_name "lang" $lang) }}
+{{ $title := partial "localized.html" (dict "value" $data.target.position "lang" $lang) }}
+{{ $location := partial "location.html" (dict "location" $data.personal.location "lang" $lang) }}
+{{ $availability := partial "localized.html" (dict "value" $data.personal.availability "lang" $lang) }}
+{{ $pdfFile := cond (eq $lang "ru") "shamil-sattarov-resume-ru.pdf" "shamil-sattarov-resume-en.pdf" }}
+{{ $pdfURL := printf "%s/%s" site.Params.releaseDownloadURL $pdfFile }}
+
+<header class="topbar">
+  {{/* CSS-only theme switch: :root:has(#theme-toggle:checked) swaps the
+       token block in main.css. A native checkbox keeps it keyboard
+       operable and announces its own state, so the label names what it
+       controls rather than the current mode. */}}
+  <input type="checkbox" id="theme-toggle" class="theme-toggle-input">
+  <label for="theme-toggle" class="theme-toggle">
+    {{ partial "icon.html" (dict "name" "moon" "class" "theme-icon theme-icon--moon") }}
+    {{ partial "icon.html" (dict "name" "sun" "class" "theme-icon theme-icon--sun") }}
+    <span class="visually-hidden">{{ partial "label.html" (dict "key" "theme" "lang" $lang) }}</span>
+  </label>
+  <nav class="lang-switch" aria-label="{{ partial "label.html" (dict "key" "languageSwitch" "lang" $lang) }}">
+    {{ range .AllTranslations }}
+      <a{{ if eq .Language.Lang $lang }} aria-current="page"{{ end }} href="{{ .RelPermalink }}" lang="{{ .Language.Lang }}" hreflang="{{ .Language.Lang }}">{{ .Language.Label }}</a>
+    {{ end }}
+  </nav>
+</header>
+
+<main id="main" class="resume-sheet" tabindex="-1">
+  <article class="resume-primary">
+    <header class="identity">
+      <p class="kicker">{{ partial "label.html" (dict "key" "heroEyebrow" "lang" $lang) }}</p>
+      <h1>{{ $fullName }}</h1>
+      <p class="headline">{{ $title }}</p>
+      <div class="title-rule" aria-hidden="true"></div>
+    </header>
+
+    <section class="main-section">
+      <h2>{{ partial "label.html" (dict "key" "summary" "lang" $lang) }}</h2>
+      <div class="summary-stack">
+        {{ range $data.summary }}
+          <p>{{ index . $lang | default (index . "en") }}</p>
+        {{ end }}
+      </div>
+    </section>
+
+    <section class="main-section">
+      <h2>{{ partial "label.html" (dict "key" "experience" "lang" $lang) }}</h2>
+      <div class="experience-list">
+        {{ range $data.experience }}
+          {{ partial "experience-card.html" (dict "item" . "lang" $lang) }}
+        {{ end }}
+      </div>
+    </section>
+
+    <section class="main-section">
+      <h2>{{ partial "label.html" (dict "key" "education" "lang" $lang) }}</h2>
+      <div class="education-list">
+        {{ range $data.education }}
+          <article class="education-item">
+            <p class="mini-meta">{{ .year }} · {{ partial "localized.html" (dict "value" .level "lang" $lang) }}</p>
+            <h3>{{ partial "localized.html" (dict "value" .institution "lang" $lang) }}</h3>
+            <p>{{ partial "localized.html" (dict "value" .specialization "lang" $lang) }}</p>
+          </article>
+        {{ end }}
+      </div>
+    </section>
+  </article>
+
+  <aside class="resume-sidebar">
+    {{ partial "avatar.html" (dict "person" $fullName "lang" $lang) }}
+
+    <section class="side-section">
+      <h2>{{ partial "label.html" (dict "key" "contacts" "lang" $lang) }}</h2>
+      <address class="contact-list">
+        <a href="mailto:{{ $data.personal.email }}">
+          {{ partial "icon.html" (dict "name" "mail") }}
+          <span>{{ $data.personal.email }}</span>
+        </a>
+        {{ with $data.personal.phone }}<a href="tel:{{ replaceRE "[^+0-9]" "" . }}">{{ . }}</a>{{ end }}
+        {{/* Telegram used to be a field of its own with a hand-written
+             block here; it is a profile like any other now. Networks
+             without a mark of their own fall back to the chain link. */}}
+        {{ $icons := dict "github" "github" "linkedin" "linkedin" "telegram" "telegram" }}
+        {{ range $data.personal.profiles }}
+        <a href="{{ .url }}" rel="me noopener">
+          {{ partial "icon.html" (dict "name" (index $icons (lower .network) | default "link")) }}
+          <span>{{ .label | default .network }}</span>
+        </a>
+        {{ end }}
+      </address>
+      <a class="download-link" href="{{ $pdfURL }}">{{ partial "label.html" (dict "key" "resume" "lang" $lang) }} · {{ upper $lang }}</a>
+    </section>
+
+    <section class="side-section">
+      <h2>{{ partial "label.html" (dict "key" "details" "lang" $lang) }}</h2>
+      <dl class="fact-list">
+        <div><dt>{{ partial "label.html" (dict "key" "location" "lang" $lang) }}</dt><dd>{{ $location }}</dd></div>
+        <div><dt>{{ partial "label.html" (dict "key" "availability" "lang" $lang) }}</dt><dd>{{ $availability }}</dd></div>
+        <div><dt>{{ partial "label.html" (dict "key" "citizenship" "lang" $lang) }}</dt><dd>{{ partial "localized.html" (dict "value" $data.personal.citizenship "lang" $lang) }}</dd></div>
+        <div><dt>{{ partial "label.html" (dict "key" "format" "lang" $lang) }}</dt><dd>{{ partial "localized.html" (dict "value" $data.target.work_format "lang" $lang) }}</dd></div>
+        <div><dt>{{ partial "label.html" (dict "key" "employment" "lang" $lang) }}</dt><dd>{{ delimit (index $data.target.employment $lang) ", " }}</dd></div>
+        <div><dt>{{ partial "label.html" (dict "key" "salary" "lang" $lang) }}</dt><dd>{{ partial "localized.html" (dict "value" $data.target.salary "lang" $lang) }}</dd></div>
+      </dl>
+    </section>
+
+    <section class="side-section">
+      <h2>{{ partial "label.html" (dict "key" "stack" "lang" $lang) }}</h2>
+      <div class="skill-groups">
+        {{ range $data.skills }}
+          <section class="skill-group">
+            <h3>{{ partial "localized.html" (dict "value" .area "lang" $lang) }}</h3>
+            <ul class="chip-list">
+              {{ range .items }}<li>{{ . }}</li>{{ end }}
+            </ul>
+          </section>
+        {{ end }}
+      </div>
+    </section>
+
+    <section class="side-section">
+      <h2>{{ partial "label.html" (dict "key" "languages" "lang" $lang) }}</h2>
+      <dl class="language-list">
+        {{ range $data.languages }}
+          <div>
+            <dt>{{ partial "localized.html" (dict "value" .language "lang" $lang) }}</dt>
+            <dd>
+              {{/* The dots are decorative: they carry no text, and print
+                   drops their fill when background graphics are off. The
+                   level is the accessible and printable carrier. */}}
+              <span class="language-level">{{ partial "localized.html" (dict "value" .level "lang" $lang) }}</span>
+              <span class="language-dots" aria-hidden="true">
+                {{- $rating := .rating -}}
+                {{- range seq 1 7 -}}
+                  <span class="language-dot{{ if le . $rating }} is-filled{{ end }}"></span>
+                {{- end -}}
+              </span>
+            </dd>
+          </div>
+        {{ end }}
+      </dl>
+    </section>
+
+    <section class="side-section">
+      <h2>{{ partial "label.html" (dict "key" "about" "lang" $lang) }}</h2>
+      <ul class="about-list">
+        {{ range $data.about }}<li>{{ index . $lang | default (index . "en") }}</li>{{ end }}
+      </ul>
+    </section>
+  </aside>
+</main>
+{{ end }}

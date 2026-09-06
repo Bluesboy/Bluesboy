@@ -1,0 +1,17 @@
+{{/*
+  Looks up an interface string.
+
+  The table lives in data/ui.yaml so the Typst resume reads the same
+  labels; keeping it here as a template dict is what let the two drift
+  ("Желаемая зарплата" on the page, "Зарплата" in the PDF).
+
+  Params:
+    key   entry in data/ui.yaml
+    lang  current language code
+*/}}
+{{- $lang := .lang | default "en" -}}
+{{- $entry := index hugo.Data.ui .key -}}
+{{- if not $entry -}}
+  {{- errorf "partials/label.html: no %q in data/ui.yaml" .key -}}
+{{- end -}}
+{{- index $entry $lang | default (index $entry "en") -}}
