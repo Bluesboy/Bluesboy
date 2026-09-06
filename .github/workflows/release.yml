@@ -41,9 +41,8 @@ jobs:
     - uses: typst-community/setup-typst@v5
       with:
         typst-version: '0.15.1'
-    # Installs the cog binary. Its default `cog check` is off: cog.toml sets
-    # from_latest_tag, so the check cannot run before the first tag exists,
-    # and the release job only ever calls `cog bump`.
+    # Installs the cog binary only. Commit messages are validated in CI; a
+    # malformed one should turn that red, not block the site from deploying.
     - uses: cocogitto/cocogitto-action@v3
       with:
         check: false
