@@ -38,7 +38,10 @@ jobs:
       with:
         hugo-version: '0.165.0'
         extended: true
-    - uses: typst-community/setup-typst@v5
+    # Pinned to a patch, unlike the other actions: upstream moves the v5 tag
+    # onto prereleases, and it currently points at v5.3.0b1. Bump this by
+    # hand once a stable v5.3.0 ships.
+    - uses: typst-community/setup-typst@v5.2.0
       with:
         typst-version: '0.15.1'
     # Installs the cog binary only; version/plan and version/release drive it
