@@ -37,7 +37,12 @@ jobs:
     - uses: typst-community/setup-typst@v4
       with:
         typst-version: '0.15.1'
+    # Installs the cog binary. Its default `cog check` is off: cog.toml sets
+    # from_latest_tag, so the check cannot run before the first tag exists,
+    # and the release job only ever calls `cog bump`.
     - uses: cocogitto/cocogitto-action@v3
+      with:
+        check: false
 
     # typstyle and actionlint are built from source, which costs minutes on
     # every run. Cache the binaries themselves: `make deps/install` skips a
