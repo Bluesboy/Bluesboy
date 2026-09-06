@@ -39,18 +39,17 @@ jobs:
     - uses: typst-community/setup-typst@v5
       with:
         typst-version: '0.15.1'
-    # Installs cog and validates commit messages from v1.0.0 to HEAD. Every
-    # commit is checked while it is new, so re-checking tagged history each
-    # run would only add work that no longer has a fix short of a rewrite.
-    # check-latest-tag-only makes the action pass --from-latest-tag: without
-    # it the range comes from cog.toml's from_latest_tag while the log still
-    # claims "Checking all commits", which reads as a wider check than runs.
-    # cog.toml ignores merge commits, so the synthetic merge GitHub builds
-    # for a pull request cannot fail the check.
-    - uses: cocogitto/cocogitto-action@v3
+    # Installs cog and validates commit messages from the latest tag to HEAD.
+    # Every commit is checked while it is new, so re-checking tagged history
+    # each run would only add work that no longer has a fix short of a
+    # rewrite. cog.toml ignores merge commits, so the synthetic merge GitHub
+    # builds for a pull request cannot fail the check.
+    # Pin v4.2.0, not v4: the moving tag still points at v4.0.0 and installs
+    # cog 6.4.0, while v4.2.0 installs 7.0.0.
+    - uses: cocogitto/cocogitto-action@v4.2.0
       with:
-        check: true
-        check-latest-tag-only: true
+        command: check
+        args: --from-latest-tag
 
     # typstyle and actionlint are built from source, which costs minutes on
     # every run. Cache the binaries themselves: `make deps/install` skips a

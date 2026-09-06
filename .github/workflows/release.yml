@@ -41,11 +41,14 @@ jobs:
     - uses: typst-community/setup-typst@v5
       with:
         typst-version: '0.15.1'
-    # Installs the cog binary only. Commit messages are validated in CI; a
-    # malformed one should turn that red, not block the site from deploying.
-    - uses: cocogitto/cocogitto-action@v3
+    # Installs the cog binary only; version/plan and version/release drive it
+    # from the Makefile. Commit messages are validated in CI, where a
+    # malformed one turns the check red instead of blocking a deployment.
+    # install-only also skips the action's global git config, so the release
+    # identity set below stays in force.
+    - uses: cocogitto/cocogitto-action@v4.2.0
       with:
-        check: false
+        install-only: true
 
     - id: tools
       run: echo "key=$(make -s deps/versions)" >> "$GITHUB_OUTPUT"
