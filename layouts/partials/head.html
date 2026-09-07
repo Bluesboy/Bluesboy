@@ -10,7 +10,7 @@
      full 1254x1254 master. */}}
 {{ $share := partial "image.html" (dict "spec" "fill 1200x630 center jpg q82") }}
 {{ $icon32 := partial "image.html" (dict "spec" "resize 32x32 png") }}
-{{ $icon180 := partial "image.html" (dict "spec" "resize 180x180 png") }}
+{{ $icon180 := partial "image.html" (dict "spec" "resize 180x180 jpg q82") }}
 {{/* Bundled in assets/fonts, not fetched from a CDN, and the same faces
      Typst embeds in the PDF. Latin + Cyrillic subset, two weights — see
      scripts/build_fonts.py. */}}
