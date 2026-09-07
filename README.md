@@ -14,8 +14,13 @@ KDE2 was better installed from ports than patched by hand.
 
 🐧 Geek. Sold on free software, the Unix way, and twelve-factor apps.
 
+🔍 Show me a system I haven't seen and I'll take it apart to see how it
+works — then write it down so nobody has to take it apart twice.
+
 🌍 Working remotely from Ufa. Russian native, English good enough to argue about
 YAML indentation.
+
+😎 I use Arch btw
 
 📄 [CV](https://cv.shamil.pro/) ·
 [Resume PDF](https://github.com/Bluesboy/Bluesboy/releases/latest/download/shamil-sattarov-resume-en.pdf)
@@ -34,9 +39,15 @@ YAML indentation.
 такое VLAN и чем отличается STP от RSTP. А также практик, который знает, что
 KDE2 лучше ставить из портов, чем патчить.
 
-🐧 Гик, фанат свободного ПО, Пути Unix и 12 факторов.
+🐧 Гик, фанат свободного ПО, Пути Unix и принципов 12-факторных приложений.
 
-🌍 Работаю удалённо из Уфы.
+🔍 Покажите незнакомую систему — разберу, как устроена, и запишу,
+чтобы следующему не пришлось разбирать заново.
 
-📄 [Резюме](https://cv.shamil.pro/ru/) ·
+🌍 Работаю удалённо из Уфы. Русский родной, английского хватает,
+чтобы спорить об отступах в YAML.
+
+😎 Кстати, я использую Arch!
+
+📄 [CV](https://cv.shamil.pro/ru/) ·
 [Резюме PDF](https://github.com/Bluesboy/Bluesboy/releases/latest/download/shamil-sattarov-resume-ru.pdf)
