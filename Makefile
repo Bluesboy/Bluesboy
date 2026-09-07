@@ -62,6 +62,11 @@ build/pdf: build/pdf/en build/pdf/ru ## Build both resumes
 build/site: ## Build production Hugo website
 	@rm -rf $(SITE_DIR)
 	$(HUGO) --destination $(abspath $(SITE_DIR))
+# English lives at /, but Hugo still writes a meta-refresh page at /en/, and
+# disableAliases does not cover it: that page comes from the multilingual
+# layout, not from front-matter aliases. sitemap.xml still indexes
+# /en/sitemap.xml, so only the redirect goes.
+	@rm -f $(SITE_DIR)/en/index.html
 
 build/release: build ## Build release artifacts
 	@echo "Release artifacts: $(PDF_DIR), $(SITE_DIR)"

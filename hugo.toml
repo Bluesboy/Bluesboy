@@ -16,12 +16,14 @@ disableKinds = ["taxonomy", "term", "rss"]
 
 [languages]
   [languages.en]
-    locale = "en-US"
+    # Region-free: hreflang in the sitemap comes from this, and the CV
+    # targets no single country. languageCode is deprecated since 0.158.
+    locale = "en"
     label = "English"
     weight = 1
     title = "Shamil Sattarov — Platform Engineer"
   [languages.ru]
-    locale = "ru-RU"
+    locale = "ru"
     label = "Русский"
     weight = 2
     title = "Шамиль Саттаров — платформенный инженер"
