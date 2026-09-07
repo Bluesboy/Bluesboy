@@ -14,7 +14,7 @@ personal:
     country_code: RU
   citizenship:
     en: Russian Federation
-    ru: Россия
+    ru: Российская Федерация
   availability:
     en: Open to business trips
     ru: Готов к командировкам
@@ -37,13 +37,6 @@ target:
   position:
     en: Platform Engineer, DevOps Engineer
     ru: Платформенный инженер, инженер-DevOps
-  employment:
-    en:
-    - Part-time
-    - Project / one-off assignment
-    ru:
-    - Частичная занятость
-    - Проектная работа / разовое задание
   work_format:
     en: Remote
     ru: Удалённо
@@ -52,8 +45,8 @@ target:
     ru: 380 000 ₽/мес.
 
 summary:
-- en: Platform engineer building cloud-native systems that stay declarative — infrastructure as code, GitOps delivery, stateful services on operators, with observability and recovery shipped alongside.
-  ru: 'Платформенный инженер. Строю cloud-native системы, которые остаются декларативными: инфраструктура кодом, поставка через GitOps, stateful-сервисы на операторах, наблюдаемость и восстановление в комплекте.'
+- en: "Computers have been part of my life for over 30 years. I turn manually run infrastructure into systems with clear configuration and automated workflows: cloud migration, builds and releases, monitoring, and disaster recovery. I pick up unfamiliar systems quickly and share what I learn with the team."
+  ru: "Компьютеры — часть моей жизни больше 30 лет. Превращаю инфраструктуру с ручным управлением в системы с понятными настройками и автоматизированными процессами: перенос в облако, сборка и выпуск, мониторинг и восстановление после сбоев. Быстро осваиваю незнакомые системы и делюсь опытом с командой."
 
 experience:
 - company:
@@ -74,31 +67,31 @@ experience:
     ru: Платформенный инженер
   detailed: true
   responsibilities:
-  - en: Build and maintain CI/CD delivery pipelines for application deployments.
-    ru: Настройка и сопровождение конвейеров CI/CD для поставки приложений.
-  - en: Coach team members in DevOps practices, including IaC, IaaS, and Gitflow.
-    ru: Обучение команды практикам DevOps, включая IaC, IaaS и Gitflow.
-  - en: Ensure application resilience and configure cloud services such as GCP, GKE, GCLB, CloudFlare, and SingleStore.
-    ru: Обеспечение отказоустойчивости приложений и настройка облачных сервисов GCP, GKE, GCLB, CloudFlare и SingleStore.
-  - en: Design and deploy supporting services and databases for Kubernetes-based applications, including External DNS, CertManager, Prometheus Operator, Jaeger, Elasticsearch, ClickHouse, Redis, and Postgres Operator.
-    ru: Исследование, проектирование и развёртывание вспомогательных сервисов и СУБД для Kubernetes-приложений, включая External DNS, CertManager, Prometheus Operator, Jaeger, Elasticsearch, ClickHouse, Redis и Postgres Operator.
-  - en: Help developers prepare traditional web applications for cloud operations by adding Prometheus metrics, Google Cloud Logging, and OpenTracing / Jaeger tracing.
-    ru: Помощь разработчикам в подготовке традиционных веб-приложений к эксплуатации в облаке — встраивание метрик Prometheus, настройка Google Cloud Logging и трассировки OpenTracing / Jaeger.
+  - en: Set up and maintain CI/CD.
+    ru: Настройка и сопровождение CI/CD.
+  - en: "Coach team members in DevOps practices: IaC, Gitflow, and twelve-factor application development."
+    ru: "Обучение команды практикам DevOps: IaC, Gitflow и разработке 12-факторных приложений."
+  - en: "Ensure application resilience and configure cloud infrastructure: GCP, GKE, GCLB, Cloudflare, and SingleStore."
+    ru: "Обеспечение отказоустойчивости приложений и настройка облачной инфраструктуры: GCP, GKE, GCLB, Cloudflare и SingleStore."
+  - en: "Deploy supporting services and databases through operators: ExternalDNS, cert-manager, Prometheus, Jaeger, Elasticsearch, ClickHouse, Redis, and PostgreSQL."
+    ru: "Развёртывание вспомогательных служб и баз данных через операторы: ExternalDNS, cert-manager, Prometheus, Jaeger, Elasticsearch, ClickHouse, Redis и PostgreSQL."
+  - en: "Help developers prepare applications for cloud operations: monitoring, logging, and tracing."
+    ru: "Помощь разработчикам в подготовке приложений к эксплуатации в облаке: мониторинг, журналирование и трассировка."
   achievements:
-  - en: Migrated a ~300 RPS platform from a hand-configured server to an Ansible-provisioned Docker Swarm cluster, then to GKE managed by Terraform, with no downtime at any cutover.
-    ru: Перевёл платформу с нагрузкой ~300 RPS с вручную настроенного сервера на кластер Docker Swarm, развёрнутый через Ansible, затем на GKE под управлением Terraform — все миграции прошли без простоя.
-  - en: Introduced GitOps with Argo CD across 20+ services and internal tools, cutting deployment from over three minutes to under one and reducing rollback to a single Git revert.
-    ru: Внедрил GitOps на Argo CD для 20+ сервисов и служебных приложений — выкатка сократилась с трёх с лишним минут до менее чем одной, откат выполняется одним коммитом.
-  - en: Migrated infrastructure as code from Terraform to Crossplane, eliminating configuration drift through continuous reconciliation against Git.
-    ru: Перевёл инфраструктуру как код с Terraform на Crossplane, устранив дрейф конфигурации — состояние непрерывно сверяется с Git.
-  - en: Moved deployments from Helm to Argo CD and then to the rendered manifests pattern, making every diff reviewable as plain YAML and freeing Argo CD from template rendering.
-    ru: Перевёл развёртывание с Helm на Argo CD, а затем на Rendered Manifests Pattern — диффы читаются как обычный YAML, с Argo CD снята нагрузка по рендерингу шаблонов.
-  - en: Moved secrets management to the External Secrets Operator, bringing secrets into the same GitOps flow and keeping every reference auditable.
-    ru: Перевёл управление секретами на External Secrets Operator — секреты попали в общий GitOps-поток, каждая ссылка прослеживается.
-  - en: Moved stateful services onto Kubernetes operators — Postgres, ClickHouse, Redis, and Elasticsearch — and brought Kafka in-house from a managed provider onto Strimzi.
-    ru: Перевёл stateful-сервисы на Kubernetes-операторы — Postgres, ClickHouse, Redis, Elasticsearch — и забрал Kafka у внешнего провайдера внутрь кластера на Strimzi.
-  - en: Replaced self-hosted Nginx static delivery, a recurring source of outages, with Google Cloud Storage behind a CDN.
-    ru: Заменил раздачу статики с собственного Nginx, регулярно дававшего сбои, на Google Cloud Storage за CDN.
+  - en: Migrated a ~300 RPS platform from a hand-configured VPS, first to an Ansible-provisioned Docker Swarm cluster, then to GKE managed by Terraform. Both migrations completed with no downtime.
+    ru: Перенёс платформу с нагрузкой около 300 RPS с настроенного вручную VPS сначала в Docker Swarm, развёрнутый через Ansible, затем в GKE под управлением Terraform. Обе миграции прошли без простоя.
+  - en: Introduced GitOps with Argo CD across 20+ services and internal tools. Deployment time fell from over three minutes to one; rollback takes a single git revert.
+    ru: Внедрил GitOps на базе Argo CD для 20+ сервисов и внутренних инструментов. Время развёртывания сократилось с более чем трёх минут до минуты; откат выполняется одним коммитом.
+  - en: Moved resource management from Terraform to Crossplane. Infrastructure is now managed through GitOps, and Crossplane keeps resources in the state described in the configuration.
+    ru: Перевёл управление ресурсами с Terraform на Crossplane. Теперь инфраструктура управляется через GitOps, а Crossplane поддерживает ресурсы в состоянии, описанном в конфигурации.
+  - en: Moved deployments under Argo CD management, then replaced Helm template rendering in Argo CD with pre-rendered YAML manifests (Rendered Manifests Pattern). Changes are visible in plain YAML diffs, and Argo CD does not spend resources rendering templates.
+    ru: Перевёл развёртывание под управление Argo CD, затем заменил рендеринг Helm-шаблонов в Argo CD готовыми YAML-манифестами (Rendered Manifests Pattern). Изменения видны в обычных YAML-диффах, а Argo CD не тратит ресурсы на рендеринг шаблонов.
+  - en: Moved secrets management to the External Secrets Operator. Everything now goes through GitOps.
+    ru: Перенёс управление секретами в External Secrets Operator. Теперь всё идёт через GitOps.
+  - en: Moved PostgreSQL, ClickHouse, Redis, and Elasticsearch to Kubernetes operators, and Kafka from a SaaS solution to a self-managed cluster with Strimzi.
+    ru: Перенёс PostgreSQL, ClickHouse, Redis и Elasticsearch на Kubernetes-операторы, а Kafka из SaaS-решения в собственный кластер под управлением Strimzi.
+  - en: Moved static delivery from Nginx to Google Cloud Storage behind a CDN. This eliminated outages and configuration overhead.
+    ru: Перенёс раздачу статики с Nginx в Google Cloud Storage за CDN. Это устранило сбои и избавило от обслуживания конфигурации.
 - company:
     en: Rossko
     ru: Росско
@@ -120,23 +113,23 @@ experience:
     ru: Главный инженер-DevOps
   detailed: true
   responsibilities:
-  - en: Supported development of the distribution portal and its CI/CD workflows.
-    ru: Поддержка разработки портала дистрибуции и его процессов CI/CD.
-  - en: Migrated traditional web applications to a microservice architecture.
-    ru: Миграция традиционных веб-приложений на микросервисную архитектуру.
-  - en: Containerized infrastructure services and ran the Docker Swarm orchestrator.
-    ru: Контейнеризация инфраструктурных сервисов и эксплуатация оркестратора Docker Swarm.
-  - en: Moved the server and network administration team onto infrastructure as code and Git-based change workflows.
-    ru: Перевод команды системных и сетевых администраторов на инфраструктуру как код и работу с изменениями через Git.
+  - en: Supported distribution portal development and CI/CD workflows.
+    ru: Поддержка разработки портала дистрибуции и CI/CD-процессов.
+  - en: Containerized web applications and helped the team adopt twelve-factor principles.
+    ru: Контейнеризация веб-приложений и помощь команде в переходе на принципы 12-факторных приложений.
+  - en: Containerized infrastructure services and operated Docker Swarm.
+    ru: Контейнеризация инфраструктурных сервисов и эксплуатация Docker Swarm.
+  - en: "Trained the system and network administration team in DevOps practices: IaC, configuration management, CI/CD, and Git."
+    ru: "Обучение команды системных и сетевых администраторов практикам DevOps: IaC, управлению конфигурациями, CI/CD и работе с Git."
   achievements:
-  - en: Brought a 20+ host vSphere estate and around 100 virtual machines under Ansible, AWX and Terraform, replacing hand-built servers with reproducible provisioning.
-    ru: Перевёл парк из 20+ хостов vSphere и порядка 100 виртуальных машин под управление Ansible, AWX и Terraform — вместо собранных вручную серверов воспроизводимое развёртывание.
+  - en: Moved 20+ vSphere hosts and around 100 virtual machines under Ansible, Ansible Tower (AWX), and Terraform. Replaced hand-configured servers with reproducible provisioning.
+    ru: Перевёл 20+ хостов vSphere и около 100 виртуальных машин под управление Ansible, Ansible Tower (AWX) и Terraform. Ручную настройку серверов заменил воспроизводимым развёртыванием.
   - en: Standardized continuous delivery across the 15+ microservices of the main application, giving eight developers one path to production instead of per-service scripts.
-    ru: Унифицировал непрерывную поставку для 15+ микросервисов основного приложения — восемь разработчиков получили единый путь в продакшен вместо отдельных скриптов на каждый сервис.
+    ru: Унифицировал процесс доставки 15+ микросервисов основного приложения. Восемь разработчиков получили единый путь в продакшен вместо отдельных скриптов для каждого сервиса.
   - en: Built observability for the microservices on EFK, Prometheus and Grafana, bringing logs and metrics into one place and shortening failure detection and diagnosis.
-    ru: Построил наблюдаемость микросервисов на EFK, Prometheus и Grafana — журналы и метрики в одном месте, сбои обнаруживаются быстрее, диагностика проще.
+    ru: Настроил мониторинг микросервисов на EFK, Prometheus и Grafana. Собрал журналы и метрики в одном месте, ускорив обнаружение и диагностику сбоев.
   - en: Moved web service assets to MinIO object storage, taking file state off the application servers.
-    ru: Перевёл файлы веб-сервисов в объектное хранилище MinIO, сняв состояние с серверов приложений.
+    ru: Перенёс файлы веб-сервисов в объектное хранилище MinIO, чтобы приложения не хранили состояние локально.
 - company:
     en: Plussell
     ru: Plussell
@@ -159,20 +152,20 @@ experience:
   detailed: true
   responsibilities:
   - en: Maintained the Java build and release process for Liferay and OSGi applications, including versions and dependencies.
-    ru: Сопровождение сборки и релизов Java-приложений на Liferay и OSGi, включая версии и зависимости.
-  - en: Deployed servers with OpenStack Heat / CloudFormation, Ansible, and shell / Python.
-    ru: Развёртывание серверов с помощью OpenStack Heat / CloudFormation, Ansible и shell / Python.
+    ru: "Сопровождение сборки и выпуска Java-приложений на Liferay и OSGi: управление версиями и зависимостями."
+  - en: Deployed servers with OpenStack Heat/CloudFormation, Ansible, and shell/Python.
+    ru: Развёртывание серверов через OpenStack Heat/CloudFormation, Ansible и shell/Python.
   - en: Operated Docker and Kubernetes-based container infrastructure.
-    ru: Эксплуатация контейнерной инфраструктуры на базе Docker и Kubernetes.
+    ru: Эксплуатация контейнерной инфраструктуры на Docker и Kubernetes.
   - en: Designed and maintained LDAP and PKI infrastructure with FreeIPA, and deployed SDN with OpenStack Neutron and Flannel.
-    ru: Проектирование и сопровождение инфраструктуры LDAP и PKI на базе FreeIPA, развёртывание SDN с OpenStack Neutron и Flannel.
+    ru: Проектирование и сопровождение инфраструктуры LDAP и PKI на FreeIPA. Развёртывание SDN с OpenStack Neutron и Flannel.
   achievements:
-  - en: Replaced manual builds with a Jenkins and Nexus pipeline and moved dependency management to Gradle, cutting build time from hours to minutes.
-    ru: Заменил ручную сборку конвейером на Jenkins и Nexus, перевёл управление зависимостями на Gradle — время сборки сократилось с часов до минут.
-  - en: Migrated the platform from two hand-configured bare-metal servers to Mail.ru Cloud, then running on plain OpenStack, with infrastructure provisioned from Heat and Ansible.
-    ru: Перевёл платформу с двух вручную настроенных физических серверов в облако Mail.ru, работавшее тогда на чистом OpenStack, — инфраструктура разворачивается из Heat и Ansible.
-  - en: Built a Kubernetes cluster on OpenStack that provisions itself end to end, and moved the supporting systems — Elasticsearch and Jenkins — onto it.
-    ru: Построил кластер Kubernetes на OpenStack с полностью автоматическим развёртыванием и перевёл на него вспомогательные системы — Elasticsearch и Jenkins.
+  - en: Automated builds with Jenkins and Nexus, and moved dependency management to Gradle. Build time fell from hours to minutes.
+    ru: Автоматизировал сборку с Jenkins и Nexus, перевёл управление зависимостями на Gradle. Время сборки сократилось с часов до минут.
+  - en: Migrated the platform from two hand-configured bare-metal servers to Mail.ru Cloud running on OpenStack. Provisioned infrastructure with Heat and Ansible.
+    ru: Перенёс платформу с двух вручную настроенных физических серверов в Mail.ru Cloud на базе OpenStack. Инфраструктуру развёртывал через Heat и Ansible.
+  - en: Built a Kubernetes cluster on OpenStack with fully automated provisioning. Moved Elasticsearch, Jenkins, and Nexus onto it.
+    ru: Развернул Kubernetes-кластер на OpenStack, полностью автоматизировав его развёртывание. Перенёс на него Elasticsearch, Jenkins и Nexus.
   - en: Moved the Liferay portal from Tomcat to WildFly.
     ru: Перевёл портал Liferay с Tomcat на WildFly.
 - company:
@@ -195,17 +188,17 @@ experience:
     ru: системный администратор, «ведущий специалист-эксперт»
   detailed: false
   responsibilities:
-  - en: Deployed and operated KVM and VMware virtualization clusters.
-    ru: Развёртывание и эксплуатация кластеров виртуализации KVM и VMware.
+  - en: Deployed and operated Proxmox and VMware vSphere virtualization clusters.
+    ru: Развёртывание и эксплуатация кластеров виртуализации на Proxmox и VMware vSphere.
   - en: Developed and tested disaster recovery scenarios for server systems.
     ru: Разработка и проверка сценариев аварийного восстановления серверных систем.
   - en: Performed information security audits, vulnerability remediation, and load testing.
-    ru: Аудиты информационной безопасности, устранение уязвимостей и нагрузочное тестирование.
+    ru: Аудит информационной безопасности, устранение уязвимостей и нагрузочное тестирование.
   achievements:
-  - en: Integrated FreeIPA, Foreman, isc-dhcp, and Zabbix into a single provisioning and monitoring chain.
-    ru: Объединил FreeIPA, Foreman, isc-dhcp и Zabbix в единую цепочку выдачи и мониторинга серверов.
-  - en: Automated deployment of test environments for incident-response drills.
-    ru: Автоматизировал развёртывание тестовых сред для учений по реагированию на инциденты.
+  - en: Integrated FreeIPA, Foreman, isc-dhcp, and Zabbix into a single server provisioning and monitoring workflow.
+    ru: Объединил FreeIPA, Foreman, isc-dhcp и Zabbix в единый процесс развёртывания и мониторинга серверов.
+  - en: Automated test environment preparation for incident-response drills.
+    ru: Автоматизировал подготовку тестовых сред для учений по реагированию на инциденты.
 - company:
     en: Freelance
     ru: Фриланс
@@ -227,11 +220,11 @@ experience:
     ru: системный и сетевой инженер
   detailed: false
   responsibilities:
-  - en: Designed and deployed network and server infrastructure for small businesses.
-    ru: Проектирование и развёртывание сетевой и серверной инфраструктуры для малого бизнеса.
+  - en: Designed and deployed network and server infrastructure for small companies.
+    ru: Проектирование и развёртывание сетевой и серверной инфраструктуры для небольших компаний.
   achievements:
   - en: Delivered turnkey office infrastructure — structured cabling, servers, and monitoring.
-    ru: Построил и передал заказчикам инфраструктуру офисов под ключ — СКС, серверы, мониторинг.
+    ru: "Сдал заказчикам офисную инфраструктуру под ключ: СКС, серверы и мониторинг."
 - company:
     en: Bashkir National Library named after Akhmet-Zaki Validi
     ru: Национальная библиотека Республики Башкортостан им. Ахмет-Заки Валиди
@@ -252,17 +245,17 @@ experience:
     ru: сетевой инженер, «инженер-программист»
   detailed: false
   responsibilities:
-  - en: Designed and implemented network infrastructure, including structured cabling and active equipment from Cisco, MikroTik, and Juniper.
-    ru: Проектирование и внедрение сетевой инфраструктуры, включая СКС и активное оборудование Cisco, MikroTik и Juniper.
-  - en: Administered Windows and GNU/Linux servers.
-    ru: Администрирование серверов Windows и GNU/Linux.
+  - en: Designed and deployed network infrastructure, including structured cabling and active equipment from Cisco, MikroTik, and Juniper.
+    ru: "Проектирование и развёртывание сетевой инфраструктуры: СКС и активное оборудование Cisco, MikroTik и Juniper."
+  - en: Administered Windows and GNU+Linux servers.
+    ru: Администрирование серверов Windows и GNU+Linux.
   - en: Deployed and maintained Nagios monitoring.
-    ru: Развёртывание и сопровождение мониторинга Nagios.
+    ru: Развёртывание и сопровождение системы мониторинга Nagios.
   achievements:
-  - en: Built a secure multiservice network linking the central office and remote branches, with OpenVPN access for remote staff.
-    ru: Построил защищённую мультисервисную сеть между центральным офисом и удалёнными площадками с доступом сотрудников через OpenVPN.
-  - en: Modernized the LAN end to end — cabling design, equipment selection, specifications, and vendor coordination.
-    ru: Модернизировал ЛВС целиком — проект СКС, выбор и настройка оборудования, спецификации, работа с поставщиками.
+  - en: Built a secure multiservice network connecting the central office and remote sites. Set up remote staff access through OpenVPN.
+    ru: Построил защищённую мультисервисную сеть, связав центральный офис с удалёнными площадками. Организовал удалённый доступ сотрудников через OpenVPN.
+  - en: "Fully modernized the LAN: designed structured cabling, selected and configured equipment, prepared specifications, and coordinated with vendors."
+    ru: "Полностью модернизировал ЛВС: спроектировал СКС, выбрал и настроил оборудование, подготовил спецификации, работал с поставщиками."
 - company:
     en: State Budgetary Institution "Center for Information and Communication Technologies under the Government of the Republic of Bashkortostan"
     ru: ГБУ «Центр информационно-коммуникационных технологий при Аппарате Правительства Республики Башкортостан»
@@ -283,13 +276,13 @@ experience:
     ru: сетевой инженер, «ведущий специалист-эксперт»
   detailed: false
   responsibilities:
-  - en: Designed and implemented network solutions for government institutions.
-    ru: Проектирование и внедрение сетевых решений для государственных учреждений.
+  - en: Designed and deployed network solutions for government institutions.
+    ru: Проектирование и развёртывание сетевых решений для государственных учреждений.
   - en: Prepared project documentation and technical specifications.
     ru: Подготовка проектной документации и технических заданий.
   achievements:
-  - en: Led the creation of the republic's largest fault-tolerant network.
-    ru: Руководил созданием крупнейшей в республике отказоустойчивой сети.
+  - en: Led the creation of the republic's largest fault-tolerant network for public authorities.
+    ru: Руководил созданием крупнейшей в республике отказоустойчивой сети для органов государственной власти.
 - company:
     en: Chelyabtyazhproekt
     ru: ОАО «Челябтяжмашпроект»
@@ -310,15 +303,15 @@ experience:
     ru: системный администратор, «администратор информационной безопасности вычислительной сети»
   detailed: false
   responsibilities:
-  - en: Administered AD, Squid, and a FreeBSD gateway.
-    ru: Администрирование AD, Squid и шлюза на FreeBSD.
+  - en: Administered Active Directory, Squid, and a FreeBSD gateway.
+    ru: Администрирование Active Directory, Squid и шлюза на FreeBSD.
   - en: Ran information security for the office network.
     ru: Обеспечение информационной безопасности офисной сети.
   achievements:
-  - en: Built the office LAN from scratch — equipment, structured cabling, AD domain — and established a dedicated channel to the parent company.
-    ru: Построил офисную ЛВС с нуля — оборудование, СКС, домен AD — и организовал выделенный канал до головной компании.
+  - en: "Built the office LAN from scratch: equipment, structured cabling, and an Active Directory domain. Established a dedicated channel to the parent company."
+    ru: "Построил офисную ЛВС с нуля: оборудование, СКС, домен Active Directory. Организовал выделенный канал связи с головной компанией."
   - en: Automated hardware inventory with OCS Inventory.
-    ru: Автоматизировал учёт техники на OCS Inventory.
+    ru: Автоматизировал учёт техники с помощью OCS Inventory.
 - company:
     en: RON-Telecom LLC
     ru: ООО «РОН-Телеком»
@@ -339,8 +332,8 @@ experience:
     ru: системный администратор
   detailed: false
   responsibilities:
-  - en: Administered AD, Sendmail, Squid, a VoIP gateway, and a Nortel BCM 2000 PBX.
-    ru: Администрирование AD, Sendmail, Squid, VoIP-шлюза и АТС Nortel BCM 2000.
+  - en: Administered Active Directory, Sendmail, Squid, an IP telephony gateway, and a Nortel BCM 2000 PBX.
+    ru: Администрирование Active Directory, Sendmail, Squid, шлюза IP-телефонии и АТС Nortel BCM 2000.
   achievements:
   - en: Connected the Chelyabinsk office and the Tryokhgorny plant networks.
     ru: Объединил сети офиса в Челябинске и завода в Трёхгорном.
@@ -366,11 +359,11 @@ experience:
     ru: системный администратор
   detailed: false
   responsibilities:
-  - en: Administered AD, Lotus Domino, 1C:Enterprise on MS SQL, Squid on ALT GNU/Linux, and Bacula backups.
-    ru: Администрирование AD, Lotus Domino, 1С:Предприятие на MS SQL, Squid на ALT GNU/Linux и резервного копирования Bacula.
+  - en: "Administered Active Directory, Lotus Domino, 1C:Enterprise on MS SQL, Squid on ALT GNU+Linux, and Bacula backups."
+    ru: "Администрирование Active Directory, Lotus Domino, 1С:Предприятие на MS SQL, Squid на ALT GNU+Linux и резервного копирования на базе Bacula."
   achievements:
   - en: Moved the logistics office to a new site with no break in warehouse operations.
-    ru: Перевёз офис логистики на новую площадку без остановки складских операций.
+    ru: Перенёс офис логистики на новую площадку без остановки складских операций.
 - company:
     en: Unimilk LLC
     ru: ООО «Юнимилк»
@@ -391,11 +384,11 @@ experience:
     ru: системный администратор, «специалист отдела информационных технологий»
   detailed: false
   responsibilities:
-  - en: Administered AD, Exchange, and 1C:Enterprise, and maintained Panasonic PBX systems.
-    ru: Администрирование AD, Exchange и 1С:Предприятие, обслуживание АТС Panasonic.
+  - en: "Administered Active Directory, Exchange, and 1C:Enterprise, and maintained Panasonic PBX systems."
+    ru: "Администрирование Active Directory, Exchange и 1С:Предприятие, обслуживание АТС Panasonic."
   achievements:
   - en: Relocated the office together with its telephony without interrupting the working day.
-    ru: Перенёс офис вместе с телефонией, не прерывая рабочий день.
+    ru: Перенёс офис вместе с телефонией на новую площадку без остановки рабочего процесса.
 - company:
     en: Soyuz-Region LLC
     ru: ООО «Союз-Регион»
@@ -420,7 +413,7 @@ experience:
     ru: Администрирование сети интернет-кафе и шлюза на FreeBSD.
   achievements:
   - en: Prepared a new retail point for launch — cabling, workstations, and staff training.
-    ru: Подготовил новую торговую точку к запуску — СКС, рабочие места, обучение персонала.
+    ru: "Подготовил новую торговую точку к запуску: СКС, рабочие места, обучение персонала."
 - company:
     en: Profsistemy LLC
     ru: ООО «Профсистемы»
@@ -445,7 +438,7 @@ experience:
     ru: Сборка, настройка и ремонт ПК, установка операционных систем.
   achievements:
   - en: Built a preconfigured Windows XP deployment image with drivers and software bundled in, cutting installation on a new machine from about 90 minutes to roughly 10.
-    ru: Собрал собственный образ Windows XP с драйверами и программами — установка на новую машину сократилась примерно с полутора часов до десяти минут.
+    ru: Собрал образ Windows XP с драйверами и программами. Установка на новый компьютер сократилась примерно с полутора часов до десяти минут.
 
 education:
 - institution:
@@ -496,7 +489,7 @@ skills:
   - Google Kubernetes Engine
   - Helm
   - Kustomize
-  - Operators
+  - Kubernetes Operators
 
 - area:
     en: IaC & CM
@@ -536,12 +529,13 @@ skills:
 
 - area:
     en: Observability
-    ru: Наблюдение
+    ru: Наблюдаемость
   items:
   - Prometheus Stack
   - ELK/EFK
   - Grafana
   - Jaeger
+  - OpenTelemetry
 
 - area:
     en: Cloud platforms
@@ -552,7 +546,7 @@ skills:
   - Alibaba Cloud
   - Yandex Cloud
   - GitHub
-  - CloudFlare
+  - Cloudflare
   - OpenStack
 
 - area:
@@ -571,7 +565,7 @@ skills:
 
 - area:
     en: Scripting & Automation
-    ru: Скриптинг и автоматизация
+    ru: Скрипты и автоматизация
   items:
   - GNU Make
   - Taskfile
@@ -590,17 +584,17 @@ skills:
   - Cisco
 
 about:
-- en: Take platforms from hand-run servers to cloud-native operation — three such migrations, each completed without downtime.
-  ru: Перевожу платформы с вручную настроенных серверов в cloud-native — три такие миграции, все без простоя.
-- en: 'Work declaratively: GitOps for delivery, Crossplane for infrastructure, Kubernetes operators for stateful services, so the running state is what Git says it is.'
-  ru: 'Работаю декларативно: GitOps для поставки, Crossplane для инфраструктуры, Kubernetes-операторы для stateful-сервисов — рабочее состояние совпадает с записанным в Git.'
-- en: 'Run what I build: observability, disaster recovery and secrets rotation ship with the platform rather than after it.'
-  ru: 'Эксплуатирую то, что строю: наблюдаемость, аварийное восстановление и ротация секретов появляются вместе с платформой, а не после неё.'
-- en: Reach below the cluster when the problem is not in Kubernetes — routing and active network equipment, PKI and directory services, structured cabling.
-  ru: 'Спускаюсь ниже кластера, когда проблема не в Kubernetes: маршрутизация и активное сетевое оборудование, PKI и службы каталогов, СКС.'
-- en: Bring teams into these practices — infrastructure as code, Git-based workflows, CI/CD — instead of keeping them to myself.
-  ru: Передаю практики команде — инфраструктура как код, работа через Git, CI/CD.
-- en: Build and package other people's code across the Go, Java, Python, Node.js, .NET and Rust ecosystems — their dependency managers, artifact repositories and release layouts.
-  ru: Собираю и пакетирую чужой код в экосистемах Go, Java, Python, Node.js, .NET и Rust — их менеджеры зависимостей, репозитории артефактов и раскладка релизов.
-- en: 'Work inside the SDLC teams actually use: branching strategies including Gitflow, semantic versioning and automated releases, twelve-factor application design.'
-  ru: 'Работаю внутри реального SDLC: стратегии ветвления, включая Gitflow, семантическое версионирование и автоматические релизы, приложения по методологии twelve-factor.'
+- en: Migrate platforms from manually configured servers to cloud infrastructure. Completed three such migrations without downtime.
+  ru: Переношу платформы с серверов, настроенных вручную, в облачную инфраструктуру. Выполнил три такие миграции без простоя.
+- en: Manage applications and infrastructure through GitOps. Use Crossplane and Kubernetes operators to keep systems in the state described in Git.
+  ru: Управляю приложениями и инфраструктурой через GitOps. Использую Crossplane и Kubernetes-операторы, чтобы поддерживать системы в состоянии, описанном в Git.
+- en: Build and maintain infrastructure. Set up monitoring, disaster recovery, and secret rotation from the start.
+  ru: Создаю и сопровождаю инфраструктуру. Сразу настраиваю мониторинг, аварийное восстановление и ротацию секретов.
+- en: Enjoy sharing knowledge and helping colleagues simplify their work and automate routine tasks.
+  ru: Люблю делиться знаниями и помогать коллегам упрощать работу и автоматизировать рутинные задачи.
+- en: 'Know the Go, Java, Python, Node.js, .NET, and Rust ecosystems well from a build and release perspective: dependency management, packaging, and working with artifact repositories.'
+  ru: 'Хорошо знаю экосистемы Go, Java, Python, Node.js, .NET и Rust со стороны сборки и выпуска приложений: управление зависимостями, пакетирование и работу с репозиториями артефактов.'
+- en: 'Help teams adopt new processes and technologies and establish application development and release workflows: choose branching strategies, set up semantic versioning, automate releases, and apply twelve-factor principles.'
+  ru: 'Помогаю командам осваивать новые процессы и технологии, налаживать разработку и выпуск приложений: выбирать стратегию ветвления, настраивать семантическое версионирование, автоматизировать релизы и применять принципы 12-факторных приложений.'
+- en: 'Quickly understand unfamiliar systems, learn new technologies, and deploy services: from studying documentation and configuration to operation and troubleshooting.'
+  ru: 'Быстро разбираюсь в незнакомых системах, осваиваю новые технологии и внедряю службы: от изучения документации и настройки до эксплуатации и устранения проблем.'

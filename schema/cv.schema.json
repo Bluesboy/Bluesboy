@@ -36,10 +36,9 @@
     "target": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["position", "employment", "work_format", "salary"],
+      "required": ["position", "work_format", "salary"],
       "properties": {
         "position": { "$ref": "#/$defs/i18nString" },
-        "employment": { "$ref": "#/$defs/i18nArray" },
         "work_format": { "$ref": "#/$defs/i18nString" },
         "salary": { "$ref": "#/$defs/i18nString" }
       }
@@ -81,15 +80,6 @@
       "type": "array",
       "minItems": 1,
       "items": { "$ref": "#/$defs/i18nString" }
-    },
-    "i18nArray": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["en", "ru"],
-      "properties": {
-        "en": { "type": "array", "minItems": 1, "items": { "type": "string" } },
-        "ru": { "type": "array", "minItems": 1, "items": { "type": "string" } }
-      }
     },
     "location": {
       "type": "object",

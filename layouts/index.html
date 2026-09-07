@@ -99,7 +99,6 @@
         <div><dt>{{ partial "label.html" (dict "key" "availability" "lang" $lang) }}</dt><dd>{{ $availability }}</dd></div>
         <div><dt>{{ partial "label.html" (dict "key" "citizenship" "lang" $lang) }}</dt><dd>{{ partial "localized.html" (dict "value" $data.personal.citizenship "lang" $lang) }}</dd></div>
         <div><dt>{{ partial "label.html" (dict "key" "format" "lang" $lang) }}</dt><dd>{{ partial "localized.html" (dict "value" $data.target.work_format "lang" $lang) }}</dd></div>
-        <div><dt>{{ partial "label.html" (dict "key" "employment" "lang" $lang) }}</dt><dd>{{ delimit (index $data.target.employment $lang) ", " }}</dd></div>
         <div><dt>{{ partial "label.html" (dict "key" "salary" "lang" $lang) }}</dt><dd>{{ partial "localized.html" (dict "value" $data.target.salary "lang" $lang) }}</dd></div>
       </dl>
     </section>
