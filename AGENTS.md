@@ -42,6 +42,7 @@
 - Russian responsibilities use neutral noun-based wording where appropriate.
 - Current English responsibilities use Present Simple; previous roles use Past Simple.
 - Achievements describe completed results and use past tense.
+- Write `summary` as first-person prose in both languages; keep every list item verb-first with no subject.
 - Responsibilities and achievements must remain visually distinguishable in PDF.
 - Keep salary localized and separate from contact information.
 - Phone is optional. Never reintroduce it when absent from `data/cv.yaml`.
@@ -106,6 +107,10 @@
 - Keep section headings smaller than the candidate name and role headings.
 - Keep section order: detailed experience, earlier experience, education.
 - Keep skill groups as named subsections with solid divider lines.
+- Page one carries the detailed experience, the whole skills column, and the languages block;
+  earlier experience, education, and the about list start page two.
+- The Russian PDF sets that budget: the same text runs longer in Cyrillic than in Latin.
+- `summary` spans both columns, so its length moves the experience and the skills column together.
 - Keep both PDFs concise, readable, and free of unnecessary page breaks; preserve clickable links.
 
 ## Build interface
@@ -125,12 +130,29 @@
 - Use Conventional Commits and Cocogitto semantic versioning.
 - First release is `v1.0.0`; later versions come from `cog bump --auto`.
 - Cocogitto creates a tag on the merge commit; it does not create a bump commit.
+- Validate commit messages in CI only, through `cog check` limited to `--from-latest-tag`;
+  a malformed message turns the check red instead of blocking a deployment.
+- Keep `check-latest-tag-only` set on the action so the range is stated in the workflow,
+  not inferred from `from_latest_tag` in `cog.toml`.
+- Keep `ignore_merge_commits` on; the synthetic subject GitHub builds for a pull request
+  is not a conventional commit and would otherwise fail the check.
+- Install cog in the release job with `install-only: true`: it must not re-check commits
+  there, and the skipped step is also the one that overwrites the git identity.
 - A merge to `master` builds, releases both PDFs plus `SHA256SUMS`, and deploys Pages.
 - Keep release and Pages deployment in one workflow.
 - Build before tagging: `version/plan` predicts the tag so a failed build leaves none behind.
 - Deploy Pages on every push to master; release PDFs only when a bump is warranted.
+- Keep the build a separate workflow step between `version/plan` and `version/release`.
+- Do not move it into cog `pre_bump_hooks`: hooks never run on the non-bump pushes that
+  still deploy Pages, a failing hook exits through a Rust panic, and the `|| true` in
+  `version/release` would report that panic as "no bump-worthy commits".
+- Hooks stay absent from `cog.toml`; `--dry-run` skips them, so `version/plan` and the
+  local `version/*` targets must remain free of side effects.
 - Grant `permissions` per job, never workflow-wide.
 - Keep pinned tool versions in the Makefile; CI derives its cache key from `deps/versions`.
+- Track the major tag of an action only while upstream keeps it on the newest stable release.
+  Pin a patch when it drifts: `typst-community/setup-typst@v5.2.0` because `v5` moves onto
+  prereleases, `cocogitto/cocogitto-action@v4.2.0` because `v4` is stale on cog 6.4.0.
 - Keep Git history checkout complete with `fetch-depth: 0`.
 - Do not add GoReleaser or tracked copies of generated PDFs.
 
@@ -139,6 +161,8 @@
 - After relevant changes, run `make fmt`, `make lint`, and `make ci VERSION=v1.0.0`.
 - Run `git diff --check` before completion.
 - For PDF changes, verify page counts and visually inspect every page in EN and RU.
+- Check what page one still holds after any content change:
+  `pdftotext -raw -f 1 -l 1 build/pdf/shamil-sattarov-resume-ru.pdf - | tail`.
 - For link changes, verify PDF annotations and generated Hugo URLs.
 - Do not commit, tag, push, or create a release unless explicitly requested.
 
