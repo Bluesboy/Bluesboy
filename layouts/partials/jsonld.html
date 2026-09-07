@@ -44,7 +44,7 @@
 
 {{ $spoken := slice }}
 {{ range $data.languages }}
-  {{ $spoken = $spoken | append (dict "@type" "Language" "name" (partial "localized.html" (dict "value" .language "lang" $lang)) "alternateName" (partial "localized.html" (dict "value" .level "lang" $lang))) }}
+  {{ $spoken = $spoken | append (dict "@type" "Language" "name" (partial "localized.html" (dict "value" .language "lang" $lang))) }}
 {{ end }}
 {{ with $spoken }}{{ $profile = merge $profile (dict "knowsLanguage" .) }}{{ end }}
 
