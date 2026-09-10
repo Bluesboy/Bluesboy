@@ -14,7 +14,8 @@
 - Do not duplicate CV content in templates, Markdown, or generated files.
 - Never inline an interface label in a template; add a key to `data/ui.yaml`.
 - Where the site and the PDF need different wording, add a second key rather than a second copy.
-- Keep site title and description in `hugo.toml` only; the site has no content files.
+- Derive home page and social titles from `personal.full_name` and `target.position`,
+  and descriptions from `summary`; `hugo.toml` holds only the site-name fallback and configuration.
 - `scripts/validate_cv.py` checks font coverage for both data files.
 - Keep shared values unlocalized. Store translated text as `{en, ru}`.
 - Every localized field must contain both `en` and `ru`.
@@ -32,8 +33,15 @@
 - Store skills once as `{name, featured?}`; names are unlocalized, group headings are localized.
 - Achievements store `{en, ru, featured?}`. In both models absent `featured` means false.
 - PDF selects skills and achievements by `featured: true`, never by position or text matching.
-- Hugo shows all skills (core first and emphasized within each group) and all achievements.
+- Hugo shows every skill once: featured items in Core stack, others in Additional technologies.
+- Keep Additional technologies expanded, visually secondary, and full-width directly below Core stack.
+- Render skill groups as compact semantic definition lists with comma-separated technology names,
+  without chips; use two columns on desktop and one on mobile.
+- Hugo shows all achievements; detailed-role responsibilities and `detailed: false` history
+  live in native, initially collapsed `<details>` blocks, with localized summaries.
 - Experience may have localized `scope`; every detailed role needs one plus at least one featured achievement.
+- Earlier roles may have optional localized `resume_company` for a shorter PDF display name;
+  default to `company`. Hugo always shows the full `company` name.
 - Validate data through `scripts/validate_cv.py` or `make test/schema`.
 - Keep the semantic rules there in step with the renderers: period order, one open period,
   at least three responsibilities and achievements per detailed entry, URL shape.
@@ -50,12 +58,15 @@
 - PDF detailed roles render a short scope and selected achievements; full responsibilities stay on the website.
 - Do not store or render salary or citizenship; neither has a public CV use case.
 - Avatar and About are website-only; preserve useful context without repeating the summary.
+- Present About as How I work; keep unique factual information when removing repeated points.
 - Store language proficiency as a localized semantic `level`, never a visual `rating`.
 - Phone is optional. Never reintroduce it when absent from `data/cv.yaml`.
 - Do not store or render a birth date; it is personal data with no rendering purpose.
 - Store every external profile, Telegram included, in `personal.profiles`.
 - Use the optional `label` on a profile when the displayed text differs from the network name.
 - Do not hardcode profile links or per-network branches in renderers.
+- Optional profile `resume_languages` lists PDF locales (`en`, `ru`); absent means both,
+  an empty list means website-only. Hugo contacts and JSON-LD always include every profile.
 
 ## Hugo website
 
@@ -65,6 +76,8 @@
 - Do not show the website URL as a contact linking to the current page.
 - Resume buttons point to stable GitHub Release assets, not Pages copies.
 - Keep the site responsive, semantic, accessible, and JavaScript-free.
+- Keep mobile DOM order: identity, summary, contacts, core stack, additional technologies,
+  experience, education, languages, How I work. Keep both skill sections together on desktop too.
 - Size type in `rem`, never in `px`, so a raised browser font size scales the whole page.
 - Stack label/value pairs into one column below 560px.
 - Keep fonts and icons local. Do not add CDN or runtime network dependencies.
@@ -107,17 +120,19 @@
 - Preserve EN/RU output names:
   - `shamil-sattarov-resume-en.pdf`
   - `shamil-sattarov-resume-ru.pdf`
-- Show the web URL as the linked text `Full CV`.
-- Keep a compact textual contact bar: email and meaningful profile network labels, followed by `Full CV`.
+- Show the web URL as its linked domain, derived from `site.url`.
+- Keep a compact textual contact bar: email and visible profile network labels, followed by the domain.
 - Keep contacts clickable; allow wrapping rather than shrinking text or clipping.
 - Put location and work format on a separate compact line; no photo, salary, or citizenship in PDF.
-- Preserve clickable GitHub, LinkedIn, HeadHunter, Telegram, and `Full CV` links.
+- Preserve clickable profile links according to `resume_languages` and the CV domain in both locales.
+- Keep a small footer with the localized name, linked CV domain, and dynamic current/total page count.
 - Keep section headings smaller than the candidate name and role headings.
 - Use a single column with semantic top-to-bottom plain-text extraction; no sidebars or content tables.
 - Keep order: name, target role, contacts, summary, core expertise, experience, earlier experience, education, languages.
 - Target positioning never changes historical job titles.
 - Render core skills as compact named text groups, aiming for about 25–30 visible items.
 - Detailed roles show company, factual title, month-level dates, location/remote, scope, and featured achievements.
+- Keep the role introduction and first achievement together; allow later achievements to flow across pages.
 - Earlier roles show dates, company, and title; do not expand their responsibilities or achievements.
 - Language proficiency is plain text (language — level), without dots or progress bars.
 - Target two readable pages per language through natural pagination, not forced page breaks or tiny type.

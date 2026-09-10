@@ -21,9 +21,7 @@ disableKinds = ["taxonomy", "term", "rss"]
     locale = "en"
     label = "English"
     weight = 1
-    title = "Shamil Sattarov — Platform Engineer"
   [languages.ru]
     locale = "ru"
     label = "Русский"
     weight = 2
-    title = "Шамиль Саттаров — платформенный инженер"

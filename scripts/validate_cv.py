@@ -78,6 +78,8 @@ check(starts == sorted(starts, reverse=True),
 # featured defaults to false in both renderers; JSON Schema defaults do not
 # populate missing keys.
 for i, job in enumerate(cv["experience"]):
+    check("resume_company" not in job or not job["detailed"],
+          f"experience[{i}].resume_company: only compact earlier roles use a short name")
     if not job["detailed"]:
         continue
     for field in ("responsibilities", "achievements"):

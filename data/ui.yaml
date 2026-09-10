@@ -62,14 +62,23 @@ summary:
   en: Summary
   ru: Кратко
 stack:
-  en: Stack
-  ru: Стек
+  en: Core stack
+  ru: Ключевой стек
+additionalSkills:
+  en: Additional technologies
+  ru: Дополнительные технологии
+responsibilities:
+  en: Responsibilities
+  ru: Обязанности
+earlierWebsite:
+  en: Earlier infrastructure & network engineering experience
+  ru: Предыдущий опыт
 highlights:
   en: Highlights
   ru: Ключевое
 about:
-  en: About
-  ru: О себе
+  en: How I work
+  ru: Как я работаю
 notFoundTitle:
   en: Page not found
   ru: Страница не найдена
@@ -87,9 +96,6 @@ earlier:
 coreSkills:
   en: Core expertise
   ru: Ключевые компетенции
-fullCV:
-  en: Full CV
-  ru: Full CV
 resumeTitle:
   en: Resume
   ru: Резюме

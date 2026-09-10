@@ -96,6 +96,12 @@
       "properties": {
         "network": { "type": "string", "minLength": 1 },
         "label": { "type": "string", "minLength": 1 },
+        "resume_languages": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "enum": ["en", "ru"] },
+          "default": ["en", "ru"]
+        },
         "url": { "type": "string", "format": "uri", "pattern": "^https?://" }
       }
     },
@@ -142,6 +148,7 @@
       "required": ["company", "location", "website", "period", "position", "detailed", "responsibilities", "achievements"],
       "properties": {
         "company": { "$ref": "#/$defs/i18nString" },
+        "resume_company": { "$ref": "#/$defs/i18nString" },
         "location": { "$ref": "#/$defs/location" },
         "remote": { "const": true },
         "website": { "type": "string", "format": "uri-reference" },

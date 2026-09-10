@@ -1,0 +1,17 @@
+{{ $lang := .lang }}
+{{ $featured := .featured }}
+<dl class="skill-groups">
+  {{ range hugo.Data.cv.skills }}
+    {{ $area := .area }}
+    {{ $items := slice }}
+    {{ range .items }}
+      {{ if eq (default false .featured) $featured }}{{ $items = $items | append . }}{{ end }}
+    {{ end }}
+    {{ with $items }}
+      <div class="skill-group">
+        <dt>{{ partial "localized.html" (dict "value" $area "lang" $lang) }}:</dt>
+        <dd>{{ delimit (apply . "index" "." "name") ", " }}</dd>
+      </div>
+    {{ end }}
+  {{ end }}
+</dl>

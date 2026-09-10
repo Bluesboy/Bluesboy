@@ -19,14 +19,6 @@
     <p>{{ partial "localized.html" (dict "value" . "lang" $lang) }}</p>
   {{ end }}
 
-  {{ with $item.responsibilities }}
-    <ul class="bullet-list">
-      {{ range . }}
-        <li>{{ index . $lang | default (index . "en") }}</li>
-      {{ end }}
-    </ul>
-  {{ end }}
-
   {{ with $item.achievements }}
     <div class="achievement-box">
       <p class="mini-meta">{{ partial "label.html" (dict "key" "highlights" "lang" $lang) }}</p>
@@ -36,5 +28,17 @@
         {{ end }}
       </ul>
     </div>
+  {{ end }}
+  {{ with $item.responsibilities }}
+    {{ if $item.detailed }}
+    <details class="responsibilities">
+      <summary>{{ partial "label.html" (dict "key" "responsibilities" "lang" $lang) }}</summary>
+    {{ end }}
+      <ul class="bullet-list">
+        {{ range . }}
+          <li>{{ index . $lang | default (index . "en") }}</li>
+        {{ end }}
+      </ul>
+    {{ if $item.detailed }}</details>{{ end }}
   {{ end }}
 </article>

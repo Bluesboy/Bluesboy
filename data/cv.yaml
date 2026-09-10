@@ -20,12 +20,14 @@ personal:
   - network: Telegram
     label: '@youngbluesman'
     url: https://t.me/youngbluesman
+    resume_languages: [ru]
   - network: GitHub
     url: https://github.com/Bluesboy
   - network: LinkedIn
     url: https://www.linkedin.com/in/shamilsattarov/
   - network: HeadHunter
     url: https://ufa.hh.ru/resume/3b8b50ecff01a24da20039ed1f4b6761433036
+    resume_languages: [ru]
 
 site:
   url: https://cv.shamil.pro
@@ -39,8 +41,8 @@ target:
     ru: Удалённо
 
 summary:
-- en: "I specialize in production infrastructure on GCP/GKE: GitOps, IaC, CI/CD, observability, and stateful workloads. I move systems from manual operations to declarative infrastructure: I have completed zero-downtime migrations, introduced GitOps for 20+ services, and moved cloud resource management from Terraform to Crossplane. I work at the intersection of development and operations, standardizing delivery and reducing manual operational work for teams."
-  ru: "Специализируюсь на production-инфраструктуре в GCP/GKE: GitOps, IaC, CI/CD, наблюдаемость и эксплуатация stateful-сервисов. Перевожу системы от ручного управления к декларативной модели: проводил миграции без простоя, внедрил GitOps для 20+ сервисов и перевёл управление облачными ресурсами с Terraform на Crossplane. Работаю на стыке разработки и эксплуатации: стандартизирую delivery и уменьшаю объём ручных операций для команд."
+- en: "I specialize in production infrastructure on GCP/GKE: GitOps, IaC, CI/CD, observability, and stateful workloads. In moving systems from manual operations to declarative infrastructure, I have completed three zero-downtime migrations from manually configured servers to the cloud, introduced GitOps for 20+ services, and moved cloud resource management from Terraform to Crossplane. Working at the intersection of development and operations, I standardize delivery processes and reduce manual operational work for teams."
+  ru: "Специализируюсь на production-инфраструктуре в GCP/GKE: GitOps, IaC, CI/CD, наблюдаемость и эксплуатация stateful-сервисов. Перевожу системы от ручного управления к декларативной модели: провёл три миграции с настроенных вручную серверов в облако без простоя, внедрил GitOps для 20+ сервисов и перевёл управление облачными ресурсами с Terraform на Crossplane. Работаю на стыке разработки и эксплуатации: стандартизирую процессы доставки и уменьшаю объём ручных операций для команд."
 
 experience:
 - company:
@@ -57,8 +59,8 @@ experience:
     start: '2020-01'
     end: null
   position:
-    en: Platform Engineer
-    ru: Платформенный инженер
+    en: Senior Platform Engineer
+    ru: Senior Platform Engineer
   detailed: true
   scope:
     en: "Own the production platform and delivery infrastructure on GCP/GKE, covering CI/CD, GitOps, reliability, observability, secrets, and stateful services."
@@ -78,8 +80,8 @@ experience:
   - en: Migrated a ~300 RPS platform from a manually configured VPS to Docker Swarm provisioned with Ansible, then to GKE managed with Terraform; completed both migrations without downtime.
     ru: Перенёс платформу с нагрузкой ~300 RPS с настроенного вручную VPS в Docker Swarm под управлением Ansible, затем в GKE под управлением Terraform; обе миграции прошли без простоя.
     featured: true
-  - en: Introduced Argo CD GitOps for 20+ services and internal tools; cut deployment time from over three minutes to one and made rollback a single git revert.
-    ru: Внедрил GitOps на Argo CD для 20+ сервисов и внутренних инструментов; сократил время развёртывания с более чем трёх минут до минуты, свёл откат к одному git revert.
+  - en: Introduced Argo CD GitOps for 20+ services and internal tools; cut deployment time from over three minutes to one and simplified rollback to reverting a single Git commit.
+    ru: Внедрил GitOps на Argo CD для 20+ сервисов и внутренних инструментов; сократил время развёртывания с более чем трёх минут до минуты, свёл откат к отмене одного изменения в Git.
     featured: true
   - en: Moved cloud resource management from Terraform to Crossplane under GitOps, with automatic reconciliation to the declared configuration.
     ru: Перевёл управление облачными ресурсами с Terraform на Crossplane под GitOps с автоматическим приведением к состоянию, заданному в конфигурации.
@@ -114,8 +116,8 @@ experience:
     ru: Главный инженер-DevOps
   detailed: true
   scope:
-    en: Supported distribution portal development and CI/CD, containerized applications and infrastructure services, operated Docker Swarm, and trained administrators in DevOps practices.
-    ru: Сопровождал разработку портала дистрибуции и CI/CD, контейнеризировал приложения и инфраструктурные сервисы, эксплуатировал Docker Swarm и обучал администраторов практикам DevOps.
+    en: "Supported infrastructure and delivery for the distribution portal: 15+ microservices, virtual infrastructure, CI/CD, and container platform operations."
+    ru: "Сопровождал инфраструктуру и процессы доставки портала дистрибуции: 15+ микросервисов, виртуальная инфраструктура, CI/CD и эксплуатация контейнерной платформы."
   responsibilities:
   - en: Supported distribution portal development and CI/CD workflows.
     ru: Поддержка разработки портала дистрибуции и CI/CD-процессов.
@@ -158,8 +160,8 @@ experience:
     ru: Инженер-DevOps
   detailed: true
   scope:
-    en: Maintained Java application builds and releases, automated server provisioning, and operated container, LDAP/PKI, and software-defined network infrastructure.
-    ru: Сопровождал сборку и выпуск Java-приложений, автоматизировал развёртывание серверов, эксплуатировал контейнерную инфраструктуру, LDAP/PKI и программно-определяемые сети.
+    en: Was responsible for builds, releases, and infrastructure of the Java/Liferay platform on OpenStack, including provisioning automation and Kubernetes operations.
+    ru: Отвечал за сборку, выпуск и инфраструктуру Java/Liferay-платформы в OpenStack, включая автоматизацию развёртывания и эксплуатацию Kubernetes.
   responsibilities:
   - en: Maintained the Java build and release process for Liferay and OSGi applications, including versions and dependencies.
     ru: "Сопровождение сборки и выпуска Java-приложений на Liferay и OSGi: управление версиями и зависимостями."
@@ -184,6 +186,9 @@ experience:
 - company:
     en: State Unitary Enterprise "Center for Information and Communication Technologies of the Republic of Bashkortostan"
     ru: ГУП «Центр информационно-коммуникационных технологий Республики Башкортостан»
+  resume_company:
+    en: Republic of Bashkortostan ICT Center
+    ru: ГУП «ЦИКТ Республики Башкортостан»
   location:
     city:
       en: Ufa
@@ -272,6 +277,9 @@ experience:
 - company:
     en: State Budgetary Institution "Center for Information and Communication Technologies under the Government of the Republic of Bashkortostan"
     ru: ГБУ «Центр информационно-коммуникационных технологий при Аппарате Правительства Республики Башкортостан»
+  resume_company:
+    en: ICT Center under the Government of Bashkortostan
+    ru: ГБУ «ЦИКТ при Аппарате Правительства Республики Башкортостан»
   location:
     city:
       en: Ufa
@@ -508,13 +516,15 @@ skills:
     featured: true
   - name: Kubernetes Operators
     featured: true
+  - name: GitHub
+    featured: true
   - name: Cloudflare
     featured: true
   - name: Docker Swarm
   - name: AWS
+  - name: Azure
   - name: Alibaba Cloud
   - name: Yandex Cloud
-  - name: GitHub
   - name: OpenStack
 
 - area:
@@ -531,6 +541,8 @@ skills:
     featured: true
   - name: Flux CD
     featured: true
+  - name: Google Config Connector
+    featured: true
   - name: AWS CloudFormation
   - name: OpenStack Heat
   - name: Google Cloud Deployment Manager
@@ -541,11 +553,12 @@ skills:
   items:
   - name: GitHub Actions
     featured: true
+  - name: Argo Workflows
+    featured: true
   - name: GitLab CI
     featured: true
   - name: Jenkins
     featured: true
-  - name: Argo Workflows
   - name: Concourse CI
   - name: Bitbucket Pipelines
   - name: Tekton
@@ -570,7 +583,7 @@ skills:
     en: Observability
     ru: Наблюдаемость
   items:
-  - name: Prometheus Stack
+  - name: Prometheus
     featured: true
   - name: Grafana
     featured: true
@@ -579,6 +592,7 @@ skills:
   - name: ELK/EFK
     featured: true
   - name: Jaeger
+    featured: true
 
 - area:
     en: Build & packaging
@@ -598,29 +612,28 @@ skills:
     en: Engineering & Automation
     ru: Разработка и автоматизация
   items:
-  - name: GNU+Linux
+  - name: bash
     featured: true
-  - name: Go
+  - name: GNU Make
     featured: true
   - name: Python
     featured: true
-  - name: Bash
+  - name: Go
     featured: true
-  - name: GNU Make
   - name: Taskfile
 
 - area:
     en: Infrastructure
     ru: Инфраструктура
   items:
+  - name: GNU+Linux
+    featured: true
   - name: KVM/Libvirt
   - name: VMware vSphere
   - name: Proxmox
   - name: Cisco
 
 about:
-- en: Completed three migrations from manually configured servers to cloud infrastructure without downtime.
-  ru: Выполнил три миграции с настроенных вручную серверов в облачную инфраструктуру без простоя.
 - en: Build and maintain infrastructure. Set up monitoring, disaster recovery, and secret rotation from the start.
   ru: Создаю и сопровождаю инфраструктуру. Сразу настраиваю мониторинг, аварийное восстановление и ротацию секретов.
 - en: Enjoy sharing knowledge and helping colleagues simplify their work and automate routine tasks.

@@ -24,6 +24,7 @@
 #let ink = rgb("#25313A")
 #let muted = rgb("#52616B")
 #let core = source.skills.map(group => group.items.filter(featured)).flatten()
+#let domain = source.site.url.replace(regex("^https?://"), "").trim("/")
 
 #set document(
   title: t(source.personal.full_name) + " — " + l("resumeTitle"),
@@ -32,7 +33,13 @@
   keywords: core.map(item => item.name) + (source.site.url, version),
   date: none,
 )
-#set page(paper: "a4", margin: (x: 16mm, y: 15mm))
+#set page(
+  paper: "a4",
+  margin: (x: 16mm, y: 15mm),
+  footer: context align(center, text(size: 8pt, fill: muted)[
+    #t(source.personal.full_name) · #link(source.site.url, domain) · #counter(page).display("1/1", both: true)
+  ]),
+)
 #set text(
   font: "IBM Plex Sans",
   size: 11pt,
@@ -63,9 +70,11 @@
   link("mailto:" + source.personal.email, source.personal.email),
 )
 #for profile in source.personal.profiles {
-  contacts.push(link(profile.url, profile.network))
+  if lang in profile.at("resume_languages", default: ("en", "ru")) {
+    contacts.push(link(profile.url, profile.network))
+  }
 }
-#contacts.push(link(source.site.url, l("fullCV")))
+#contacts.push(link(source.site.url, domain))
 #text(size: 10pt, contacts.join([ · ]))
 #parbreak()
 #text(
@@ -90,7 +99,8 @@
 
 #heading(level: 1, l("experience"))
 #for job in source.experience.filter(item => item.detailed) {
-  // Keep each concise role together, without prescribing a page number.
+  let achievements = job.achievements.filter(featured).map(t)
+  // Keep the introduction and first result together; later results may flow.
   block(breakable: false, {
     let company = if job.website == "" { t(job.company) } else {
       link("https://" + job.website, t(job.company))
@@ -102,14 +112,17 @@
       ]
     ]
     block(above: 0pt, below: 0.7em, t(job.scope))
-    list(..job.achievements.filter(featured).map(item => t(item)))
+    list(achievements.first())
   })
+  if achievements.len() > 1 {
+    list(..achievements.slice(1))
+  }
 }
 
 #heading(level: 1, l("earlier"))
 #for job in source.experience.filter(item => not item.detailed) {
   block(breakable: false, above: 0pt, below: 0.7em)[
-    #text(fill: muted, period(job.period)) — #strong(t(job.company)) — #t(job.position)
+    #text(fill: muted, period(job.period)) — #strong(t(job.at("resume_company", default: job.company))) — #t(job.position)
   ]
 }
 

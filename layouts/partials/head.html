@@ -1,4 +1,9 @@
 {{ $title := .Title | default site.Title }}
+{{ if .IsHome }}
+  {{ $name := partial "localized.html" (dict "value" hugo.Data.cv.personal.full_name "lang" site.Language.Lang) }}
+  {{ $position := partial "localized.html" (dict "value" hugo.Data.cv.target.position "lang" site.Language.Lang) }}
+  {{ $title = printf "%s — %s" $name $position }}
+{{ end }}
 {{/* The page description is the CV summary, so the meta tag, the share
      card and the JSON-LD cannot drift from what the page itself says.
      hugo.toml used to carry a third, near-identical copy. */}}

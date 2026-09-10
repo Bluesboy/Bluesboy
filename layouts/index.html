@@ -27,15 +27,17 @@
 </header>
 
 <main id="main" class="resume-sheet" tabindex="-1">
-  <article class="resume-primary">
-    <header class="identity">
+  <header class="identity">
+    <div>
       <p class="kicker">{{ partial "label.html" (dict "key" "heroEyebrow" "lang" $lang) }}</p>
       <h1>{{ $fullName }}</h1>
       <p class="headline">{{ $title }}</p>
       <div class="title-rule" aria-hidden="true"></div>
-    </header>
+    </div>
+    {{ partial "avatar.html" (dict "person" $fullName "lang" $lang) }}
+  </header>
 
-    <section class="main-section">
+    <section class="main-section summary-section">
       <h2>{{ partial "label.html" (dict "key" "summary" "lang" $lang) }}</h2>
       <div class="summary-stack">
         {{ range $data.summary }}
@@ -44,33 +46,7 @@
       </div>
     </section>
 
-    <section class="main-section">
-      <h2>{{ partial "label.html" (dict "key" "experience" "lang" $lang) }}</h2>
-      <div class="experience-list">
-        {{ range $data.experience }}
-          {{ partial "experience-card.html" (dict "item" . "lang" $lang) }}
-        {{ end }}
-      </div>
-    </section>
-
-    <section class="main-section">
-      <h2>{{ partial "label.html" (dict "key" "education" "lang" $lang) }}</h2>
-      <div class="education-list">
-        {{ range $data.education }}
-          <article class="education-item">
-            <p class="mini-meta">{{ .year }} · {{ partial "localized.html" (dict "value" .level "lang" $lang) }}</p>
-            <h3>{{ partial "localized.html" (dict "value" .institution "lang" $lang) }}</h3>
-            <p>{{ partial "localized.html" (dict "value" .specialization "lang" $lang) }}</p>
-          </article>
-        {{ end }}
-      </div>
-    </section>
-  </article>
-
-  <aside class="resume-sidebar">
-    {{ partial "avatar.html" (dict "person" $fullName "lang" $lang) }}
-
-    <section class="side-section">
+    <section class="side-section contacts-section">
       <h2>{{ partial "label.html" (dict "key" "contacts" "lang" $lang) }}</h2>
       <address class="contact-list">
         <a href="mailto:{{ $data.personal.email }}">
@@ -90,10 +66,7 @@
         {{ end }}
       </address>
       <a class="download-link" href="{{ $pdfURL }}">{{ partial "label.html" (dict "key" "resume" "lang" $lang) }} · {{ upper $lang }}</a>
-    </section>
-
-    <section class="side-section">
-      <h2>{{ partial "label.html" (dict "key" "details" "lang" $lang) }}</h2>
+      <h3 class="contact-details-title">{{ partial "label.html" (dict "key" "details" "lang" $lang) }}</h3>
       <dl class="fact-list">
         <div><dt>{{ partial "label.html" (dict "key" "location" "lang" $lang) }}</dt><dd>{{ $location }}</dd></div>
         <div><dt>{{ partial "label.html" (dict "key" "availability" "lang" $lang) }}</dt><dd>{{ $availability }}</dd></div>
@@ -101,22 +74,50 @@
       </dl>
     </section>
 
-    <section class="side-section">
+    <section class="main-section core-section">
       <h2>{{ partial "label.html" (dict "key" "stack" "lang" $lang) }}</h2>
-      <div class="skill-groups">
-        {{ range $data.skills }}
-          <section class="skill-group">
-            <h3>{{ partial "localized.html" (dict "value" .area "lang" $lang) }}</h3>
-            <ul class="chip-list">
-              {{ range where .items "featured" true }}<li><strong>{{ .name }}</strong></li>{{ end }}
-              {{ range .items }}{{ if not .featured }}<li>{{ .name }}</li>{{ end }}{{ end }}
-            </ul>
-          </section>
+      {{ partial "skill-groups.html" (dict "featured" true "lang" $lang) }}
+    </section>
+
+    <section class="main-section additional-section">
+      <h2>{{ partial "label.html" (dict "key" "additionalSkills" "lang" $lang) }}</h2>
+      {{ partial "skill-groups.html" (dict "featured" false "lang" $lang) }}
+    </section>
+
+    <section class="main-section experience-section">
+      <h2>{{ partial "label.html" (dict "key" "experience" "lang" $lang) }}</h2>
+      <div class="experience-list">
+        {{ range where $data.experience "detailed" true }}
+          {{ partial "experience-card.html" (dict "item" . "lang" $lang) }}
+        {{ end }}
+      </div>
+      {{ $earlier := where $data.experience "detailed" false }}
+      {{ with $earlier }}
+      {{ $oldest := index (last 1 .) 0 }}
+      {{ $newest := index . 0 }}
+      <details class="earlier-experience">
+        <summary>{{ partial "label.html" (dict "key" "earlierWebsite" "lang" $lang) }}, {{ substr $oldest.period.start 0 4 }}–{{ substr $newest.period.end 0 4 }}</summary>
+        <div class="experience-list">
+          {{ range . }}{{ partial "experience-card.html" (dict "item" . "lang" $lang) }}{{ end }}
+        </div>
+      </details>
+      {{ end }}
+    </section>
+
+    <section class="main-section education-section">
+      <h2>{{ partial "label.html" (dict "key" "education" "lang" $lang) }}</h2>
+      <div class="education-list">
+        {{ range $data.education }}
+          <article class="education-item">
+            <p class="mini-meta">{{ .year }} · {{ partial "localized.html" (dict "value" .level "lang" $lang) }}</p>
+            <h3>{{ partial "localized.html" (dict "value" .institution "lang" $lang) }}</h3>
+            <p>{{ partial "localized.html" (dict "value" .specialization "lang" $lang) }}</p>
+          </article>
         {{ end }}
       </div>
     </section>
 
-    <section class="side-section">
+    <section class="side-section languages-section">
       <h2>{{ partial "label.html" (dict "key" "languages" "lang" $lang) }}</h2>
       <dl class="language-list">
         {{ range $data.languages }}
@@ -130,12 +131,11 @@
       </dl>
     </section>
 
-    <section class="side-section">
+    <section class="main-section about-section">
       <h2>{{ partial "label.html" (dict "key" "about" "lang" $lang) }}</h2>
       <ul class="about-list">
         {{ range $data.about }}<li>{{ index . $lang | default (index . "en") }}</li>{{ end }}
       </ul>
     </section>
-  </aside>
 </main>
 {{ end }}
