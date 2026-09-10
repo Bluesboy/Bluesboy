@@ -243,11 +243,6 @@ h1 {
 .fact-list dd, .language-list dd { margin: 0; text-align: right; }
 .language-list dd { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: .35rem .55rem; }
 .language-level { color: var(--muted); font-size: .82rem; }
-.language-dots { display: inline-flex; gap: .22rem; }
-.language-dot { width: .55rem; height: .55rem; border: 1px solid var(--accent); border-radius: 50%; }
-/* Fill is the only thing separating a filled dot from an empty one, and
-   browsers omit background graphics when printing unless told not to. */
-.language-dot.is-filled { background: var(--accent); print-color-adjust: exact; -webkit-print-color-adjust: exact; }
 .skill-groups { display: grid; gap: 1rem; }
 .skill-group h3 { margin: 0 0 .45rem; color: var(--accent); font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; }
 .chip-list { display: flex; flex-wrap: wrap; gap: .4rem; margin: 0; padding: 0; list-style: none; }

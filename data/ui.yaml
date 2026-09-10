@@ -46,18 +46,12 @@ location:
 availability:
   en: Availability
   ru: Доступность
-citizenship:
-  en: Citizenship
-  ru: Гражданство
 format:
   en: Work format
   ru: Формат работы
 details:
   en: Details
   ru: Детали
-salary:
-  en: Desired salary
-  ru: Желаемая зарплата
 contacts:
   en: Contacts
   ru: Контакты
@@ -90,15 +84,15 @@ notFoundHome:
 earlier:
   en: Earlier experience
   ru: Предыдущий опыт
-responsibilities:
-  en: Responsibilities
-  ru: Обязанности
-achievements:
-  en: Achievements
-  ru: Достижения
 coreSkills:
-  en: Core skills
-  ru: Навыки
+  en: Core expertise
+  ru: Ключевые компетенции
+fullCV:
+  en: Full CV
+  ru: Full CV
+resumeTitle:
+  en: Resume
+  ru: Резюме
 # Month names. The site spells them out, the resume abbreviates.
 months:
   long:

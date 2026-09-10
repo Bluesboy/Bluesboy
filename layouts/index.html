@@ -97,9 +97,7 @@
       <dl class="fact-list">
         <div><dt>{{ partial "label.html" (dict "key" "location" "lang" $lang) }}</dt><dd>{{ $location }}</dd></div>
         <div><dt>{{ partial "label.html" (dict "key" "availability" "lang" $lang) }}</dt><dd>{{ $availability }}</dd></div>
-        <div><dt>{{ partial "label.html" (dict "key" "citizenship" "lang" $lang) }}</dt><dd>{{ partial "localized.html" (dict "value" $data.personal.citizenship "lang" $lang) }}</dd></div>
         <div><dt>{{ partial "label.html" (dict "key" "format" "lang" $lang) }}</dt><dd>{{ partial "localized.html" (dict "value" $data.target.work_format "lang" $lang) }}</dd></div>
-        <div><dt>{{ partial "label.html" (dict "key" "salary" "lang" $lang) }}</dt><dd>{{ partial "localized.html" (dict "value" $data.target.salary "lang" $lang) }}</dd></div>
       </dl>
     </section>
 
@@ -110,7 +108,8 @@
           <section class="skill-group">
             <h3>{{ partial "localized.html" (dict "value" .area "lang" $lang) }}</h3>
             <ul class="chip-list">
-              {{ range .items }}<li>{{ . }}</li>{{ end }}
+              {{ range where .items "featured" true }}<li><strong>{{ .name }}</strong></li>{{ end }}
+              {{ range .items }}{{ if not .featured }}<li>{{ .name }}</li>{{ end }}{{ end }}
             </ul>
           </section>
         {{ end }}
@@ -124,16 +123,7 @@
           <div>
             <dt>{{ partial "localized.html" (dict "value" .language "lang" $lang) }}</dt>
             <dd>
-              {{/* The dots are decorative: they carry no text, and print
-                   drops their fill when background graphics are off. The
-                   level is the accessible and printable carrier. */}}
               <span class="language-level">{{ partial "localized.html" (dict "value" .level "lang" $lang) }}</span>
-              <span class="language-dots" aria-hidden="true">
-                {{- $rating := .rating -}}
-                {{- range seq 1 7 -}}
-                  <span class="language-dot{{ if le . $rating }} is-filled{{ end }}"></span>
-                {{- end -}}
-              </span>
             </dd>
           </div>
         {{ end }}

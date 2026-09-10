@@ -37,7 +37,7 @@
 {{ $knows := slice }}
 {{ range $data.skills }}
   {{ range .items }}
-    {{ $knows = $knows | append . }}
+    {{ $knows = $knows | append .name }}
   {{ end }}
 {{ end }}
 {{ with $knows }}{{ $profile = merge $profile (dict "knowsAbout" (uniq .)) }}{{ end }}

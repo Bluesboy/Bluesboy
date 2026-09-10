@@ -12,9 +12,6 @@ personal:
       en: Russia
       ru: Россия
     country_code: RU
-  citizenship:
-    en: Russian Federation
-    ru: Российская Федерация
   availability:
     en: Open to business trips
     ru: Готов к командировкам
@@ -35,18 +32,15 @@ site:
 
 target:
   position:
-    en: Platform Engineer, DevOps Engineer
-    ru: Платформенный инженер, инженер-DevOps
+    en: Senior Platform Engineer / Senior DevOps Engineer
+    ru: Senior Platform Engineer / Senior DevOps Engineer
   work_format:
     en: Remote
     ru: Удалённо
-  salary:
-    en: $4,500 net/mo
-    ru: 380 000 ₽/мес.
 
 summary:
-- en: "Computers have been part of my life for over 30 years. I turn manually run infrastructure into systems with clear configuration and automated workflows: cloud migration, builds and releases, monitoring, and disaster recovery. I pick up unfamiliar systems quickly and share what I learn with the team."
-  ru: "Компьютеры — часть моей жизни больше 30 лет. Превращаю инфраструктуру с ручным управлением в системы с понятными настройками и автоматизированными процессами: перенос в облако, сборка и выпуск, мониторинг и восстановление после сбоев. Быстро осваиваю незнакомые системы и делюсь опытом с командой."
+- en: "I specialize in production infrastructure on GCP/GKE: GitOps, IaC, CI/CD, observability, and stateful workloads. I move systems from manual operations to declarative infrastructure: I have completed zero-downtime migrations, introduced GitOps for 20+ services, and moved cloud resource management from Terraform to Crossplane. I work at the intersection of development and operations, standardizing delivery and reducing manual operational work for teams."
+  ru: "Специализируюсь на production-инфраструктуре в GCP/GKE: GitOps, IaC, CI/CD, наблюдаемость и эксплуатация stateful-сервисов. Перевожу системы от ручного управления к декларативной модели: проводил миграции без простоя, внедрил GitOps для 20+ сервисов и перевёл управление облачными ресурсами с Terraform на Crossplane. Работаю на стыке разработки и эксплуатации: стандартизирую delivery и уменьшаю объём ручных операций для команд."
 
 experience:
 - company:
@@ -66,6 +60,9 @@ experience:
     en: Platform Engineer
     ru: Платформенный инженер
   detailed: true
+  scope:
+    en: "Own the production platform and delivery infrastructure on GCP/GKE, covering CI/CD, GitOps, reliability, observability, secrets, and stateful services."
+    ru: "Отвечаю за production-платформу и delivery-инфраструктуру в GCP/GKE: CI/CD, GitOps, отказоустойчивость, наблюдаемость, секреты и stateful-сервисы."
   responsibilities:
   - en: Set up and maintain CI/CD.
     ru: Настройка и сопровождение CI/CD.
@@ -78,18 +75,22 @@ experience:
   - en: "Help developers prepare applications for cloud operations: monitoring, logging, and tracing."
     ru: "Помощь разработчикам в подготовке приложений к эксплуатации в облаке: мониторинг, журналирование и трассировка."
   achievements:
-  - en: Migrated a ~300 RPS platform from a hand-configured VPS, first to an Ansible-provisioned Docker Swarm cluster, then to GKE managed by Terraform. Both migrations completed with no downtime.
-    ru: Перенёс платформу с нагрузкой около 300 RPS с настроенного вручную VPS сначала в Docker Swarm, развёрнутый через Ansible, затем в GKE под управлением Terraform. Обе миграции прошли без простоя.
-  - en: Introduced GitOps with Argo CD across 20+ services and internal tools. Deployment time fell from over three minutes to one; rollback takes a single git revert.
-    ru: Внедрил GitOps на базе Argo CD для 20+ сервисов и внутренних инструментов. Время развёртывания сократилось с более чем трёх минут до минуты; откат выполняется одним коммитом.
-  - en: Moved resource management from Terraform to Crossplane. Infrastructure is now managed through GitOps, and Crossplane keeps resources in the state described in the configuration.
-    ru: Перевёл управление ресурсами с Terraform на Crossplane. Теперь инфраструктура управляется через GitOps, а Crossplane поддерживает ресурсы в состоянии, описанном в конфигурации.
+  - en: Migrated a ~300 RPS platform from a manually configured VPS to Docker Swarm provisioned with Ansible, then to GKE managed with Terraform; completed both migrations without downtime.
+    ru: Перенёс платформу с нагрузкой ~300 RPS с настроенного вручную VPS в Docker Swarm под управлением Ansible, затем в GKE под управлением Terraform; обе миграции прошли без простоя.
+    featured: true
+  - en: Introduced Argo CD GitOps for 20+ services and internal tools; cut deployment time from over three minutes to one and made rollback a single git revert.
+    ru: Внедрил GitOps на Argo CD для 20+ сервисов и внутренних инструментов; сократил время развёртывания с более чем трёх минут до минуты, свёл откат к одному git revert.
+    featured: true
+  - en: Moved cloud resource management from Terraform to Crossplane under GitOps, with automatic reconciliation to the declared configuration.
+    ru: Перевёл управление облачными ресурсами с Terraform на Crossplane под GitOps с автоматическим приведением к состоянию, заданному в конфигурации.
+    featured: true
   - en: Moved deployments under Argo CD management, then replaced Helm template rendering in Argo CD with pre-rendered YAML manifests (Rendered Manifests Pattern). Changes are visible in plain YAML diffs, and Argo CD does not spend resources rendering templates.
     ru: Перевёл развёртывание под управление Argo CD, затем заменил рендеринг Helm-шаблонов в Argo CD готовыми YAML-манифестами (Rendered Manifests Pattern). Изменения видны в обычных YAML-диффах, а Argo CD не тратит ресурсы на рендеринг шаблонов.
   - en: Moved secrets management to the External Secrets Operator. Everything now goes through GitOps.
     ru: Перенёс управление секретами в External Secrets Operator. Теперь всё идёт через GitOps.
   - en: Moved PostgreSQL, ClickHouse, Redis, and Elasticsearch to Kubernetes operators, and Kafka from a SaaS solution to a self-managed cluster with Strimzi.
     ru: Перенёс PostgreSQL, ClickHouse, Redis и Elasticsearch на Kubernetes-операторы, а Kafka из SaaS-решения в собственный кластер под управлением Strimzi.
+    featured: true
   - en: Moved static delivery from Nginx to Google Cloud Storage behind a CDN. This eliminated outages and configuration overhead.
     ru: Перенёс раздачу статики с Nginx в Google Cloud Storage за CDN. Это устранило сбои и избавило от обслуживания конфигурации.
 - company:
@@ -112,6 +113,9 @@ experience:
     en: Senior DevOps Engineer
     ru: Главный инженер-DevOps
   detailed: true
+  scope:
+    en: Supported distribution portal development and CI/CD, containerized applications and infrastructure services, operated Docker Swarm, and trained administrators in DevOps practices.
+    ru: Сопровождал разработку портала дистрибуции и CI/CD, контейнеризировал приложения и инфраструктурные сервисы, эксплуатировал Docker Swarm и обучал администраторов практикам DevOps.
   responsibilities:
   - en: Supported distribution portal development and CI/CD workflows.
     ru: Поддержка разработки портала дистрибуции и CI/CD-процессов.
@@ -122,12 +126,15 @@ experience:
   - en: "Trained the system and network administration team in DevOps practices: IaC, configuration management, CI/CD, and Git."
     ru: "Обучение команды системных и сетевых администраторов практикам DevOps: IaC, управлению конфигурациями, CI/CD и работе с Git."
   achievements:
-  - en: Moved 20+ vSphere hosts and around 100 virtual machines under Ansible, Ansible Tower (AWX), and Terraform. Replaced hand-configured servers with reproducible provisioning.
-    ru: Перевёл 20+ хостов vSphere и около 100 виртуальных машин под управление Ansible, Ansible Tower (AWX) и Terraform. Ручную настройку серверов заменил воспроизводимым развёртыванием.
-  - en: Standardized continuous delivery across the 15+ microservices of the main application, giving eight developers one path to production instead of per-service scripts.
-    ru: Унифицировал процесс доставки 15+ микросервисов основного приложения. Восемь разработчиков получили единый путь в продакшен вместо отдельных скриптов для каждого сервиса.
-  - en: Built observability for the microservices on EFK, Prometheus and Grafana, bringing logs and metrics into one place and shortening failure detection and diagnosis.
-    ru: Настроил мониторинг микросервисов на EFK, Prometheus и Grafana. Собрал журналы и метрики в одном месте, ускорив обнаружение и диагностику сбоев.
+  - en: Automated provisioning for 20+ vSphere hosts and ~100 VMs with Ansible, Ansible Tower (AWX), and Terraform, replacing manual server configuration.
+    ru: Перевёл 20+ хостов vSphere и ~100 виртуальных машин на воспроизводимое развёртывание через Ansible, Ansible Tower (AWX) и Terraform вместо ручной настройки.
+    featured: true
+  - en: Standardized continuous delivery for 15+ microservices, giving 8 developers a shared path to production instead of per-service scripts.
+    ru: "Унифицировал доставку 15+ микросервисов: 8 разработчиков получили единый путь в продакшен вместо отдельных скриптов для каждого сервиса."
+    featured: true
+  - en: Built microservice observability with EFK, Prometheus, and Grafana, centralizing logs and metrics to speed up failure detection and diagnosis.
+    ru: Внедрил наблюдаемость микросервисов на EFK, Prometheus и Grafana; объединил журналы и метрики, ускорив обнаружение и диагностику сбоев.
+    featured: true
   - en: Moved web service assets to MinIO object storage, taking file state off the application servers.
     ru: Перенёс файлы веб-сервисов в объектное хранилище MinIO, чтобы приложения не хранили состояние локально.
 - company:
@@ -150,6 +157,9 @@ experience:
     en: DevOps Engineer
     ru: Инженер-DevOps
   detailed: true
+  scope:
+    en: Maintained Java application builds and releases, automated server provisioning, and operated container, LDAP/PKI, and software-defined network infrastructure.
+    ru: Сопровождал сборку и выпуск Java-приложений, автоматизировал развёртывание серверов, эксплуатировал контейнерную инфраструктуру, LDAP/PKI и программно-определяемые сети.
   responsibilities:
   - en: Maintained the Java build and release process for Liferay and OSGi applications, including versions and dependencies.
     ru: "Сопровождение сборки и выпуска Java-приложений на Liferay и OSGi: управление версиями и зависимостями."
@@ -162,10 +172,13 @@ experience:
   achievements:
   - en: Automated builds with Jenkins and Nexus, and moved dependency management to Gradle. Build time fell from hours to minutes.
     ru: Автоматизировал сборку с Jenkins и Nexus, перевёл управление зависимостями на Gradle. Время сборки сократилось с часов до минут.
+    featured: true
   - en: Migrated the platform from two hand-configured bare-metal servers to Mail.ru Cloud running on OpenStack. Provisioned infrastructure with Heat and Ansible.
     ru: Перенёс платформу с двух вручную настроенных физических серверов в Mail.ru Cloud на базе OpenStack. Инфраструктуру развёртывал через Heat и Ansible.
+    featured: true
   - en: Built a Kubernetes cluster on OpenStack with fully automated provisioning. Moved Elasticsearch, Jenkins, and Nexus onto it.
     ru: Развернул Kubernetes-кластер на OpenStack, полностью автоматизировав его развёртывание. Перенёс на него Elasticsearch, Jenkins и Nexus.
+    featured: true
   - en: Moved the Liferay portal from Tomcat to WildFly.
     ru: Перевёл портал Liferay с Tomcat на WildFly.
 - company:
@@ -469,125 +482,145 @@ languages:
   level:
     en: Native
     ru: Родной
-  rating: 7
 - language:
     en: English
     ru: Английский
   level:
     en: B2
     ru: B2
-  rating: 4
 
 skills:
 - area:
-    en: Containers & Orchestration
-    ru: Контейнеры и оркестровка
+    en: Cloud & Platform
+    ru: Облако и платформа
   items:
-  - Docker
-  - Docker Swarm
-  - Kubernetes
-  - Google Kubernetes Engine
-  - Helm
-  - Kustomize
-  - Kubernetes Operators
+  - name: Google Cloud Platform
+    featured: true
+  - name: Google Kubernetes Engine
+    featured: true
+  - name: Kubernetes
+    featured: true
+  - name: Docker
+    featured: true
+  - name: Helm
+    featured: true
+  - name: Kustomize
+    featured: true
+  - name: Kubernetes Operators
+    featured: true
+  - name: Cloudflare
+    featured: true
+  - name: Docker Swarm
+  - name: AWS
+  - name: Alibaba Cloud
+  - name: Yandex Cloud
+  - name: GitHub
+  - name: OpenStack
 
 - area:
-    en: IaC & CM
-    ru: IaC и CM
+    en: IaC & GitOps
+    ru: IaC и GitOps
   items:
-  - Ansible
-  - Terraform
-  - Crossplane
-  - AWS CloudFormation
-  - OpenStack Heat
-  - Google Cloud Deployment Manager
+  - name: Crossplane
+    featured: true
+  - name: Terraform
+    featured: true
+  - name: Ansible
+    featured: true
+  - name: Argo CD
+    featured: true
+  - name: Flux CD
+    featured: true
+  - name: AWS CloudFormation
+  - name: OpenStack Heat
+  - name: Google Cloud Deployment Manager
 
 - area:
     en: CI/CD
     ru: CI/CD
   items:
-  - Jenkins
-  - GitHub Actions
-  - Concourse CI
-  - GitLab CI
-  - Bitbucket Pipelines
-  - Tekton
-  - Argo Workflows
-  - Argo CD
-  - Flux CD
+  - name: GitHub Actions
+    featured: true
+  - name: GitLab CI
+    featured: true
+  - name: Jenkins
+    featured: true
+  - name: Argo Workflows
+  - name: Concourse CI
+  - name: Bitbucket Pipelines
+  - name: Tekton
 
 - area:
     en: Data
     ru: Данные
   items:
-  - PostgreSQL
-  - MySQL / MariaDB
-  - ClickHouse
-  - Kafka
-  - Redis / Valkey
-  - Elasticsearch / OpenSearch
+  - name: PostgreSQL
+    featured: true
+  - name: Kafka
+    featured: true
+  - name: Redis / Valkey
+    featured: true
+  - name: ClickHouse
+    featured: true
+  - name: Elasticsearch / OpenSearch
+    featured: true
+  - name: MySQL / MariaDB
 
 - area:
     en: Observability
     ru: Наблюдаемость
   items:
-  - Prometheus Stack
-  - ELK/EFK
-  - Grafana
-  - Jaeger
-  - OpenTelemetry
-
-- area:
-    en: Cloud platforms
-    ru: Облачные платформы
-  items:
-  - Google Cloud Platform
-  - AWS
-  - Alibaba Cloud
-  - Yandex Cloud
-  - GitHub
-  - Cloudflare
-  - OpenStack
+  - name: Prometheus Stack
+    featured: true
+  - name: Grafana
+    featured: true
+  - name: OpenTelemetry
+    featured: true
+  - name: ELK/EFK
+    featured: true
+  - name: Jaeger
 
 - area:
     en: Build & packaging
     ru: Сборка и пакеты
   items:
-  - Maven
-  - Gradle
-  - npm
-  - NuGet
-  - pip
-  - Cargo
-  - Go modules
-  - Artifactory
-  - Nexus
+  - name: Maven
+  - name: Gradle
+  - name: npm
+  - name: NuGet
+  - name: pip
+  - name: Cargo
+  - name: Go modules
+  - name: Artifactory
+  - name: Nexus
 
 - area:
-    en: Scripting & Automation
-    ru: Скрипты и автоматизация
+    en: Engineering & Automation
+    ru: Разработка и автоматизация
   items:
-  - GNU Make
-  - Taskfile
-  - Bash
-  - Python
-  - Go
+  - name: GNU+Linux
+    featured: true
+  - name: Go
+    featured: true
+  - name: Python
+    featured: true
+  - name: Bash
+    featured: true
+  - name: GNU Make
+  - name: Taskfile
 
 - area:
     en: Infrastructure
     ru: Инфраструктура
   items:
-  - GNU+Linux
-  - KVM/Libvirt
-  - VMware vSphere
-  - Proxmox
-  - Cisco
+  - name: KVM/Libvirt
+  - name: VMware vSphere
+  - name: Proxmox
+  - name: Cisco
 
 about:
-- en: Migrate platforms from manually configured servers to cloud infrastructure. Completed three such migrations without downtime.
-  ru: Переношу платформы с серверов, настроенных вручную, в облачную инфраструктуру. Выполнил три такие миграции без простоя.
-- en: Manage applications and infrastructure through GitOps. Use Crossplane and Kubernetes operators to keep systems in the state described in Git.
-  ru: Управляю приложениями и инфраструктурой через GitOps. Использую Crossplane и Kubernetes-операторы, чтобы поддерживать системы в состоянии, описанном в Git.
+- en: Completed three migrations from manually configured servers to cloud infrastructure without downtime.
+  ru: Выполнил три миграции с настроенных вручную серверов в облачную инфраструктуру без простоя.
 - en: Build and maintain infrastructure. Set up monitoring, disaster recovery, and secret rotation from the start.
   ru: Создаю и сопровождаю инфраструктуру. Сразу настраиваю мониторинг, аварийное восстановление и ротацию секретов.
 - en: Enjoy sharing knowledge and helping colleagues simplify their work and automate routine tasks.

@@ -15,6 +15,10 @@
 
   <p class="mini-meta strong">{{ $location }}{{ if $item.remote }} · <span class="remote-flag">{{ partial "label.html" (dict "key" "remote" "lang" $lang) }}</span>{{ end }}{{ with partial "website-url.html" (dict "url" $item.website) }} · <a href="{{ . }}" rel="noopener">{{ $item.website }}</a>{{ end }}</p>
 
+  {{ with $item.scope }}
+    <p>{{ partial "localized.html" (dict "value" . "lang" $lang) }}</p>
+  {{ end }}
+
   {{ with $item.responsibilities }}
     <ul class="bullet-list">
       {{ range . }}

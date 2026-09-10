@@ -8,12 +8,11 @@
     "personal": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["avatar", "full_name", "location", "citizenship", "availability", "email", "profiles"],
+      "required": ["avatar", "full_name", "location", "availability", "email", "profiles"],
       "properties": {
         "avatar": { "type": "string" },
         "full_name": { "$ref": "#/$defs/i18nString" },
         "location": { "$ref": "#/$defs/location" },
-        "citizenship": { "$ref": "#/$defs/i18nString" },
         "availability": { "$ref": "#/$defs/i18nString" },
         "phone": { "type": "string" },
         "email": { "type": "string", "format": "email" },
@@ -36,11 +35,10 @@
     "target": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["position", "work_format", "salary"],
+      "required": ["position", "work_format"],
       "properties": {
         "position": { "$ref": "#/$defs/i18nString" },
-        "work_format": { "$ref": "#/$defs/i18nString" },
-        "salary": { "$ref": "#/$defs/i18nString" }
+        "work_format": { "$ref": "#/$defs/i18nString" }
       }
     },
     "summary": { "$ref": "#/$defs/i18nStringArray" },
@@ -72,8 +70,8 @@
       "additionalProperties": false,
       "required": ["en", "ru"],
       "properties": {
-        "en": { "type": "string" },
-        "ru": { "type": "string" }
+        "en": { "type": "string", "minLength": 1 },
+        "ru": { "type": "string", "minLength": 1 }
       }
     },
     "i18nStringArray": {
@@ -101,13 +99,32 @@
         "url": { "type": "string", "format": "uri", "pattern": "^https?://" }
       }
     },
+    "achievementItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["en", "ru"],
+      "properties": {
+        "en": { "type": "string", "minLength": 1 },
+        "ru": { "type": "string", "minLength": 1 },
+        "featured": { "type": "boolean", "default": false }
+      }
+    },
+    "skillItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "featured": { "type": "boolean", "default": false }
+      }
+    },
     "skillGroup": {
       "type": "object",
       "additionalProperties": false,
       "required": ["area", "items"],
       "properties": {
         "area": { "$ref": "#/$defs/i18nString" },
-        "items": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+        "items": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/skillItem" } }
       }
     },
     "period": {
@@ -115,8 +132,8 @@
       "additionalProperties": false,
       "required": ["start", "end"],
       "properties": {
-        "start": { "type": "string", "pattern": "^\\d{4}-\\d{2}$" },
-        "end": { "type": ["string", "null"], "pattern": "^\\d{4}-\\d{2}$" }
+        "start": { "type": "string", "pattern": "^\\d{4}-(0[1-9]|1[0-2])$" },
+        "end": { "type": ["string", "null"], "pattern": "^\\d{4}-(0[1-9]|1[0-2])$" }
       }
     },
     "experienceItem": {
@@ -127,12 +144,13 @@
         "company": { "$ref": "#/$defs/i18nString" },
         "location": { "$ref": "#/$defs/location" },
         "remote": { "const": true },
-        "website": { "type": ["string", "null"], "format": "uri-reference" },
+        "website": { "type": "string", "format": "uri-reference" },
         "period": { "$ref": "#/$defs/period" },
         "position": { "$ref": "#/$defs/i18nString" },
         "detailed": { "type": "boolean" },
+        "scope": { "$ref": "#/$defs/i18nString" },
         "responsibilities": { "$ref": "#/$defs/i18nStringArray" },
-        "achievements": { "$ref": "#/$defs/i18nStringArray" }
+        "achievements": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/achievementItem" } }
       }
     },
     "educationItem": {
@@ -149,11 +167,10 @@
     "languageItem": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["language", "level", "rating"],
+      "required": ["language", "level"],
       "properties": {
         "language": { "$ref": "#/$defs/i18nString" },
-        "level": { "$ref": "#/$defs/i18nString" },
-        "rating": { "type": "integer", "minimum": 1, "maximum": 7 }
+        "level": { "$ref": "#/$defs/i18nString" }
       }
     }
   }

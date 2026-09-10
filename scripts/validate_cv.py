@@ -74,14 +74,41 @@ for i, job in enumerate(cv["experience"]):
 check(starts == sorted(starts, reverse=True),
       "experience: entries are not in reverse-chronological order")
 
-# resume.typ indexes responsibilities[2] and achievements[2] for every
-# detailed entry, so fewer than three would crash the PDF build.
+# Detailed roles keep full website content and a useful curated resume view.
+# featured defaults to false in both renderers; JSON Schema defaults do not
+# populate missing keys.
 for i, job in enumerate(cv["experience"]):
     if not job["detailed"]:
         continue
     for field in ("responsibilities", "achievements"):
         check(len(job[field]) >= 3,
               f"experience[{i}].{field}: detailed entries need at least 3, found {len(job[field])}")
+    check("scope" in job, f"experience[{i}].scope: detailed entries need a role scope")
+    check(any(item.get("featured", False) for item in job["achievements"]),
+          f"experience[{i}].achievements: detailed entries need a featured achievement")
+
+skill_names = [item["name"] for group in cv["skills"] for item in group["items"]]
+check(len(skill_names) == len(set(skill_names)), "skills: names must not be duplicated")
+check(any(item.get("featured", False) for group in cv["skills"] for item in group["items"]),
+      "skills: at least one core skill must be featured")
+
+
+def check_ui(node, path="ui"):
+    if not isinstance(node, dict):
+        problems.append(f"{path}: expected a localized value or a group of values")
+    elif "en" in node or "ru" in node:
+        check(set(node) == {"en", "ru"}, f"{path}: both en and ru are required")
+        for value in node.values():
+            check(isinstance(value, str) and bool(value)
+                  or isinstance(value, list) and len(value) == 12
+                  and all(isinstance(item, str) and item for item in value),
+                  f"{path}: expected nonempty text or 12 month names")
+    else:
+        for key, value in node.items():
+            check_ui(value, f"{path}.{key}")
+
+
+check_ui(ui)
 
 if problems:
     for problem in problems:

@@ -4,7 +4,7 @@
 
 - This is the GitHub profile repository `Bluesboy/Bluesboy`.
 - The Hugo website is the full bilingual CV.
-- The Typst PDFs are concise bilingual resumes.
+- The Typst PDFs are concise, platform-neutral bilingual resumes for direct applications and ATS/job boards.
 - Use `CV` for the website and source data; use `Resume` for PDF artifacts.
 
 ## Source of truth
@@ -29,7 +29,11 @@
 - Update `schema/cv.schema.json` with every data-model change.
 - Keep `minItems` a contract, never a snapshot of how much data exists today.
 - Do not keep a field no renderer reads: either render it or drop it.
-- Store skill items as plain strings; only the group names are localized.
+- Store skills once as `{name, featured?}`; names are unlocalized, group headings are localized.
+- Achievements store `{en, ru, featured?}`. In both models absent `featured` means false.
+- PDF selects skills and achievements by `featured: true`, never by position or text matching.
+- Hugo shows all skills (core first and emphasized within each group) and all achievements.
+- Experience may have localized `scope`; every detailed role needs one plus at least one featured achievement.
 - Validate data through `scripts/validate_cv.py` or `make test/schema`.
 - Keep the semantic rules there in step with the renderers: period order, one open period,
   at least three responsibilities and achievements per detailed entry, URL shape.
@@ -43,8 +47,10 @@
 - Current English responsibilities use Present Simple; previous roles use Past Simple.
 - Achievements describe completed results and use past tense.
 - Write `summary` as first-person prose in both languages; keep every list item verb-first with no subject.
-- Responsibilities and achievements must remain visually distinguishable in PDF.
-- Keep salary localized and separate from contact information.
+- PDF detailed roles render a short scope and selected achievements; full responsibilities stay on the website.
+- Do not store or render salary or citizenship; neither has a public CV use case.
+- Avatar and About are website-only; preserve useful context without repeating the summary.
+- Store language proficiency as a localized semantic `level`, never a visual `rating`.
 - Phone is optional. Never reintroduce it when absent from `data/cv.yaml`.
 - Do not store or render a birth date; it is personal data with no rendering purpose.
 - Store every external profile, Telegram included, in `personal.profiles`.
@@ -92,25 +98,30 @@
 - `resume.typ` adapts `data/cv.yaml`; it is presentation logic, not content storage.
 - Build with local fonts through `--font-path assets/fonts --ignore-system-fonts`.
 - Never depend on a system font; the build must produce identical output on any machine.
-- Typst packages are vendored under `vendor/typst` and resolved with `--package-path`.
+- The resume uses standard Typst elements, without a theme dependency.
+- Retained Typst packages are vendored under `vendor/typst` and resolved with `--package-path` if used.
 - Never restore a network package fetch; the PDF build must work offline.
 - Mark every edit to a vendored package with a `LOCAL PATCH (Bluesboy/cv)` comment.
-- Keep presentation overrides in the vendored sources, not as show rules matching package internals.
+- Keep resume presentation in `resume.typ`; never use show rules matching vendored package internals.
 - Exclude `vendor/` from `make fmt` and `make lint`.
 - Preserve EN/RU output names:
   - `shamil-sattarov-resume-en.pdf`
   - `shamil-sattarov-resume-ru.pdf`
 - Show the web URL as the linked text `Full CV`.
-- Keep salary outside the contact bar.
-- Keep the contact bar on one line; omit location from it.
+- Keep a compact textual contact bar: email and meaningful profile network labels, followed by `Full CV`.
+- Keep contacts clickable; allow wrapping rather than shrinking text or clipping.
+- Put location and work format on a separate compact line; no photo, salary, or citizenship in PDF.
 - Preserve clickable GitHub, LinkedIn, HeadHunter, Telegram, and `Full CV` links.
 - Keep section headings smaller than the candidate name and role headings.
-- Keep section order: detailed experience, earlier experience, education.
-- Keep skill groups as named subsections with solid divider lines.
-- Page one carries the detailed experience, the whole skills column, and the languages block;
-  earlier experience, education, and the about list start page two.
-- The Russian PDF sets that budget: the same text runs longer in Cyrillic than in Latin.
-- `summary` spans both columns, so its length moves the experience and the skills column together.
+- Use a single column with semantic top-to-bottom plain-text extraction; no sidebars or content tables.
+- Keep order: name, target role, contacts, summary, core expertise, experience, earlier experience, education, languages.
+- Target positioning never changes historical job titles.
+- Render core skills as compact named text groups, aiming for about 25–30 visible items.
+- Detailed roles show company, factual title, month-level dates, location/remote, scope, and featured achievements.
+- Earlier roles show dates, company, and title; do not expand their responsibilities or achievements.
+- Language proficiency is plain text (language — level), without dots or progress bars.
+- Target two readable pages per language through natural pagination, not forced page breaks or tiny type.
+- Page one prioritizes the header, summary, core skills, and recent experience; no fixed page-one contract.
 - Keep both PDFs concise, readable, and free of unnecessary page breaks; preserve clickable links.
 
 ## Build interface
@@ -161,8 +172,8 @@
 - After relevant changes, run `make fmt`, `make lint`, and `make ci VERSION=v1.0.0`.
 - Run `git diff --check` before completion.
 - For PDF changes, verify page counts and visually inspect every page in EN and RU.
-- Check what page one still holds after any content change:
-  `pdftotext -raw -f 1 -l 1 build/pdf/shamil-sattarov-resume-ru.pdf - | tail`.
+- Inspect full raw text extraction in both languages with `pdftotext -raw build/pdf/shamil-sattarov-resume-{en,ru}.pdf -`
+  (run separately for each file). Confirm section order, literal ATS keywords, contact labels, and no duplicates or icon gibberish.
 - For link changes, verify PDF annotations and generated Hugo URLs.
 - Do not commit, tag, push, or create a release unless explicitly requested.
 
