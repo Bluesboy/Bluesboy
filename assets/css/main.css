@@ -177,10 +177,10 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outli
 }
 h1, h2, h3, p { overflow-wrap: anywhere; }
 h1 {
-  max-width: 15ch;
   margin: 0;
-  font: 700 clamp(2.7rem, 5.6vw, 5.2rem)/.92 var(--display-font);
+  font: 700 clamp(2.7rem, 5vw, 4.6rem)/.92 var(--display-font);
   letter-spacing: -.025em;
+  white-space: nowrap;
   text-transform: uppercase;
 }
 .headline { margin: .9rem 0 0; color: var(--muted); font-size: clamp(1.2rem, 2vw, 1.55rem); font-weight: 700; }
@@ -287,7 +287,7 @@ summary:hover { color: var(--accent-strong); }
   .avatar-wrap { width: 100px; }
   .skill-groups { grid-template-columns: 1fr; }
   .skill-group dt, .skill-group dd { display: block; }
-  h1 { font-size: clamp(2.45rem, 14vw, 4rem); }
+  h1 { font-size: clamp(1.55rem, 7.2vw, 2.7rem); }
   .experience-head { display: block; }
   .role { max-width: none; margin-top: .35rem; text-align: left; }
   .education-list { grid-template-columns: 1fr; }
