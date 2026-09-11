@@ -145,6 +145,8 @@
 - Use the `Makefile` as the local and CI entry point.
 - Recipes run under `bash -eu -o pipefail`; do not rely on a failed command being ignored.
 - `make lint` skips a missing linter, so gate CI on `deps/verify` instead.
+- Keep `deps/verify` to build, test and lint tools; `cog` and `gh` are gated by
+  `deps/verify/release`, so a clone without them can still build and check the site.
 - `make preview`: Hugo development server.
 - `make build`: website and both PDFs.
 - `make fmt`: format Typst.

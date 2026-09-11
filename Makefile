@@ -132,7 +132,7 @@ check: lint test/schema ## Run static checks
 # =============================================================================
 # DEPENDENCIES
 # =============================================================================
-.PHONY: deps deps/install deps/verify deps/versions
+.PHONY: deps deps/install deps/verify deps/verify/release deps/versions
 
 #-- Dependencies
 deps/install: ## Install Python validation and lint dependencies
@@ -141,9 +141,12 @@ deps/install: ## Install Python validation and lint dependencies
 	@command -v actionlint >/dev/null || go install github.com/rhysd/actionlint/cmd/actionlint@$(ACTIONLINT_VERSION)
 	@command -v typstyle >/dev/null || cargo install typstyle --version $(TYPSTYLE_VERSION) --locked
 
-deps/verify: ## Verify required build and lint dependencies
-	@for tool in $(HUGO) $(TYPST) $(COG) $(GH) $(PYTHON) sha256sum yamllint actionlint typstyle; do command -v $$tool >/dev/null || { echo "Missing dependency: $$tool" >&2; exit 1; }; done
+deps/verify: ## Verify the tools a build, its tests and the linters need
+	@for tool in $(HUGO) $(TYPST) $(PYTHON) sha256sum yamllint actionlint typstyle; do command -v $$tool >/dev/null || { echo "Missing dependency: $$tool" >&2; exit 1; }; done
 	@$(PYTHON) -c 'import jsonschema, pypdf, yaml'
+
+deps/verify/release: ## Verify the tools only tagging and publishing need
+	@for tool in $(COG) $(GH) git; do command -v $$tool >/dev/null || { echo "Missing dependency: $$tool" >&2; exit 1; }; done
 
 deps/versions: ## Print pinned tool versions (CI builds its cache key from this)
 	@echo "actionlint-$(ACTIONLINT_VERSION)-typstyle-$(TYPSTYLE_VERSION)"
@@ -188,7 +191,7 @@ version/plan: ## Print the tag the next release would carry, or nothing
 		echo v1.0.0; \
 	fi
 
-version/release: ## Create and push the next tag when commits warrant one
+version/release: deps/verify/release ## Create and push the next tag when commits warrant one
 	@if git describe --tags --abbrev=0 >/dev/null 2>&1; then \
 		before=$$(git describe --tags --abbrev=0); \
 		$(COG) bump --auto >&2 || true; \
@@ -204,9 +207,11 @@ version/release: ## Create and push the next tag when commits warrant one
 	git push origin "$$tag" >&2; \
 	printf 'tag=%s\n' "$$tag"
 
-release: ## Publish built PDFs and checksums to GitHub Release
+release: deps/verify/release ## Publish built PDFs and checksums to GitHub Release
 	@test "$(VERSION)" != "dev" || { echo "VERSION must be a release tag" >&2; exit 1; }
-	@test -s $(PDF_DIR)/SHA256SUMS
+# Upload what the checksums describe: this target consumes build/pdf without
+# rebuilding it, so a stale SHA256SUMS would ship as the published digest.
+	@cd $(PDF_DIR) && sha256sum -c SHA256SUMS
 	@if $(GH) release view "$(VERSION)" >/dev/null 2>&1; then \
 		$(GH) release upload "$(VERSION)" $(PDF_EN) $(PDF_RU) $(PDF_DIR)/SHA256SUMS --clobber; \
 	else \
