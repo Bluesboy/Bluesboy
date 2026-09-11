@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """Regenerate the bundled IBM Plex Sans faces in assets/fonts.
 
-Not part of `make build` — the generated faces are committed, exactly like
-the vendored Typst packages, so that building the CV needs no network and
-no system fonts. Run this only to change the family, the weights or the
-character coverage, then commit the result.
+Not part of `make build` — the generated faces are committed, so building
+the CV needs no network and no system fonts. Run this only to change the
+family, the weights or the character coverage, then commit the result.
 
 Source is the Google Fonts copy of IBM Plex Sans, pinned to a commit so a
 rerun reproduces the same bytes. The upstream file is a variable font; the
@@ -29,9 +28,9 @@ VARIABLE = f"{BASE}/IBMPlexSans%5Bwdth,wght%5D.ttf"
 LICENSE = f"{BASE}/OFL.txt"
 EXPECTED_VERSION = "Version 3.201"
 
-# Weights the design actually uses. main.css asks for 400 and 700 only;
-# altacv asks for regular and bold. Adding a weight means adding a file to
-# every page load, so keep this list short and deliberate.
+# Weights the design actually uses: main.css and resume.typ ask for 400 and
+# 700 only. Adding a weight means adding a file to every page load, so keep
+# this list short and deliberate.
 WEIGHTS = {400: "Regular", 700: "Bold"}
 
 # Coverage. Deliberately narrow: the CV is English and Russian, and every
@@ -90,51 +89,6 @@ def covered() -> set[int]:
     return {c for start, end in RANGES for c in range(start, end + 1)}
 
 
-# Font Awesome. Only Typst uses these — the website inlines its five
-# glyphs as SVG — so they are cut down to what the vendored altacv can
-# possibly ask for. Both the icon names and their codepoints are read out
-# of vendor/typst, so the subset cannot drift from the theme.
-AWESOME = {
-    "Font Awesome 7 Free-Solid-900.otf",
-    "Font Awesome 7 Brands-Regular-400.otf",
-}
-AWESOME_SOURCE = "sources/fontawesome"
-
-
-def awesome_codepoints() -> set[int]:
-    import re
-
-    icons = (root / "vendor/typst/preview/altacv/1.6.0/internal/icons.typ").read_text(
-        encoding="utf-8")
-    names = set(re.findall(r'^\s+\w+: "([a-z-]+)",', icons, re.M))
-    table = (root / "vendor/typst/preview/fontawesome/0.6.1/lib-gen-map.typ").read_text(
-        encoding="utf-8")
-    points: set[int] = set()
-    for name in names:
-        match = re.search(r'"%s":\s*"([^"]+)"' % re.escape(name), table)
-        if match is None:
-            raise SystemExit(f"{name!r} is not in the fontawesome map")
-        points.update(int(h, 16) for h in re.findall(r"\{([0-9a-fA-F]+)\}", match.group(1)))
-    return points
-
-
-def build_awesome() -> None:
-    from fontTools.ttLib import TTFont
-
-    archive = root / AWESOME_SOURCE
-    if not archive.is_dir():
-        print(f"skipping Font Awesome: put the upstream OTFs in {AWESOME_SOURCE}/")
-        return
-    points = awesome_codepoints()
-    for name in sorted(AWESOME):
-        source = archive / name
-        font = TTFont(source)
-        wanted = points & set(font.getBestCmap())
-        target = out_dir / name
-        size = cut(source, wanted, target, None, features=[])
-        print(f"{name:42} {size:>7} B  ({len(wanted)} glyphs)")
-
-
 def main() -> int:
     from fontTools.ttLib import TTFont
     from fontTools.varLib import instancer
@@ -172,7 +126,6 @@ def main() -> int:
 
     variable.unlink()
     print(f"\n{len(unicodes)} codepoints requested from {EXPECTED_VERSION}\n")
-    build_awesome()
     return 0
 
 

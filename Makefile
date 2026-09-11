@@ -13,7 +13,7 @@ VERSION      ?= $(shell git describe --tags --always --dirty 2>/dev/null || echo
 
 HUGO         ?= hugo
 TYPST        ?= typst
-TYPST_FLAGS  ?= --font-path assets/fonts --package-path vendor/typst --ignore-system-fonts
+TYPST_FLAGS  ?= --font-path assets/fonts --ignore-system-fonts
 COG          ?= cog
 GH           ?= gh
 PYTHON       ?= python3

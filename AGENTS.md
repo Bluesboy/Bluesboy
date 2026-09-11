@@ -87,8 +87,8 @@
 - Website and PDF share one bundled family: IBM Plex Sans, weights 400 and 700 only.
 - Serve fonts as WOFF2; keep the TTF faces for Typst and do not publish them.
 - Regenerate bundled faces only through `scripts/build_fonts.py`, then commit them.
-- Font Awesome is subset to the icons the vendored theme can request; widen it by rerunning that script.
-- Keep the upstream Font Awesome package in `sources/fontawesome/` for regeneration.
+- Ship no icon font: `layouts/partials/icon.html` carries Font Awesome outlines as inline SVG.
+- Add an outline by tracing it from the upstream package kept in `sources/fontawesome/`.
 - Widening the character coverage means widening `RANGES` in that script and rerunning it.
 - Inline contact icons as SVG from `layouts/partials/icon.html`; do not ship icon webfonts to the browser.
 - Read `personal.avatar` through `layouts/partials/image.html`; never hardcode the image path.
@@ -114,12 +114,9 @@
 - `resume.typ` adapts `data/cv.yaml`; it is presentation logic, not content storage.
 - Build with local fonts through `--font-path assets/fonts --ignore-system-fonts`.
 - Never depend on a system font; the build must produce identical output on any machine.
-- The resume uses standard Typst elements, without a theme dependency.
-- Retained Typst packages are vendored under `vendor/typst` and resolved with `--package-path` if used.
-- Never restore a network package fetch; the PDF build must work offline.
-- Mark every edit to a vendored package with a `LOCAL PATCH (Bluesboy/cv)` comment.
-- Keep resume presentation in `resume.typ`; never use show rules matching vendored package internals.
-- Exclude `vendor/` from `make fmt` and `make lint`.
+- The resume uses standard Typst elements: no theme, no package import, nothing to vendor.
+- Never add a package import; the PDF build must work offline and stay free of upstream drift.
+- Keep all resume presentation in `resume.typ`.
 - Preserve EN/RU output names:
   - `shamil-sattarov-resume-en.pdf`
   - `shamil-sattarov-resume-ru.pdf`
@@ -200,5 +197,5 @@
 
 ## Licensing
 
-- Preserve attribution for AltaCV, Almeida CV, and Font Awesome in `LICENSE`.
+- Preserve attribution for Almeida CV and Font Awesome in `LICENSE`.
 - MIT covers repository software only. Personal CV data and avatar remain excluded.

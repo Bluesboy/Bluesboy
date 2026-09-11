@@ -21,38 +21,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 The CV content in data/cv.yaml and the personal image in
-assets/images/avatar.png are not covered by this software license.
-
-The PDF layout uses the MIT-licensed Alta CV Typst package:
-https://github.com/smur89/alta-typst
-
-Alta CV and its dependencies are vendored under vendor/typst/ so the PDF
-build needs no network access. Each package keeps its own upstream
-LICENSE file alongside its sources:
-
-  vendor/typst/preview/altacv        MIT, Copyright (c) 2023 George Honeywood
-  vendor/typst/preview/fontawesome   MIT, Copyright (c) 2023 duskmoon314 (Campbell He)
-  vendor/typst/preview/gairm-import  MIT, Copyright (c) 2026 Shane Murphy
-  vendor/typst/preview/zebra         MIT, Copyright (c) 2026 Julian
-
-Local modifications to the vendored sources are marked with a
-"LOCAL PATCH (Bluesboy/cv)" comment at each change.
+assets/images/avatar.jpg are not covered by this software license.
 
 The web layout is adapted from the MIT-licensed Almeida CV Hugo theme:
 Copyright (c) 2020 Inês Almeida
 https://github.com/ineesalmeida/almeida-cv
 
-The bundled Font Awesome fonts remain under their upstream license in
-assets/fonts/LICENSE.txt. They are subset to the icons the vendored CV
-theme can request; scripts/build_fonts.py reproduces them from the
-upstream desktop package. The inline SVG glyph outlines in
-layouts/partials/icon.html are extracted from those same font files and
-remain covered by that license.
+The contact icons in layouts/partials/icon.html are Font Awesome 7
+outlines, inlined as SVG. They remain under their upstream license, which
+ships in assets/fonts/LICENSE-FontAwesome.txt.
 
 IBM Plex Sans is bundled in assets/fonts under the SIL Open Font License
 1.1, Copyright (c) 2017 IBM Corp. The full license text ships alongside
 it in assets/fonts/OFL-IBMPlexSans.txt. The bundled faces are static
 instances cut from the upstream variable font and subset to Latin and
-Cyrillic; scripts/build_fonts.py reproduces them from the pinned source. The inline SVG glyph outlines in
-layouts/partials/icon.html are extracted from those same font files and
-remain covered by that license.
+Cyrillic; scripts/build_fonts.py reproduces them from the pinned source.
