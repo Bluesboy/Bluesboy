@@ -12,7 +12,6 @@
   /* Separate token because --line is decorative (1.3:1) while control
      borders owe 3:1 under WCAG 1.4.11. */
   --line-strong: #6f8085;
-  --chip-bg: rgba(255, 255, 255, .45);
   /* Foreground for text sitting on --accent / --ink fills. Both flip in
      dark mode, so neither can stay a literal #fff. */
   --on-accent: #fff;
@@ -41,7 +40,6 @@
   --accent-soft: #2c5a60;
   --line: #2a373b;
   --line-strong: #5b6d72;
-  --chip-bg: rgba(255, 255, 255, .04);
   --on-accent: #0f1416;
   --on-ink: #0f1416;
   --shadow: 0 24px 70px rgba(0, 0, 0, .5);
@@ -81,6 +79,7 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outli
 
 .topbar {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
   align-items: center;
   gap: 1rem;
@@ -127,7 +126,7 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outli
 :root:has(#theme-toggle:checked) .theme-icon--moon { display: none; }
 :root:has(#theme-toggle:checked) .theme-icon--sun { display: inline; }
 
-.lang-switch { display: flex; gap: .35rem; }
+.lang-switch { display: flex; flex-wrap: wrap; min-width: 0; justify-content: flex-end; gap: .35rem; }
 .lang-switch a {
   min-width: 2.7rem;
   padding: .45rem .65rem;
@@ -180,7 +179,6 @@ h1 {
   margin: 0;
   font: 700 clamp(2.7rem, 5vw, 4.6rem)/.92 var(--display-font);
   letter-spacing: -.025em;
-  white-space: nowrap;
   text-transform: uppercase;
 }
 .headline { margin: .9rem 0 0; color: var(--muted); font-size: clamp(1.2rem, 2vw, 1.55rem); font-weight: 700; }
@@ -314,7 +312,6 @@ summary:hover { color: var(--accent-strong); }
     --accent-soft: #9ec4c7;
     --line: #d4dde0;
     --line-strong: #6f8085;
-    --chip-bg: transparent;
     --on-accent: #fff;
     --on-ink: #fff;
   }

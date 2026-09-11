@@ -100,7 +100,7 @@
 - Define every colour as a token on `:root`; override only tokens inside the dark and print blocks.
 - Light is the default theme; dark comes only from the topbar switch, never from `prefers-color-scheme`.
 - Keep the theme switch CSS-only: a checkbox plus `:root:has(#theme-toggle:checked)`, guarded by `@supports`.
-- Keep `theme-color` in step with `--page` for both colour schemes.
+- Keep `theme-color` in step with the default light `--page`; a CSS-only checkbox cannot update metadata.
 - Give language-switch links `lang` and `hreflang`.
 - Use `--line-strong` for control borders (3:1) and `--line` only for decorative rules.
 - Never hardcode `#fff` on an `--accent` or `--ink` fill; use `--on-accent` / `--on-ink`.
@@ -190,7 +190,8 @@
 - For PDF changes, verify page counts and visually inspect every page in EN and RU.
 - `make test/build` runs `scripts/check_artifacts.py` over the built files: section order, literal
   core-skill keywords, clickable contacts per locale, the two-page budget, identity footers,
-  duplicated lines, EN/RU parity, meta description, JSON-LD, heading levels, and image alt text.
+  embedded fonts, duplicated lines, EN/RU parity, complete website content, canonical/social metadata,
+  JSON-LD, heading levels, image alt text, and 404 indexing.
 - Inspect the rendered pages for what no check can see: spacing, widows, and where pages break.
 - For link changes, verify PDF annotations and generated Hugo URLs.
 - Do not commit, tag, push, or create a release unless explicitly requested.

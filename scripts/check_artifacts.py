@@ -176,12 +176,16 @@ class Page(html.parser.HTMLParser):
     def __init__(self) -> None:
         super().__init__()
         self.meta: dict[str, str] = {}
+        self.property_meta: dict[str, str] = {}
         self.hreflang: set[str] = set()
+        self.canonical = ""
         self.headings: list[tuple[int, str]] = []
         self.images: list[dict[str, str]] = []
+        self.hrefs: set[str] = set()
         self.links: list[tuple[dict[str, str], str]] = []
         self.jsonld: list[dict] = []
         self.lang = ""
+        self.title = ""
         self.text: list[str] = []
         self.summaries = 0
         self._open: list[tuple[str, dict[str, str]]] = []
@@ -190,12 +194,19 @@ class Page(html.parser.HTMLParser):
         a = {k: (v or "") for k, v in attrs}
         if tag == "html":
             self.lang = a.get("lang", "")
-        elif tag == "meta" and "name" in a:
-            self.meta[a["name"]] = a.get("content", "")
+        elif tag == "meta":
+            if "name" in a:
+                self.meta[a["name"]] = a.get("content", "")
+            if "property" in a:
+                self.property_meta[a["property"]] = a.get("content", "")
         elif tag == "link" and a.get("rel") == "alternate":
             self.hreflang.add(a.get("hreflang", ""))
+        elif tag == "link" and a.get("rel") == "canonical":
+            self.canonical = a.get("href", "")
         elif tag == "img":
             self.images.append(a)
+        elif tag == "a":
+            self.hrefs.add(a.get("href", ""))
         if tag not in self.VOID:
             self._open.append((tag, a))
 
@@ -205,9 +216,17 @@ class Page(html.parser.HTMLParser):
             if open_tag == tag:
                 break
 
+    def handle_startendtag(self, tag, attrs):
+        self.handle_starttag(tag, attrs)
+        if tag not in self.VOID:
+            self.handle_endtag(tag)
+
     def handle_data(self, data):
         self.text.append(data)
         for tag, attrs in reversed(self._open):
+            if tag == "title":
+                self.title += data
+                break
             if re.fullmatch(r"h[1-6]", tag):
                 self.headings.append((int(tag[1]), data.strip()))
                 break
@@ -239,8 +258,15 @@ for lang in LOCALES:
     page.feed(path.read_text(encoding="utf-8"))
     where = str(path.relative_to(root))
     text = flatten("".join(page.text))
+    full_name = cv["personal"]["full_name"][lang]
+    target = cv["target"]["position"][lang]
+    title = f"{full_name} — {target}"
+    canonical = cv["site"]["url"].rstrip("/") + ("/" if lang == "en" else f"/{lang}/")
 
     check(page.lang == lang, f"{where}: <html lang> is {page.lang!r}, expected {lang!r}")
+    check(flatten(page.title) == title, f"{where}: title does not match name and target.position")
+    check(page.canonical == canonical,
+          f"{where}: canonical is {page.canonical!r}, expected {canonical!r}")
     check(page.hreflang == {"en", "ru", "x-default"},
           f"{where}: hreflang set is {sorted(page.hreflang)}")
 
@@ -249,9 +275,53 @@ for lang in LOCALES:
     lead = cv["summary"][0][lang]
     check(page.meta.get("description") == lead,
           f"{where}: meta description is not the lead summary paragraph")
+    check(page.property_meta.get("og:type") == "profile",
+          f"{where}: OpenGraph type is not profile")
+    for key, expected in (
+            ("og:title", title),
+            ("og:description", lead),
+            ("og:url", canonical),
+    ):
+        check(page.property_meta.get(key) == expected,
+              f"{where}: {key} does not match the canonical data")
+    check(bool(page.property_meta.get("og:image")), f"{where}: og:image is empty")
+    for key, expected in (("twitter:title", title), ("twitter:description", lead)):
+        check(page.meta.get(key) == expected,
+              f"{where}: {key} does not match the canonical data")
+    check(page.meta.get("twitter:image") == page.property_meta.get("og:image"),
+          f"{where}: Twitter and OpenGraph images differ")
     check(page.summaries == len(cv["summary"]),
           f"{where}: {page.summaries} summary paragraphs rendered, "
           f"{len(cv['summary'])} in the data")
+
+    # A collapsed block is still part of the full CV and must survive in the
+    # HTML. Check every canonical entry, not only the visible core subset.
+    for paragraph in cv["summary"]:
+        check(flatten(paragraph[lang]) in text, f"{where}: summary paragraph is missing")
+    for job in cv["experience"]:
+        company = job["company"][lang]
+        check(company in text and job["position"][lang] in text,
+              f"{where}: role {company!r} is incomplete")
+        if "scope" in job:
+            check(flatten(job["scope"][lang]) in text,
+                  f"{where}: scope of {company!r} is missing")
+        for field in ("responsibilities", "achievements"):
+            for item in job[field]:
+                check(flatten(item[lang]) in text,
+                      f"{where}: {field} item of {company!r} is missing")
+    for item in cv["education"]:
+        for field in ("institution", "specialization", "level"):
+            check(flatten(item[field][lang]) in text,
+                  f"{where}: education {field} is missing")
+    for item in cv["languages"]:
+        check(item["language"][lang] in text and item["level"][lang] in text,
+              f"{where}: language {item['language'][lang]!r} is incomplete")
+
+    check(f"mailto:{cv['personal']['email']}" in page.hrefs,
+          f"{where}: email link is missing")
+    for profile in cv["personal"]["profiles"]:
+        check(profile["url"] in page.hrefs,
+              f"{where}: profile link {profile['network']!r} is missing")
 
     levels = [level for level, _ in page.headings]
     check(levels.count(1) == 1, f"{where}: {levels.count(1)} <h1> elements, expected one")
@@ -263,9 +333,11 @@ for lang in LOCALES:
     for image in page.images:
         check(bool(image.get("alt", "").strip()),
               f"{where}: <img src={image.get('src')!r}> has no alt text")
-    for attrs, label in page.links:
-        check(bool(label or attrs.get("aria-label") or attrs.get("title")),
-              f"{where}: <a href={attrs.get('href')!r}> has no accessible name")
+    for href in page.hrefs:
+        links = [(attrs, label) for attrs, label in page.links if attrs.get("href") == href]
+        check(any(label.strip() or attrs.get("aria-label") or attrs.get("title")
+                  for attrs, label in links),
+              f"{where}: <a href={href!r}> has no accessible name")
 
     # The website shows every skill; the PDF shows the featured subset.
     for skill in skills(featured_only=False):
@@ -284,6 +356,16 @@ for lang in LOCALES:
         knows = set(profile.get("knowsAbout", []))
         missing = sorted(set(skills(featured_only=False)) - knows)
         check(not missing, f"{where}: JSON-LD knowsAbout omits {missing[:3]}")
+
+for lang in LOCALES:
+    path = site / ("404.html" if lang == "en" else f"{lang}/404.html")
+    if not path.exists():
+        problems.append(f"{path.relative_to(root)}: missing")
+        continue
+    page = Page()
+    page.feed(path.read_text(encoding="utf-8"))
+    check(page.meta.get("robots") == "noindex",
+          f"{path.relative_to(root)}: robots meta is not noindex")
 
 if problems:
     for problem in problems:
