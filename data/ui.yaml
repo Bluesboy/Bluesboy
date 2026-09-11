@@ -107,6 +107,17 @@ notFoundHome:
   en: Open the CV
   ru: Открыть CV
 
+# Text exports only.
+email:
+  en: Email
+  ru: Электронная почта
+cvSite:
+  en: CV website
+  ru: Сайт CV
+exportAbout:
+  en: About
+  ru: О себе
+
 # PDF only.
 earlier:
   en: Earlier experience

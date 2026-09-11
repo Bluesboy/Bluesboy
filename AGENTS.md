@@ -5,6 +5,7 @@
 - This is the GitHub profile repository `Bluesboy/Bluesboy`.
 - The Hugo website is the full bilingual CV.
 - The Typst PDFs are concise, platform-neutral bilingual resumes for direct applications and ATS/job boards.
+- The TXT exports are bilingual clipboard packs for filling application-platform profiles.
 - Use `CV` for the website and source data; use `Resume` for PDF artifacts.
 
 ## Source of truth
@@ -170,7 +171,8 @@
 - Keep `deps/verify` to build, test and lint tools; `cog` and `gh` are gated by
   `deps/verify/release`, so a clone without them can still build and check the site.
 - `make preview`: Hugo development server.
-- `make build`: website and both PDFs.
+- `make build`: website, both PDFs, and bilingual TXT exports.
+- `make build/text`: generate profile, skills, experience, and education TXT files for EN and RU.
 - `make fmt`: format Typst.
 - `make lint`: YAML, Actions, and Typst lint.
 - `make ci VERSION=v1.0.0`: schema validation and complete reproducible build.
@@ -216,7 +218,7 @@
   core-skill keywords, clickable contacts per locale, the two-page budget, identity footers,
   embedded fonts, duplicated lines, EN/RU parity, complete website content, canonical/social metadata,
   grouped earlier experience, Selected Work references and anchors, JSON-LD, heading levels, image alt text,
-  and 404 indexing.
+  404 indexing, and complete bilingual TXT exports.
 - Inspect the rendered pages for what no check can see: spacing, widows, and where pages break.
 - For link changes, verify PDF annotations and generated Hugo URLs.
 - Do not commit, tag, push, or create a release unless explicitly requested.

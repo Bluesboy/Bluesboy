@@ -9,6 +9,7 @@ PROJECT_NAME ?= Bluesboy
 BUILD_DIR    ?= build
 SITE_DIR     ?= $(BUILD_DIR)/site
 PDF_DIR      ?= $(BUILD_DIR)/pdf
+TEXT_DIR     ?= $(BUILD_DIR)/text
 VERSION      ?= $(shell git describe --tags --always --dirty 2>/dev/null || echo dev)
 
 HUGO         ?= hugo
@@ -43,10 +44,10 @@ help: ## Show this help
 # =============================================================================
 # BUILD
 # =============================================================================
-.PHONY: build build/site build/pdf build/pdf/en build/pdf/ru build/release
+.PHONY: build build/site build/pdf build/pdf/en build/pdf/ru build/text build/release
 
 #-- Build
-build: build/site build/pdf ## Build CV website and both resumes
+build: build/site build/pdf build/text ## Build CV website, both resumes and text exports
 
 build/pdf/en: ## Build English PDF
 	@mkdir -p $(PDF_DIR)
@@ -67,6 +68,10 @@ build/site: ## Build production Hugo website
 # layout, not from front-matter aliases. sitemap.xml still indexes
 # /en/sitemap.xml, so only the redirect goes.
 	@rm -f $(SITE_DIR)/en/index.html
+
+build/text: ## Build bilingual clipboard-friendly text exports
+	@rm -rf $(TEXT_DIR)
+	$(PYTHON) scripts/export_text.py --output-dir $(TEXT_DIR)
 
 build/release: build ## Build release artifacts
 	@echo "Release artifacts: $(PDF_DIR), $(SITE_DIR)"
@@ -107,6 +112,8 @@ test/build: build ## Verify generated artifacts against the rendering rules
 	test -s $(PDF_DIR)/SHA256SUMS
 	test -s $(SITE_DIR)/index.html
 	test -s $(SITE_DIR)/ru/index.html
+	test -s $(TEXT_DIR)/shamil-sattarov-profile-en.txt
+	test -s $(TEXT_DIR)/shamil-sattarov-profile-ru.txt
 	$(PYTHON) scripts/check_artifacts.py
 
 test/ci: test/schema test/build ## Run CI test suite

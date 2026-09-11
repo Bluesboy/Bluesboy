@@ -18,6 +18,15 @@ from pathlib import Path
 import yaml
 from pypdf import PdfReader
 
+from export_text import (
+    KINDS,
+    output_name,
+    render_education,
+    render_experience,
+    render_profile,
+    render_skills,
+)
+
 LOCALES = ("en", "ru")
 # Order is the contract from AGENTS.md; the labels themselves live in ui.yaml.
 PDF_SECTIONS = ("summary", "coreSkills", "experience", "earlier", "education", "languages")
@@ -567,6 +576,80 @@ for lang in LOCALES:
               f"{where}: {home_lang} home link is missing or lacks language metadata")
         check(f"{ui['notFoundHome'][home_lang]} · {home_lang.upper()}" in text,
               f"{where}: {home_lang} home-link label is missing")
+
+# --- Text exports ---------------------------------------------------------
+
+text_dir = build / "text"
+text_renderers = {
+    "profile": render_profile,
+    "skills": render_skills,
+    "experience": render_experience,
+    "education": render_education,
+}
+expected_text_files = {
+    output_name(cv, kind, lang)
+    for lang in LOCALES
+    for kind in KINDS
+}
+actual_text_files = {path.name for path in text_dir.glob("*.txt")} if text_dir.exists() else set()
+check(actual_text_files == expected_text_files,
+      f"text exports: files are {sorted(actual_text_files)}, expected {sorted(expected_text_files)}")
+
+for lang in LOCALES:
+    rendered: dict[str, str] = {}
+    for kind, renderer in text_renderers.items():
+        name = output_name(cv, kind, lang)
+        path = text_dir / name
+        if not path.exists():
+            continue
+        content = path.read_text(encoding="utf-8")
+        rendered[kind] = content
+        check(content == renderer(cv, ui, lang), f"{name}: content differs from canonical data")
+
+    profile = rendered.get("profile", "")
+    profile_values = [
+        cv["personal"]["full_name"][lang],
+        cv["target"]["position"][lang],
+        cv["personal"]["email"],
+        cv["site"]["url"],
+        *(item[lang] for item in cv["summary"]),
+        *(item[lang] for item in cv["about"]),
+        *(item["url"] for item in cv["personal"]["profiles"]),
+        *(item["language"][lang] for item in cv["languages"]),
+        *(item["level"][lang] for item in cv["languages"]),
+    ]
+    for value in profile_values:
+        check(value in profile, f"text profile {lang}: canonical value {value!r} is missing")
+
+    skill_text = rendered.get("skills", "")
+    for group in cv["skills"]:
+        for featured in (True, False):
+            names = [item["name"] for item in group["items"]
+                     if item.get("featured", False) is featured]
+            if names:
+                line = f"{group['area'][lang]}: {', '.join(names)}"
+                check(line in skill_text, f"text skills {lang}: group {line!r} is missing")
+
+    experience_text = rendered.get("experience", "")
+    for job in cv["experience"]:
+        values = [
+            job["company"][lang],
+            job["position"][lang],
+            *(item[lang] for item in job["responsibilities"]),
+            *(item[lang] for item in job["achievements"]),
+        ]
+        if "scope" in job:
+            values.append(job["scope"][lang])
+        for value in values:
+            check(value in experience_text,
+                  f"text experience {lang}: canonical value {value!r} is missing")
+
+    education_text = rendered.get("education", "")
+    for item in cv["education"]:
+        for value in (item["year"], item["institution"][lang],
+                      item["level"][lang], item["specialization"][lang]):
+            check(value in education_text,
+                  f"text education {lang}: canonical value {value!r} is missing")
 
 if problems:
     for problem in problems:
