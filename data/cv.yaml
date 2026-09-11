@@ -41,10 +41,10 @@ target:
     ru: Удалённо
 
 summary:
-- en: "I build and operate fault-tolerant, multi-region production platforms: Kubernetes, GitOps, IaC, CI/CD, observability and operator-managed stateful services."
-  ru: "Строю и эксплуатирую multi-region production-платформы: Kubernetes, GitOps, IaC, CI/CD, наблюдаемость и stateful-сервисы под управлением Kubernetes-операторов."
-- en: The platform I run today spans four regions on GCP/GKE. I have completed three zero-downtime infrastructure migrations, introduced GitOps for 20+ services, and moved cloud resource management from Terraform to Crossplane. I standardize delivery and reduce manual operational work across development and operations.
-  ru: Текущая платформа работает в четырёх регионах в GCP/GKE. Провёл три миграции инфраструктуры без простоя, внедрил GitOps для 20+ сервисов и перевёл управление облачными ресурсами с Terraform на Crossplane. На стыке разработки и эксплуатации стандартизирую доставку и уменьшаю объём ручных операций.
+- en: "I build and operate fault-tolerant production platforms: Kubernetes, GitOps, IaC, CI/CD, observability and operator-managed stateful services."
+  ru: "Строю и эксплуатирую отказоустойчивые production-платформы: Kubernetes, GitOps, IaC, CI/CD, наблюдаемость и stateful-сервисы под управлением Kubernetes-операторов."
+- en: I take systems from manual operation to declarative infrastructure, standardize delivery for the teams that use it and stay responsible for running what I build; today that is a four-region platform on GCP/GKE.
+  ru: Перевожу системы от ручного управления к декларативной инфраструктуре, стандартизирую доставку для команд и отвечаю за работу того, что построил; сейчас это платформа в четырёх регионах в GCP/GKE.
 
 selected_work:
 - achievement_id: funnelflux-migration

@@ -68,6 +68,8 @@
 - Current English responsibilities use Present Simple; previous roles use Past Simple.
 - Achievements describe completed results and use past tense.
 - Write `summary` as first-person prose in both languages; keep every list item verb-first with no subject.
+- Keep `summary` about the person and the work he does. Project results and their figures
+  belong to Selected Work and the experience entries; the summary must not recite them.
 - PDF detailed roles render a short scope and selected achievements; full responsibilities stay on the website.
 - Do not store or render salary or citizenship; neither has a public CV use case.
 - Avatar and About are website-only; preserve useful context without repeating the summary.
