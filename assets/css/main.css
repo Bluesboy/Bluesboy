@@ -265,6 +265,14 @@ summary {
 }
 summary { width: fit-content; border-color: var(--line-strong); color: var(--accent); cursor: pointer; overflow-wrap: anywhere; }
 summary:hover { color: var(--accent-strong); border-color: var(--accent); }
+/* Outcomes are the claim, responsibilities the detail behind it. A rule and
+   the secondary colour say so without shrinking or hiding anything. */
+.responsibilities[open] > .bullet-list {
+  margin-top: .85rem;
+  padding-left: 2.35rem;
+  border-left: 2px solid var(--line);
+  color: var(--muted);
+}
 .earlier-experience { margin-top: 2rem; }
 .earlier-experience > .experience-list { margin-top: 1.5rem; }
 
@@ -345,6 +353,8 @@ summary:hover { color: var(--accent-strong); border-color: var(--accent); }
   .role { max-width: none; margin-top: .35rem; text-align: left; }
   .education-list { grid-template-columns: 1fr; }
   .fact-list div { grid-template-columns: 1fr; gap: .15rem; }
+  /* The inset that marks detail on desktop costs too much line length here. */
+  .responsibilities[open] > .bullet-list { padding-left: 1.4rem; }
   .fact-list dd { text-align: left; }
 }
 
