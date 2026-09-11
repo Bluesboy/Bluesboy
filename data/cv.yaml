@@ -123,8 +123,8 @@ experience:
     ru: "Сократил ежемесячные расходы на облако в несколько раз: перевёл подходящие нагрузки на spot-узлы и заменил SaaS-версии ClickHouse, PostgreSQL и Dragonfly кластерами под управлением операторов."
     featured: true
   - id: crossplane-infrastructure
-    en: Unified application and infrastructure management under GitOps by moving infrastructure from Terraform to Crossplane; clusters, networks and cache are described by Crossplane compositions, and the controller continuously reconciles infrastructure to the desired state.
-    ru: Объединил управление приложениями и инфраструктурой в единый процесс GitOps, переведя инфраструктуру с Terraform на Crossplane; кластеры, сети и кэш описаны Crossplane-композициями, а контроллер динамически приводит инфраструктуру к нужному состоянию.
+    en: Unified application and infrastructure management under GitOps by moving infrastructure from Terraform to Crossplane; compositions define the resources and the controller continuously reconciles them to the desired state.
+    ru: Объединил управление приложениями и инфраструктурой в единый процесс GitOps, переведя инфраструктуру с Terraform на Crossplane; используются композиции, а контроллер динамически приводит инфраструктуру к нужному состоянию.
     featured: true
   - en: Moved deployments under Argo CD management, then replaced Helm template rendering in Argo CD with pre-rendered YAML manifests (Rendered Manifests Pattern). Changes are visible in plain YAML diffs, and Argo CD does not spend resources rendering templates.
     ru: Перевёл развёртывание под управление Argo CD, затем заменил рендеринг Helm-шаблонов в Argo CD готовыми YAML-манифестами (Rendered Manifests Pattern). Изменения видны в обычных YAML-диффах, а Argo CD не тратит ресурсы на рендеринг шаблонов.
