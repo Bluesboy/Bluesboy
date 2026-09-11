@@ -115,11 +115,13 @@ for group, indices in resume_groups.items():
           f"experience.resume_group {group!r}: missing ui.resumeGroups label")
 
 # The first summary paragraph is what head.html hands to the meta description
-# and the share cards, where a search snippet is cut at roughly 160 characters.
+# and the share cards. A search snippet shows roughly the first 155 characters,
+# so the opening has to stand on its own; the cap only keeps the lead from
+# growing into a paragraph.
 for lang in ("en", "ru"):
     lead = cv["summary"][0][lang]
-    check(len(lead) <= 160,
-          f"summary[0].{lang}: lead paragraph is {len(lead)} characters, keep it under 160")
+    check(len(lead) <= 200,
+          f"summary[0].{lang}: lead paragraph is {len(lead)} characters, keep it under 200")
 
 skill_items = [item for group in cv["skills"] for item in group["items"]]
 skill_names = [item["name"] for item in skill_items]
@@ -128,6 +130,12 @@ skill_ids = [item["id"] for item in skill_items if "id" in item]
 check(len(skill_ids) == len(set(skill_ids)), "skills: ids must not be duplicated")
 check(any(item.get("featured", False) for item in skill_items),
       "skills: at least one core skill must be featured")
+# Core stack is the scannable list, not an inventory: AGENTS.md aims at about
+# 30-35 visible items, and every other skill still shows under Additional
+# technologies on the website.
+featured_skills = [item for item in skill_items if item.get("featured", False)]
+check(len(featured_skills) <= 35,
+      f"skills: {len(featured_skills)} featured items, keep the core stack at 35 or fewer")
 
 selected_achievements: list[str] = []
 for i, item in enumerate(cv["selected_work"]):

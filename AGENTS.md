@@ -154,6 +154,9 @@
 - Keep order: name, target role, contacts, summary, core expertise, experience, earlier experience, education, languages.
 - Keep target positioning independent of historical job titles and grades; preserve factual historical titles.
 - Render core skills as compact named text groups, aiming for about 30–35 visible items.
+- `scripts/validate_cv.py` caps the core stack at 35 featured items and the lead summary
+  paragraph at 200 characters: a search snippet shows roughly its first 155, and the cap keeps
+  the opening from growing into a paragraph.
 - Detailed roles show company, factual title, month-level dates, location/remote, scope, and featured achievements.
 - Keep each detailed role whole: a role that no longer fits starts the next page, heading and results together.
 - Earlier roles normally show dates, company, and title; entries sharing `resume_group` render as one derived
