@@ -102,8 +102,8 @@ experience:
     ru: Перенёс платформу с нагрузкой ~300 RPS с настроенного вручную VPS в Docker Swarm под управлением Ansible, затем в GKE под управлением Terraform; обе миграции прошли без простоя.
     featured: true
   - id: gitops-platform
-    en: Introduced Argo CD GitOps for 20+ services and internal tools; cut deployment time from over three minutes to one and simplified rollback to reverting a single Git commit.
-    ru: Внедрил GitOps на Argo CD для 20+ сервисов и внутренних инструментов; сократил время развёртывания с более чем трёх минут до минуты, свёл откат к отмене одного изменения в Git.
+    en: Introduced Argo CD GitOps for 20+ services and internal tools; cut deployment time from over three minutes to one; rollback now requires reverting a single Git commit.
+    ru: Внедрил GitOps на Argo CD для 20+ сервисов и внутренних инструментов; сократил время развёртывания с более чем трёх минут до минуты; откат теперь выполняется отменой одного изменения в Git.
     featured: true
   - id: crossplane-infrastructure
     en: Unified application and cloud infrastructure management in one GitOps process by moving cloud resources from Terraform to Crossplane.
