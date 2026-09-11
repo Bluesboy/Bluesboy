@@ -68,8 +68,8 @@ selected_work:
     en: Declarative infrastructure with Crossplane
     ru: Декларативная инфраструктура на Crossplane
   outcome:
-    en: 3 Crossplane compositions · environments in minutes
-    ru: 3 Crossplane-композиции · окружение за минуты
+    en: "3 Crossplane compositions · environments: days to minutes"
+    ru: "3 Crossplane-композиции · окружение: с дней до минут"
   skill_ids: [crossplane, google-cloud-platform, gke]
 
 experience:
