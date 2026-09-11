@@ -39,6 +39,14 @@
       <h1>{{ $fullName }}</h1>
       <p class="headline">{{ $title }}</p>
       <div class="title-rule" aria-hidden="true"></div>
+      {{/* Anchors only: the page is long enough to jump around, and a
+           four-link rail costs no script and no second navigation model. */}}
+      <nav class="section-nav" aria-label="{{ partial "label.html" (dict "key" "sections" "lang" $lang) }}">
+        <a href="#selected-work">{{ partial "label.html" (dict "key" "navWork" "lang" $lang) }}</a>
+        <a href="#experience">{{ partial "label.html" (dict "key" "navExperience" "lang" $lang) }}</a>
+        <a href="#stack">{{ partial "label.html" (dict "key" "navStack" "lang" $lang) }}</a>
+        <a href="#education">{{ partial "label.html" (dict "key" "navEducation" "lang" $lang) }}</a>
+      </nav>
     </div>
     {{ partial "avatar.html" (dict "person" $fullName) }}
   </header>
@@ -74,12 +82,14 @@
       <a class="download-link" href="{{ $pdfURL }}">{{ partial "label.html" (dict "key" "resume" "lang" $lang) }} · {{ upper $lang }}</a>
       <h3 class="contact-details-title">{{ partial "label.html" (dict "key" "details" "lang" $lang) }}</h3>
       <dl class="fact-list">
+        <div><dt>{{ partial "label.html" (dict "key" "format" "lang" $lang) }}</dt><dd>{{ partial "localized.html" (dict "value" $data.target.work_format "lang" $lang) }}</dd></div>
         <div><dt>{{ partial "label.html" (dict "key" "location" "lang" $lang) }}</dt><dd>{{ $location }}</dd></div>
         <div><dt>{{ partial "label.html" (dict "key" "availability" "lang" $lang) }}</dt><dd>{{ $availability }}</dd></div>
-        <div><dt>{{ partial "label.html" (dict "key" "format" "lang" $lang) }}</dt><dd>{{ partial "localized.html" (dict "value" $data.target.work_format "lang" $lang) }}</dd></div>
       </dl>
       <h3 class="contact-details-title">{{ partial "label.html" (dict "key" "languages" "lang" $lang) }}</h3>
-      <dl class="language-list">
+      {{/* One line, still a definition list: the rail cannot afford three
+           rows for two facts, and a screen reader still hears the pairs. */}}
+      <dl class="language-inline">
         {{ range $data.languages }}
           <div>
             <dt>{{ partial "localized.html" (dict "value" .language "lang" $lang) }}</dt>
@@ -89,12 +99,12 @@
       </dl>
     </section>
 
-    <section class="main-section core-section">
+    <section class="main-section core-section" id="stack">
       <h2>{{ partial "label.html" (dict "key" "stack" "lang" $lang) }}</h2>
       {{ partial "skill-groups.html" (dict "featured" true "lang" $lang) }}
     </section>
 
-    <section class="main-section selected-work-section">
+    <section class="main-section selected-work-section" id="selected-work">
       <h2>{{ partial "label.html" (dict "key" "selectedWork" "lang" $lang) }}</h2>
       <div class="selected-work-list">
         {{ range $data.selected_work }}
@@ -110,9 +120,22 @@
               {{ end }}
             {{ end }}
           {{ end }}
+          {{/* One real link per card, stretched over the card in CSS: the
+               whole surface is clickable without a second, nested anchor.
+               Digits in the outcome are emphasised where the data already
+               states them; nothing is rewritten or added. */}}
           <article class="selected-work-card" id="{{ $work.achievement_id }}">
             <h3><a href="#{{ $roleID }}">{{ partial "localized.html" (dict "value" $work.title "lang" $lang) }}</a></h3>
-            <p>{{ partial "localized.html" (dict "value" $achievement "lang" $lang) }}</p>
+            {{/* Read the raw string and escape the three characters that
+                 matter. Both the partial and htmlEscape turn "20+" into
+                 "20&#43;", and the digit rule below would then land inside
+                 that entity; none of these three replacements adds a digit. */}}
+            {{ $outcome := index $achievement $lang | default (index $achievement "en") }}
+            {{ $outcome = replace $outcome "&" "&amp;" }}
+            {{ $outcome = replace $outcome "<" "&lt;" }}
+            {{ $outcome = replace $outcome ">" "&gt;" }}
+            {{ $outcome = replaceRE `([~≈]?\d+(?:[.,]\d+)?\+?)` "<b>${1}</b>" $outcome }}
+            <p>{{ $outcome | safeHTML }}</p>
             <p class="selected-work-tech"><strong>{{ partial "label.html" (dict "key" "technologies" "lang" $lang) }}:</strong>
               {{ range $index, $skillID := $work.skill_ids }}{{ if $index }} · {{ end }}{{ index $skillsByID $skillID }}{{ end }}
             </p>
@@ -121,7 +144,7 @@
       </div>
     </section>
 
-    <section class="main-section experience-section">
+    <section class="main-section experience-section" id="experience">
       <h2>{{ partial "label.html" (dict "key" "experience" "lang" $lang) }}</h2>
       <div class="experience-list">
         {{ range where $data.experience "detailed" true }}
@@ -148,7 +171,7 @@
       </ul>
     </section>
 
-    <section class="main-section education-section">
+    <section class="main-section education-section" id="education">
       <h2>{{ partial "label.html" (dict "key" "education" "lang" $lang) }}</h2>
       <div class="education-list">
         {{ range $data.education }}

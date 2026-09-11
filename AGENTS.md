@@ -86,6 +86,14 @@
 - Keep the site responsive, semantic, accessible, and JavaScript-free.
 - Keep mobile DOM order: identity, summary, contacts with languages, core stack, Selected Work,
   experience, How I work, education, additional technologies.
+- The contacts card is a rail beside Summary and Core stack, so Core stack starts under Summary
+  instead of waiting for the taller card.
+- Languages stay in that card as one compact line, not a third label/value block: a full block
+  makes the rail outgrow the left column and reopens the gap under Core stack.
+- Anchor the sections the nav points at (`#selected-work`, `#experience`, `#stack`, `#education`)
+  and keep that nav anchors-only, under the headline, with no second navigation model.
+- Selected Work cards carry one link stretched over the card; never nest a second anchor inside.
+- Emphasise figures the data already states; never derive a new metric line for a card.
 - Size type in `rem`, never in `px`, so a raised browser font size scales the whole page.
 - Stack label/value pairs into one column below 560px.
 - Keep fonts and icons local. Do not add CDN or runtime network dependencies.

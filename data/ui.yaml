@@ -64,6 +64,21 @@ stack:
 selectedWork:
   en: Selected work
   ru: Избранные проекты
+sections:
+  en: Sections
+  ru: Разделы
+navWork:
+  en: Selected work
+  ru: Проекты
+navExperience:
+  en: Experience
+  ru: Опыт
+navStack:
+  en: Stack
+  ru: Стек
+navEducation:
+  en: Education
+  ru: Образование
 technologies:
   en: Technologies
   ru: Технологии
@@ -77,8 +92,8 @@ earlierWebsite:
   en: Earlier infrastructure & network engineering experience
   ru: Предыдущий опыт
 highlights:
-  en: Highlights
-  ru: Ключевое
+  en: Key outcomes
+  ru: Ключевые результаты
 about:
   en: How I work
   ru: Как я работаю
