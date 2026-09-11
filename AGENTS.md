@@ -28,6 +28,7 @@
 - Join city and country through `layouts/partials/location.html` or `place()` in `resume.typ`; never inline.
 - Do not store calculated age, employment duration, total experience, or release version.
 - Keep YAML sequences indentless: sequence indicators align with their mapping key.
+- Quote any value containing ": " — YAML reads the colon as a key and the parse fails.
 - Update `schema/cv.schema.json` with every data-model change.
 - Keep `minItems` a contract, never a snapshot of how much data exists today.
 - Do not keep a field no renderer reads: either render it or drop it.
