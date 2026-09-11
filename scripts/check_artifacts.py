@@ -132,6 +132,17 @@ for lang in LOCALES:
             check(profile["url"] not in uris,
                   f"{name}: {profile['network']} is excluded here but still linked")
 
+    # One family, two weights, both subset into the file. A third face means
+    # a system font leaked in or an icon font came back through --font-path.
+    embedded = set()
+    for page in reader.pages:
+        fonts = (page.get("/Resources") or {}).get("/Font") or {}
+        for key in fonts:
+            base = str(fonts[key].get_object().get("/BaseFont", "")).lstrip("/")
+            embedded.add(base.split("+")[-1])
+    check(embedded == {"IBMPlexSansRoman-Regular", "IBMPlexSansRoman-Bold"},
+          f"{name}: embedded faces are {sorted(embedded)}, expected the two IBM Plex weights")
+
     meta = reader.metadata or {}
     for field in ("/Title", "/Author", "/Subject"):
         check(bool(meta.get(field)), f"{name}: document metadata {field} is empty")
