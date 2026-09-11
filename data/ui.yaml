@@ -61,6 +61,12 @@ summary:
 stack:
   en: Core stack
   ru: Ключевой стек
+selectedWork:
+  en: Selected work
+  ru: Избранные проекты
+technologies:
+  en: Technologies
+  ru: Технологии
 additionalSkills:
   en: Additional technologies
   ru: Дополнительные технологии
@@ -90,6 +96,10 @@ notFoundHome:
 earlier:
   en: Earlier experience
   ru: Предыдущий опыт
+resumeGroups:
+  earlier-commercial:
+    en: Commercial systems and network administration roles
+    ru: Коммерческие роли в системном и сетевом администрировании
 coreSkills:
   en: Core expertise
   ru: Ключевые компетенции

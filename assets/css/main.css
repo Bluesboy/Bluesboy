@@ -150,10 +150,11 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outli
     "identity identity"
     "summary contacts"
     "core core"
-    "additional additional"
-    "about about"
+    "selected selected"
     "experience experience"
-    "education education";
+    "about about"
+    "education education"
+    "additional additional";
   gap: 2.6rem 2rem;
   padding: clamp(2rem, 4vw, 3.2rem);
   overflow: hidden;
@@ -164,6 +165,7 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outli
 .summary-section { grid-area: summary; }
 .contacts-section { grid-area: contacts; }
 .core-section { grid-area: core; }
+.selected-work-section { grid-area: selected; }
 .experience-section { grid-area: experience; }
 .experience-section > .experience-list, .earlier-experience { max-width: 90ch; }
 .education-section { grid-area: education; }
@@ -202,6 +204,15 @@ h1 {
 .side-section > h2::after { background: var(--line); }
 .summary-stack { display: grid; gap: .75rem; color: var(--muted); font-size: 1.04rem; }
 .summary-stack p { margin: 0; }
+
+.selected-work-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 1rem; }
+.selected-work-card { padding: 1rem; border-top: 3px solid var(--accent-soft); background: var(--side); }
+.selected-work-card h3 { margin: 0 0 .65rem; font-size: 1rem; }
+.selected-work-card p { margin: 0; }
+.selected-work-card p + p { margin-top: .7rem; }
+.selected-work-tech { color: var(--muted); font-size: .84rem; }
+.selected-work-card,
+.experience-card { scroll-margin-top: 1rem; }
 
 .experience-list { display: grid; gap: 2rem; }
 .experience-card { position: relative; padding-left: 1.35rem; border-left: 3px solid var(--accent-soft); }
@@ -333,7 +344,7 @@ summary:hover { color: var(--accent-strong); border-color: var(--accent); }
   .resume-sheet { display: block; padding: 0; overflow: visible; box-shadow: none; }
   .main-section, .side-section { margin-top: 2rem; padding: 0; background: var(--paper); }
   .main-section > h2, .side-section > h2 { break-after: avoid; }
-  .side-section, .experience-card, .education-item { break-inside: avoid; }
+  .side-section, .selected-work-card, .experience-card, .education-item { break-inside: avoid; }
   .download-link { color: var(--ink); background: transparent; border: 1px solid var(--ink); }
   .contact-list a[href^="http"]::after,
   .download-link::after {

@@ -30,11 +30,12 @@
 - Update `schema/cv.schema.json` with every data-model change.
 - Keep `minItems` a contract, never a snapshot of how much data exists today.
 - Do not keep a field no renderer reads: either render it or drop it.
-- Store skills once as `{name, featured?}`; names are unlocalized, group headings are localized.
-- Achievements store `{en, ru, featured?}`. In both models absent `featured` means false.
+- Store skills once as `{id?, name, featured?}`; names are unlocalized, group headings are localized.
+- Achievements store `{id?, en, ru, featured?}`. IDs are stable and language-independent;
+  in both models absent `featured` means false.
 - PDF selects skills and achievements by `featured: true`, never by position or text matching.
 - Hugo shows every skill once: featured items in Core stack, others in Additional technologies.
-- Keep Additional technologies expanded, visually secondary, and full-width directly below Core stack.
+- Keep Additional technologies expanded, visually secondary, and full-width after Education.
 - Render skill groups as compact semantic definition lists with comma-separated technology names,
   without chips; use two columns on desktop and one on mobile.
 - Hugo shows all achievements; detailed-role responsibilities and `detailed: false` history
@@ -42,6 +43,11 @@
 - Experience may have localized `scope`; every detailed role needs one plus at least one featured achievement.
 - Earlier roles may have optional localized `resume_company` for a shorter PDF display name;
   default to `company`. Hugo always shows the full `company` name.
+- `selected_work` stores only a localized short title plus references to one achievement and existing skills;
+  resolve factual outcomes and technology names from their canonical entries instead of copying them.
+- Detailed roles need stable IDs. Selected Work achievement and skill references must resolve to stable IDs.
+- Optional `resume_group` compacts contiguous earlier roles in the PDF through a localized `ui.resumeGroups`
+  label and a date range derived from their periods; Hugo still renders every role separately.
 - Validate data through `scripts/validate_cv.py` or `make test/schema`.
 - Mechanize a rule wherever it can be: shape in `schema/cv.schema.json`, data semantics in
   `scripts/validate_cv.py`, rendered output in `scripts/check_artifacts.py`.
@@ -78,9 +84,8 @@
 - Do not show the website URL as a contact linking to the current page.
 - Resume buttons point to stable GitHub Release assets, not Pages copies.
 - Keep the site responsive, semantic, accessible, and JavaScript-free.
-- Keep mobile DOM order: identity, summary, contacts with languages, core stack,
-  additional technologies, How I work, experience, education. Keep both skill sections together
-  on desktop too.
+- Keep mobile DOM order: identity, summary, contacts with languages, core stack, Selected Work,
+  experience, How I work, education, additional technologies.
 - Size type in `rem`, never in `px`, so a raised browser font size scales the whole page.
 - Stack label/value pairs into one column below 560px.
 - Keep fonts and icons local. Do not add CDN or runtime network dependencies.
@@ -106,6 +111,8 @@
 - Never hardcode `#fff` on an `--accent` or `--ink` fill; use `--on-accent` / `--on-ink`.
 - Respect `prefers-reduced-motion`.
 - Render external profiles as clickable contacts and include them in JSON-LD `sameAs`.
+- Render Selected Work before Experience from canonical achievement and skill references. Give Selected Work
+  items and detailed roles stable language-independent anchors; never derive anchors from localized text.
 - Minification is configured in `hugo.toml`; do not rely on the `--minify` flag.
 - Do not edit `build/`, `public/`, or other generated output manually.
 
@@ -134,7 +141,9 @@
 - Render core skills as compact named text groups, aiming for about 30–35 visible items.
 - Detailed roles show company, factual title, month-level dates, location/remote, scope, and featured achievements.
 - Keep each detailed role whole: a role that no longer fits starts the next page, heading and results together.
-- Earlier roles show dates, company, and title; do not expand their responsibilities or achievements.
+- Earlier roles normally show dates, company, and title; entries sharing `resume_group` render as one derived
+  year range and localized group label. Do not expand their responsibilities or achievements.
+- Render each education entry as one compact `year — institution — specialization` line; omit level in PDF only.
 - Language proficiency is plain text (language — level), without dots or progress bars.
 - Target two readable pages per language through natural pagination, not forced page breaks or tiny type.
 - Page one prioritizes the header, summary, core skills, and recent experience; no fixed page-one contract.
@@ -193,7 +202,8 @@
 - `make test/build` runs `scripts/check_artifacts.py` over the built files: section order, literal
   core-skill keywords, clickable contacts per locale, the two-page budget, identity footers,
   embedded fonts, duplicated lines, EN/RU parity, complete website content, canonical/social metadata,
-  JSON-LD, heading levels, image alt text, and 404 indexing.
+  grouped earlier experience, Selected Work references and anchors, JSON-LD, heading levels, image alt text,
+  and 404 indexing.
 - Inspect the rendered pages for what no check can see: spacing, widows, and where pages break.
 - For link changes, verify PDF annotations and generated Hugo URLs.
 - Do not commit, tag, push, or create a release unless explicitly requested.

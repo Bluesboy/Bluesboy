@@ -34,8 +34,8 @@ site:
 
 target:
   position:
-    en: Platform Engineer, Cloud Engineer, DevOps Engineer
-    ru: Platform Engineer, Cloud Engineer, DevOps Engineer
+    en: Senior Platform Engineer · Cloud Engineer · DevOps Engineer
+    ru: Senior Platform Engineer · Cloud Engineer · DevOps Engineer
   work_format:
     en: Remote
     ru: Удалённо
@@ -43,11 +43,29 @@ target:
 summary:
 - en: "I specialize in production infrastructure on GCP/GKE: GitOps, IaC, CI/CD, observability, and stateful workloads."
   ru: "Специализируюсь на production-инфраструктуре в GCP/GKE: GitOps, IaC, CI/CD, наблюдаемость и эксплуатация stateful-сервисов."
-- en: I have completed three zero-downtime migrations from manually configured servers to the cloud, introduced GitOps for 20+ services, and moved cloud resource management from Terraform to Crossplane. Working at the intersection of development and operations, I standardize delivery and reduce manual operational work for teams.
-  ru: "Провёл три миграции с настроенных вручную серверов в облако без простоя, внедрил GitOps для 20+ сервисов, перевёл управление облачными ресурсами с Terraform на Crossplane. Работаю на стыке разработки и эксплуатации: стандартизирую доставку и уменьшаю объём ручных операций для команд."
+- en: I have completed three zero-downtime infrastructure migrations, introduced GitOps for 20+ services, and moved cloud resource management from Terraform to Crossplane. I standardize delivery and reduce manual operational work across development and operations.
+  ru: Провёл три миграции инфраструктуры без простоя, внедрил GitOps для 20+ сервисов и перевёл управление облачными ресурсами с Terraform на Crossplane. На стыке разработки и эксплуатации стандартизирую доставку и уменьшаю объём ручных операций.
+
+selected_work:
+- achievement_id: funnelflux-migration
+  title:
+    en: Zero-downtime platform migrations
+    ru: Миграции платформы без простоя
+  skill_ids: [docker-swarm, ansible, gke, terraform]
+- achievement_id: gitops-platform
+  title:
+    en: GitOps delivery
+    ru: GitOps-доставка
+  skill_ids: [argo-cd, kubernetes]
+- achievement_id: crossplane-infrastructure
+  title:
+    en: Cloud infrastructure through Crossplane
+    ru: Облачная инфраструктура через Crossplane
+  skill_ids: [crossplane, google-cloud-platform, gke]
 
 experience:
-- company:
+- id: funnelflux
+  company:
     en: Funnelflux
     ru: Funnelflux
   location:
@@ -79,25 +97,29 @@ experience:
   - en: "Help developers prepare applications for cloud operations: monitoring, logging, and tracing."
     ru: "Помощь разработчикам в подготовке приложений к эксплуатации в облаке: мониторинг, журналирование и трассировка."
   achievements:
-  - en: Migrated a ~300 RPS platform from a manually configured VPS to Docker Swarm provisioned with Ansible, then to GKE managed with Terraform; completed both migrations without downtime.
+  - id: funnelflux-migration
+    en: Migrated a ~300 RPS platform from a manually configured VPS to Docker Swarm provisioned with Ansible, then to GKE managed with Terraform; completed both migrations without downtime.
     ru: Перенёс платформу с нагрузкой ~300 RPS с настроенного вручную VPS в Docker Swarm под управлением Ansible, затем в GKE под управлением Terraform; обе миграции прошли без простоя.
     featured: true
-  - en: Introduced Argo CD GitOps for 20+ services and internal tools; cut deployment time from over three minutes to one and simplified rollback to reverting a single Git commit.
+  - id: gitops-platform
+    en: Introduced Argo CD GitOps for 20+ services and internal tools; cut deployment time from over three minutes to one and simplified rollback to reverting a single Git commit.
     ru: Внедрил GitOps на Argo CD для 20+ сервисов и внутренних инструментов; сократил время развёртывания с более чем трёх минут до минуты, свёл откат к отмене одного изменения в Git.
     featured: true
-  - en: Moved cloud resource management from Terraform to Crossplane under GitOps, with automatic reconciliation to the declared configuration.
-    ru: Перевёл управление облачными ресурсами с Terraform на Crossplane под GitOps с автоматическим приведением к состоянию, заданному в конфигурации.
+  - id: crossplane-infrastructure
+    en: Unified application and cloud infrastructure management in one GitOps process by moving cloud resources from Terraform to Crossplane.
+    ru: Объединил управление приложениями и облачной инфраструктурой в единый процесс GitOps, переведя облачные ресурсы с Terraform на Crossplane.
     featured: true
   - en: Moved deployments under Argo CD management, then replaced Helm template rendering in Argo CD with pre-rendered YAML manifests (Rendered Manifests Pattern). Changes are visible in plain YAML diffs, and Argo CD does not spend resources rendering templates.
     ru: Перевёл развёртывание под управление Argo CD, затем заменил рендеринг Helm-шаблонов в Argo CD готовыми YAML-манифестами (Rendered Manifests Pattern). Изменения видны в обычных YAML-диффах, а Argo CD не тратит ресурсы на рендеринг шаблонов.
   - en: Moved secrets management to the External Secrets Operator. Everything now goes through GitOps.
     ru: Перенёс управление секретами в External Secrets Operator. Теперь всё идёт через GitOps.
-  - en: Moved PostgreSQL, ClickHouse, Redis, and Elasticsearch to Kubernetes operators, and Kafka from a SaaS solution to a self-managed cluster with Strimzi.
-    ru: Перенёс PostgreSQL, ClickHouse, Redis и Elasticsearch на Kubernetes-операторы, а Kafka из SaaS-решения в собственный кластер под управлением Strimzi.
+  - en: Standardized lifecycle management for PostgreSQL, ClickHouse, Redis, and Elasticsearch with Kubernetes operators; migrated Kafka from SaaS to a Strimzi-managed cluster.
+    ru: Стандартизировал управление жизненным циклом PostgreSQL, ClickHouse, Redis и Elasticsearch с помощью Kubernetes-операторов; перенёс Kafka из SaaS в кластер под управлением Strimzi.
     featured: true
   - en: Moved static delivery from Nginx to Google Cloud Storage behind a CDN. This eliminated outages and configuration overhead.
     ru: Перенёс раздачу статики с Nginx в Google Cloud Storage за CDN. Это устранило сбои и избавило от обслуживания конфигурации.
-- company:
+- id: rossko
+  company:
     en: Rossko
     ru: Росско
   location:
@@ -141,7 +163,8 @@ experience:
     featured: true
   - en: Moved web service assets to MinIO object storage, taking file state off the application servers.
     ru: Перенёс файлы веб-сервисов в объектное хранилище MinIO, чтобы приложения не хранили состояние локально.
-- company:
+- id: plussell
+  company:
     en: Plussell
     ru: Plussell
   location:
@@ -325,6 +348,7 @@ experience:
     en: System Administrator, Information Security Administrator
     ru: системный администратор, «администратор информационной безопасности вычислительной сети»
   detailed: false
+  resume_group: earlier-commercial
   responsibilities:
   - en: Administered Active Directory, Squid, and a FreeBSD gateway.
     ru: Администрирование Active Directory, Squid и шлюза на FreeBSD.
@@ -354,6 +378,7 @@ experience:
     en: System Administrator
     ru: системный администратор
   detailed: false
+  resume_group: earlier-commercial
   responsibilities:
   - en: Administered Active Directory, Sendmail, Squid, an IP telephony gateway, and a Nortel BCM 2000 PBX.
     ru: Администрирование Active Directory, Sendmail, Squid, шлюза IP-телефонии и АТС Nortel BCM 2000.
@@ -381,6 +406,7 @@ experience:
     en: System Administrator
     ru: системный администратор
   detailed: false
+  resume_group: earlier-commercial
   responsibilities:
   - en: "Administered Active Directory, Lotus Domino, 1C:Enterprise on MS SQL, Squid on ALT GNU+Linux, and Bacula backups."
     ru: "Администрирование Active Directory, Lotus Domino, 1С:Предприятие на MS SQL, Squid на ALT GNU+Linux и резервного копирования на базе Bacula."
@@ -406,6 +432,7 @@ experience:
     en: System Administrator, IT Specialist
     ru: системный администратор, «специалист отдела информационных технологий»
   detailed: false
+  resume_group: earlier-commercial
   responsibilities:
   - en: "Administered Active Directory, Exchange, and 1C:Enterprise, and maintained Panasonic PBX systems."
     ru: "Администрирование Active Directory, Exchange и 1С:Предприятие, обслуживание АТС Panasonic."
@@ -431,6 +458,7 @@ experience:
     en: Senior System Administrator
     ru: старший системный администратор
   detailed: false
+  resume_group: earlier-commercial
   responsibilities:
   - en: Administered the internet café network and the FreeBSD gateway.
     ru: Администрирование сети интернет-кафе и шлюза на FreeBSD.
@@ -456,6 +484,7 @@ experience:
     en: PC Service Technician
     ru: техник по ремонту и обслуживанию ПК
   detailed: false
+  resume_group: earlier-commercial
   responsibilities:
   - en: Assembled, configured, and repaired PCs, and deployed operating systems.
     ru: Сборка, настройка и ремонт ПК, установка операционных систем.
@@ -504,11 +533,14 @@ skills:
     en: Cloud & Platform
     ru: Облако и платформа
   items:
-  - name: Google Cloud Platform
+  - id: google-cloud-platform
+    name: Google Cloud Platform
     featured: true
-  - name: Google Kubernetes Engine
+  - id: gke
+    name: Google Kubernetes Engine
     featured: true
-  - name: Kubernetes
+  - id: kubernetes
+    name: Kubernetes
     featured: true
   - name: Docker
     featured: true
@@ -521,7 +553,8 @@ skills:
   - name: GitHub
   - name: Cloudflare
     featured: true
-  - name: Docker Swarm
+  - id: docker-swarm
+    name: Docker Swarm
   - name: AWS
   - name: Azure
   - name: Alibaba Cloud
@@ -532,13 +565,17 @@ skills:
     en: IaC & GitOps
     ru: IaC и GitOps
   items:
-  - name: Crossplane
+  - id: crossplane
+    name: Crossplane
     featured: true
-  - name: Terraform
+  - id: terraform
+    name: Terraform
     featured: true
-  - name: Ansible
+  - id: ansible
+    name: Ansible
     featured: true
-  - name: Argo CD
+  - id: argo-cd
+    name: Argo CD
     featured: true
   - name: Flux CD
   - name: Google Config Connector
@@ -612,13 +649,15 @@ skills:
     en: Engineering & Automation
     ru: Разработка и автоматизация
   items:
-  - name: bash
+  - name: Linux
     featured: true
-  - name: GNU Make
+  - name: Go
     featured: true
   - name: Python
     featured: true
-  - name: Go
+  - name: Bash
+    featured: true
+  - name: GNU Make
     featured: true
   - name: Taskfile
 
@@ -626,13 +665,9 @@ skills:
     en: Infrastructure
     ru: Инфраструктура
   items:
-  - name: GNU+Linux
-    featured: true
   - name: KVM/Libvirt
   - name: VMware vSphere
-    featured: true
   - name: Proxmox
-    featured: true
   - name: Cisco
 
 about:
@@ -644,5 +679,3 @@ about:
   ru: 'Хорошо знаю экосистемы Go, Java, Python, Node.js, .NET и Rust со стороны сборки и выпуска приложений: управление зависимостями, пакетирование и работу с репозиториями артефактов.'
 - en: 'Help teams adopt new processes and technologies and establish application development and release workflows: choose branching strategies, set up semantic versioning, automate releases, and apply twelve-factor principles.'
   ru: 'Помогаю командам осваивать новые процессы и технологии, налаживать разработку и выпуск приложений: выбирать стратегию ветвления, настраивать семантическое версионирование, автоматизировать релизы и применять принципы 12-факторных приложений.'
-- en: 'Quickly understand unfamiliar systems, learn new technologies, and deploy services: from studying documentation and configuration to operation and troubleshooting.'
-  ru: 'Быстро разбираюсь в незнакомых системах, осваиваю новые технологии и внедряю службы: от изучения документации и настройки до эксплуатации и устранения проблем.'

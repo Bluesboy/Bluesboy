@@ -128,18 +128,29 @@
 }
 
 #heading(level: 1, l("earlier"))
-#for job in source.experience.filter(item => not item.detailed) {
+#let earlier = source.experience.filter(item => not item.detailed)
+#for job in earlier.filter(item => "resume_group" not in item) {
   block(breakable: false, above: 0pt, below: 0.7em)[
     #text(fill: muted, period(job.period)) — #strong(t(job.at("resume_company", default: job.company))) — #t(job.position)
   ]
+}
+#for (group-id, label) in ui.resumeGroups {
+  let jobs = earlier.filter(item => (
+    item.at("resume_group", default: "") == group-id
+  ))
+  if jobs.len() > 0 {
+    let newest = jobs.first()
+    let oldest = jobs.last()
+    block(breakable: false, above: 0pt, below: 0.7em)[
+      #text(fill: muted, oldest.period.start.slice(0, 4) + "–" + newest.period.end.slice(0, 4)) — #strong(t(label))
+    ]
+  }
 }
 
 #heading(level: 1, l("education"))
 #for item in source.education {
   block(breakable: false, above: 0pt, below: 0.7em)[
-    #item.year — #strong(t(item.institution))
-    #parbreak()
-    #t(item.specialization) · #t(item.level)
+    #item.year — #strong(t(item.institution)) — #t(item.specialization)
   ]
 }
 

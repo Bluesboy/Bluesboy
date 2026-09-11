@@ -22,7 +22,7 @@ LOCALES = ("en", "ru")
 # Order is the contract from AGENTS.md; the labels themselves live in ui.yaml.
 PDF_SECTIONS = ("summary", "coreSkills", "experience", "earlier", "education", "languages")
 # The website keeps its own order, which mobile reads top to bottom.
-SITE_SECTIONS = ("summary", "contacts", "core", "additional", "about", "experience", "education")
+SITE_SECTIONS = ("summary", "contacts", "core", "selected-work", "experience", "about", "education", "additional")
 
 root = Path(__file__).resolve().parent.parent
 with (root / "data/cv.yaml").open(encoding="utf-8") as source:
@@ -78,8 +78,7 @@ for lang in LOCALES:
     page_flats = [flatten(page) for page in pages]
     flat = flatten("\n".join(pages))
 
-    # Two pages is the budget; a third means the content outgrew the format.
-    check(len(pages) <= 2, f"{name}: {len(pages)} pages, the resume targets two")
+    check(len(pages) == 2, f"{name}: {len(pages)} pages, expected two")
 
     positions = []
     for key in PDF_SECTIONS:
@@ -129,16 +128,24 @@ for lang in LOCALES:
         check(any(all(part in page for part in role_parts) for page in page_flats),
               f"{name}: detailed role {company!r} is split across pages")
 
-    for job in cv["experience"]:
-        if not job["detailed"]:
+    earlier = [job for job in cv["experience"] if not job["detailed"]]
+    for job in earlier:
+        if "resume_group" not in job:
             company = job.get("resume_company", job["company"])[lang]
             entry = f"{pdf_period(job, lang)} — {company} — {job['position'][lang]}"
             check(entry in flat, f"{name}: earlier role {company!r} is incomplete")
+    for group, label in ui["resumeGroups"].items():
+        jobs = [job for job in earlier if job.get("resume_group") == group]
+        if jobs:
+            years = f"{jobs[-1]['period']['start'][:4]}–{jobs[0]['period']['end'][:4]}"
+            entry = f"{years} — {label[lang]}"
+            check(entry in flat, f"{name}: grouped earlier experience {label[lang]!r} is incomplete")
 
     for item in cv["education"]:
-        entry = (f"{item['year']} — {item['institution'][lang]} "
-                 f"{item['specialization'][lang]} · {item['level'][lang]}")
+        entry = f"{item['year']} — {item['institution'][lang]} — {item['specialization'][lang]}"
         check(entry in flat, f"{name}: education entry {item['institution'][lang]!r} is incomplete")
+        check(item["level"][lang] not in flat,
+              f"{name}: education level {item['level'][lang]!r} should be omitted")
     for item in cv["languages"]:
         entry = f"{item['language'][lang]} — {item['level'][lang]}"
         check(entry in flat, f"{name}: language entry {item['language'][lang]!r} is incomplete")
@@ -236,15 +243,19 @@ class Page(html.parser.HTMLParser):
         self.hrefs: set[str] = set()
         self.anchors: list[dict[str, str]] = []
         self.links: list[tuple[dict[str, str], str]] = []
+        self.ids: set[str] = set()
         self.jsonld: list[dict] = []
         self.lang = ""
         self.title = ""
         self.text: list[str] = []
+        self.selected_work_text: list[str] = []
         self.summaries = 0
         self._open: list[tuple[str, dict[str, str]]] = []
 
     def handle_starttag(self, tag, attrs):
         a = {k: (v or "") for k, v in attrs}
+        if a.get("id"):
+            self.ids.add(a["id"])
         if tag == "p" and any("summary-stack" in b.get("class", "") for _, b in self._open):
             self.summaries += 1
         if tag == "section":
@@ -289,6 +300,9 @@ class Page(html.parser.HTMLParser):
         # stand in for content the reader lost, so the corpus stops at <script>.
         if not any(tag in ("script", "style") for tag, _ in self._open):
             self.text.append(data)
+            if any(tag == "section" and "selected-work-section" in attrs.get("class", "").split()
+                   for tag, attrs in self._open):
+                self.selected_work_text.append(data)
         if any(tag == "dd" for tag, _ in self._open):
             for tag, attrs in reversed(self._open):
                 if tag != "section":
@@ -374,6 +388,28 @@ for lang in LOCALES:
     check(page.open_details == 0,
           f"{where}: {page.open_details} details blocks are initially open")
 
+    selected_text = flatten(" ".join(page.selected_work_text))
+    skill_by_id = {item["id"]: item["name"] for group in cv["skills"]
+                   for item in group["items"] if "id" in item}
+    achievement_by_id = {
+        item["id"]: (item, job["id"])
+        for job in detailed()
+        for item in job["achievements"]
+        if "id" in item
+    }
+    expected_ids = {job["id"] for job in detailed()}
+    expected_ids.update(item["achievement_id"] for item in cv["selected_work"])
+    check(expected_ids <= page.ids,
+          f"{where}: stable anchors are missing: {sorted(expected_ids - page.ids)}")
+    for item in cv["selected_work"]:
+        achievement, role_id = achievement_by_id[item["achievement_id"]]
+        for value in (item["title"][lang], achievement[lang],
+                      *(skill_by_id[skill_id] for skill_id in item["skill_ids"])):
+            check(flatten(value) in selected_text,
+                  f"{where}: Selected Work value {value!r} is missing")
+        check(f"#{role_id}" in page.hrefs,
+              f"{where}: Selected Work item {item['achievement_id']!r} does not link to its role")
+
     # A collapsed block is still part of the full CV and must survive in the
     # HTML. Check every canonical entry, not only the visible core subset.
     for paragraph in cv["summary"]:
@@ -419,8 +455,8 @@ for lang in LOCALES:
                   for attrs, label in links),
               f"{where}: <a href={href!r}> has no accessible name")
 
-    # The website shows every skill exactly once and keeps the selected and
-    # additional subsets in separate adjacent sections.
+    # The skill inventory appears once; Selected Work resolves references to
+    # the same canonical items rather than defining another inventory.
     expected_core = skills(featured_only=True)
     expected_additional = [item["name"] for group in cv["skills"] for item in group["items"]
                            if not item.get("featured", False)]

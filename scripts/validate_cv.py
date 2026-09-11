@@ -77,17 +77,42 @@ check(starts == sorted(starts, reverse=True),
 # Detailed roles keep full website content and a useful curated resume view.
 # featured defaults to false in both renderers; JSON Schema defaults do not
 # populate missing keys.
+job_ids: list[str] = []
+achievement_owners: dict[str, bool] = {}
+resume_groups: dict[str, list[int]] = {}
 for i, job in enumerate(cv["experience"]):
+    if "id" in job:
+        job_ids.append(job["id"])
     check("resume_company" not in job or not job["detailed"],
           f"experience[{i}].resume_company: only compact earlier roles use a short name")
+    check("resume_group" not in job or not job["detailed"],
+          f"experience[{i}].resume_group: detailed roles cannot be grouped")
+    if "resume_group" in job:
+        resume_groups.setdefault(job["resume_group"], []).append(i)
+        check(job["period"]["end"] is not None,
+              f"experience[{i}].resume_group: grouped roles must have a closed period")
+    for achievement in job["achievements"]:
+        if "id" in achievement:
+            check(achievement["id"] not in achievement_owners,
+                  f"experience[{i}].achievements: duplicate id {achievement['id']!r}")
+            achievement_owners[achievement["id"]] = job["detailed"]
     if not job["detailed"]:
         continue
+    check("id" in job, f"experience[{i}].id: detailed entries need a stable id")
     for field in ("responsibilities", "achievements"):
         check(len(job[field]) >= 3,
               f"experience[{i}].{field}: detailed entries need at least 3, found {len(job[field])}")
     check("scope" in job, f"experience[{i}].scope: detailed entries need a role scope")
     check(any(item.get("featured", False) for item in job["achievements"]),
           f"experience[{i}].achievements: detailed entries need a featured achievement")
+
+check(len(job_ids) == len(set(job_ids)), "experience: ids must not be duplicated")
+for group, indices in resume_groups.items():
+    check(len(indices) >= 2, f"experience.resume_group {group!r}: groups need at least two roles")
+    check(indices == list(range(indices[0], indices[-1] + 1)),
+          f"experience.resume_group {group!r}: grouped roles must be contiguous")
+    check(group in ui.get("resumeGroups", {}),
+          f"experience.resume_group {group!r}: missing ui.resumeGroups label")
 
 # The first summary paragraph is what head.html hands to the meta description
 # and the share cards, where a search snippet is cut at roughly 160 characters.
@@ -96,10 +121,27 @@ for lang in ("en", "ru"):
     check(len(lead) <= 160,
           f"summary[0].{lang}: lead paragraph is {len(lead)} characters, keep it under 160")
 
-skill_names = [item["name"] for group in cv["skills"] for item in group["items"]]
+skill_items = [item for group in cv["skills"] for item in group["items"]]
+skill_names = [item["name"] for item in skill_items]
 check(len(skill_names) == len(set(skill_names)), "skills: names must not be duplicated")
-check(any(item.get("featured", False) for group in cv["skills"] for item in group["items"]),
+skill_ids = [item["id"] for item in skill_items if "id" in item]
+check(len(skill_ids) == len(set(skill_ids)), "skills: ids must not be duplicated")
+check(any(item.get("featured", False) for item in skill_items),
       "skills: at least one core skill must be featured")
+
+selected_achievements: list[str] = []
+for i, item in enumerate(cv["selected_work"]):
+    achievement_id = item["achievement_id"]
+    selected_achievements.append(achievement_id)
+    check(achievement_id in achievement_owners,
+          f"selected_work[{i}].achievement_id: unknown id {achievement_id!r}")
+    check(achievement_owners.get(achievement_id, False),
+          f"selected_work[{i}].achievement_id: selected work must belong to a detailed role")
+    for skill_id in item["skill_ids"]:
+        check(skill_id in skill_ids,
+              f"selected_work[{i}].skill_ids: unknown id {skill_id!r}")
+check(len(selected_achievements) == len(set(selected_achievements)),
+      "selected_work: achievement references must not be duplicated")
 
 
 def check_ui(node, path="ui"):

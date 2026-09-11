@@ -4,7 +4,7 @@
 {{ $position := partial "localized.html" (dict "value" $item.position "lang" $lang) }}
 {{ $location := partial "location.html" (dict "location" $item.location "lang" $lang) }}
 {{ $period := partial "period.html" (dict "period" $item.period "lang" $lang) }}
-<article class="experience-card">
+<article class="experience-card"{{ with $item.id }} id="{{ . }}"{{ end }}>
   <div class="experience-head">
     <div>
       <p class="mini-meta">{{ $period }}</p>

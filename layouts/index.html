@@ -7,6 +7,13 @@
 {{ $availability := partial "localized.html" (dict "value" $data.personal.availability "lang" $lang) }}
 {{ $pdfFile := cond (eq $lang "ru") "shamil-sattarov-resume-ru.pdf" "shamil-sattarov-resume-en.pdf" }}
 {{ $pdfURL := printf "%s/%s" site.Params.releaseDownloadURL $pdfFile }}
+{{ $skillsByID := dict }}
+{{ range $data.skills }}
+  {{ range .items }}
+    {{ $skill := . }}
+    {{ with .id }}{{ $skillsByID = merge $skillsByID (dict . $skill.name) }}{{ end }}
+  {{ end }}
+{{ end }}
 
 <header class="topbar">
   {{/* CSS-only theme switch: :root:has(#theme-toggle:checked) swaps the
@@ -87,16 +94,31 @@
       {{ partial "skill-groups.html" (dict "featured" true "lang" $lang) }}
     </section>
 
-    <section class="main-section additional-section">
-      <h2>{{ partial "label.html" (dict "key" "additionalSkills" "lang" $lang) }}</h2>
-      {{ partial "skill-groups.html" (dict "featured" false "lang" $lang) }}
-    </section>
-
-    <section class="main-section about-section">
-      <h2>{{ partial "label.html" (dict "key" "about" "lang" $lang) }}</h2>
-      <ul class="about-list">
-        {{ range $data.about }}<li>{{ index . $lang | default (index . "en") }}</li>{{ end }}
-      </ul>
+    <section class="main-section selected-work-section">
+      <h2>{{ partial "label.html" (dict "key" "selectedWork" "lang" $lang) }}</h2>
+      <div class="selected-work-list">
+        {{ range $data.selected_work }}
+          {{ $work := . }}
+          {{ $achievement := dict }}
+          {{ $roleID := "" }}
+          {{ range $data.experience }}
+            {{ $job := . }}
+            {{ range .achievements }}
+              {{ if eq (.id | default "") $work.achievement_id }}
+                {{ $achievement = . }}
+                {{ $roleID = $job.id }}
+              {{ end }}
+            {{ end }}
+          {{ end }}
+          <article class="selected-work-card" id="{{ $work.achievement_id }}">
+            <h3><a href="#{{ $roleID }}">{{ partial "localized.html" (dict "value" $work.title "lang" $lang) }}</a></h3>
+            <p>{{ partial "localized.html" (dict "value" $achievement "lang" $lang) }}</p>
+            <p class="selected-work-tech"><strong>{{ partial "label.html" (dict "key" "technologies" "lang" $lang) }}:</strong>
+              {{ range $index, $skillID := $work.skill_ids }}{{ if $index }} · {{ end }}{{ index $skillsByID $skillID }}{{ end }}
+            </p>
+          </article>
+        {{ end }}
+      </div>
     </section>
 
     <section class="main-section experience-section">
@@ -119,6 +141,13 @@
       {{ end }}
     </section>
 
+    <section class="main-section about-section">
+      <h2>{{ partial "label.html" (dict "key" "about" "lang" $lang) }}</h2>
+      <ul class="about-list">
+        {{ range $data.about }}<li>{{ index . $lang | default (index . "en") }}</li>{{ end }}
+      </ul>
+    </section>
+
     <section class="main-section education-section">
       <h2>{{ partial "label.html" (dict "key" "education" "lang" $lang) }}</h2>
       <div class="education-list">
@@ -130,6 +159,11 @@
           </article>
         {{ end }}
       </div>
+    </section>
+
+    <section class="main-section additional-section">
+      <h2>{{ partial "label.html" (dict "key" "additionalSkills" "lang" $lang) }}</h2>
+      {{ partial "skill-groups.html" (dict "featured" false "lang" $lang) }}
     </section>
 
 </main>
