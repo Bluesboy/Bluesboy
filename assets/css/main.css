@@ -326,4 +326,17 @@ summary:hover { color: var(--accent-strong); }
   .main-section > h2, .side-section > h2 { break-after: avoid; }
   .side-section, .experience-card, .education-item { break-inside: avoid; }
   .download-link { color: var(--ink); background: transparent; border: 1px solid var(--ink); }
+  .contact-list a[href^="http"]::after,
+  .download-link::after {
+    content: " (" attr(href) ")";
+    color: var(--muted);
+    font-size: .85em;
+    overflow-wrap: anywhere;
+  }
+  /* Responsibilities and the pre-2017 history live in collapsed <details>.
+     A closed one is hidden by the UA through ::details-content, so paper
+     would lose them unless that pseudo-element is opened here. */
+  details::details-content { content-visibility: visible; block-size: auto; }
+  details > summary { display: none; }
+  details { border-left: 2px solid var(--line); padding-left: .75rem; }
 }
