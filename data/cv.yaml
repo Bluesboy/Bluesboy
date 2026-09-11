@@ -93,7 +93,7 @@ experience:
   detailed: true
   scope:
     en: "Own a multi-region Kubernetes production platform and its delivery infrastructure: CI/CD, GitOps, reliability, observability, secrets, and stateful services; the current implementation runs on GCP/GKE."
-    ru: "Отвечаю за Kubernetes-платформу в нескольких регионах и её delivery-инфраструктуру: CI/CD, GitOps, отказоустойчивость, наблюдаемость, секреты и stateful-сервисы; текущая реализация работает в GCP/GKE."
+    ru: "Отвечаю за Kubernetes-платформу в нескольких регионах и её delivery-инфраструктуру: CI/CD, GitOps, отказоустойчивость, наблюдаемость, секреты и stateful-сервисы; текущая реализация работает на GCP/GKE."
   responsibilities:
   - en: Set up and maintain CI/CD.
     ru: Настройка и сопровождение CI/CD.
