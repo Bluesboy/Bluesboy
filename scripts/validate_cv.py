@@ -89,6 +89,13 @@ for i, job in enumerate(cv["experience"]):
     check(any(item.get("featured", False) for item in job["achievements"]),
           f"experience[{i}].achievements: detailed entries need a featured achievement")
 
+# The first summary paragraph is what head.html hands to the meta description
+# and the share cards, where a search snippet is cut at roughly 160 characters.
+for lang in ("en", "ru"):
+    lead = cv["summary"][0][lang]
+    check(len(lead) <= 160,
+          f"summary[0].{lang}: lead paragraph is {len(lead)} characters, keep it under 160")
+
 skill_names = [item["name"] for group in cv["skills"] for item in group["items"]]
 check(len(skill_names) == len(set(skill_names)), "skills: names must not be duplicated")
 check(any(item.get("featured", False) for group in cv["skills"] for item in group["items"]),

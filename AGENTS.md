@@ -43,6 +43,8 @@
 - Earlier roles may have optional localized `resume_company` for a shorter PDF display name;
   default to `company`. Hugo always shows the full `company` name.
 - Validate data through `scripts/validate_cv.py` or `make test/schema`.
+- Mechanize a rule wherever it can be: shape in `schema/cv.schema.json`, data semantics in
+  `scripts/validate_cv.py`, rendered output in `scripts/check_artifacts.py`.
 - Keep the semantic rules there in step with the renderers: period order, one open period,
   at least three responsibilities and achievements per detailed entry, URL shape.
 - Install `jsonschema[format-nongpl]`; plain `jsonschema` silently skips `format` checks.
@@ -189,8 +191,10 @@
 - After relevant changes, run `make fmt`, `make lint`, and `make ci VERSION=v1.0.0`.
 - Run `git diff --check` before completion.
 - For PDF changes, verify page counts and visually inspect every page in EN and RU.
-- Inspect full raw text extraction in both languages with `pdftotext -raw build/pdf/shamil-sattarov-resume-{en,ru}.pdf -`
-  (run separately for each file). Confirm section order, literal ATS keywords, contact labels, and no duplicates or icon gibberish.
+- `make test/build` runs `scripts/check_artifacts.py` over the built files: section order, literal
+  core-skill keywords, clickable contacts per locale, the two-page budget, identity footers,
+  duplicated lines, EN/RU parity, meta description, JSON-LD, heading levels, and image alt text.
+- Inspect the rendered pages for what no check can see: spacing, widows, and where pages break.
 - For link changes, verify PDF annotations and generated Hugo URLs.
 - Do not commit, tag, push, or create a release unless explicitly requested.
 

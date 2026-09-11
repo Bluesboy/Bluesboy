@@ -18,7 +18,7 @@ COG          ?= cog
 GH           ?= gh
 PYTHON       ?= python3
 PORT         ?= 1313
-PIP_PACKAGES ?= jsonschema[format-nongpl] PyYAML yamllint
+PIP_PACKAGES ?= jsonschema[format-nongpl] PyYAML yamllint pypdf
 ACTIONLINT_VERSION ?= v1.7.7
 TYPSTYLE_VERSION   ?= 0.15.1
 
@@ -50,11 +50,11 @@ build: build/site build/pdf ## Build CV website and both resumes
 
 build/pdf/en: ## Build English PDF
 	@mkdir -p $(PDF_DIR)
-	$(TYPST) compile $(TYPST_FLAGS) --input lang=en --input version=$(VERSION) resume.typ $(PDF_EN)
+	$(TYPST) compile $(TYPST_FLAGS) --input lang=en resume.typ $(PDF_EN)
 
 build/pdf/ru: ## Build Russian PDF
 	@mkdir -p $(PDF_DIR)
-	$(TYPST) compile $(TYPST_FLAGS) --input lang=ru --input version=$(VERSION) resume.typ $(PDF_RU)
+	$(TYPST) compile $(TYPST_FLAGS) --input lang=ru resume.typ $(PDF_RU)
 
 build/pdf: build/pdf/en build/pdf/ru ## Build both resumes
 	@cd $(PDF_DIR) && sha256sum $$(basename $(PDF_EN)) $$(basename $(PDF_RU)) > SHA256SUMS
@@ -81,10 +81,10 @@ preview: ## Run Hugo preview server
 	$(HUGO) server --buildDrafts --port $(PORT)
 
 watch/pdf/en: ## Rebuild English PDF on changes
-	$(TYPST) watch $(TYPST_FLAGS) --input lang=en --input version=$(VERSION) resume.typ $(PDF_EN)
+	$(TYPST) watch $(TYPST_FLAGS) --input lang=en resume.typ $(PDF_EN)
 
 watch/pdf/ru: ## Rebuild Russian PDF on changes
-	$(TYPST) watch $(TYPST_FLAGS) --input lang=ru --input version=$(VERSION) resume.typ $(PDF_RU)
+	$(TYPST) watch $(TYPST_FLAGS) --input lang=ru resume.typ $(PDF_RU)
 
 open/pdf/en: build/pdf/en ## Open English PDF
 	xdg-open $(PDF_EN)
@@ -101,12 +101,13 @@ open/pdf/ru: build/pdf/ru ## Open Russian PDF
 test/schema: ## Validate CV YAML against JSON Schema
 	$(PYTHON) scripts/validate_cv.py
 
-test/build: build ## Verify generated artifacts
+test/build: build ## Verify generated artifacts against the rendering rules
 	test -s $(PDF_EN)
 	test -s $(PDF_RU)
 	test -s $(PDF_DIR)/SHA256SUMS
 	test -s $(SITE_DIR)/index.html
 	test -s $(SITE_DIR)/ru/index.html
+	$(PYTHON) scripts/check_artifacts.py
 
 test/ci: test/schema test/build ## Run CI test suite
 
@@ -142,7 +143,7 @@ deps/install: ## Install Python validation and lint dependencies
 
 deps/verify: ## Verify required build and lint dependencies
 	@for tool in $(HUGO) $(TYPST) $(COG) $(GH) $(PYTHON) sha256sum yamllint actionlint typstyle; do command -v $$tool >/dev/null || { echo "Missing dependency: $$tool" >&2; exit 1; }; done
-	@$(PYTHON) -c 'import jsonschema, yaml'
+	@$(PYTHON) -c 'import jsonschema, pypdf, yaml'
 
 deps/versions: ## Print pinned tool versions (CI builds its cache key from this)
 	@echo "actionlint-$(ACTIONLINT_VERSION)-typstyle-$(TYPSTYLE_VERSION)"
