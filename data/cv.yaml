@@ -41,8 +41,10 @@ target:
     ru: Удалённо
 
 summary:
-- en: "I specialize in production infrastructure on GCP/GKE: GitOps, IaC, CI/CD, observability, and stateful workloads. In moving systems from manual operations to declarative infrastructure, I have completed three zero-downtime migrations from manually configured servers to the cloud, introduced GitOps for 20+ services, and moved cloud resource management from Terraform to Crossplane. Working at the intersection of development and operations, I standardize delivery processes and reduce manual operational work for teams."
-  ru: "Специализируюсь на production-инфраструктуре в GCP/GKE: GitOps, IaC, CI/CD, наблюдаемость и эксплуатация stateful-сервисов. Перевожу системы от ручного управления к декларативной модели: провёл три миграции с настроенных вручную серверов в облако без простоя, внедрил GitOps для 20+ сервисов и перевёл управление облачными ресурсами с Terraform на Crossplane. Работаю на стыке разработки и эксплуатации: стандартизирую процессы доставки и уменьшаю объём ручных операций для команд."
+- en: "I specialize in production infrastructure on GCP/GKE: GitOps, IaC, CI/CD, observability, and stateful workloads."
+  ru: "Специализируюсь на production-инфраструктуре в GCP/GKE: GitOps, IaC, CI/CD, наблюдаемость и эксплуатация stateful-сервисов."
+- en: I have completed three zero-downtime migrations from manually configured servers to the cloud, introduced GitOps for 20+ services, and moved cloud resource management from Terraform to Crossplane. Working at the intersection of development and operations, I standardize delivery and reduce manual operational work for teams.
+  ru: "Провёл три миграции с настроенных вручную серверов в облако без простоя, внедрил GitOps для 20+ сервисов, перевёл управление облачными ресурсами с Terraform на Crossplane. Работаю на стыке разработки и эксплуатации: стандартизирую доставку и уменьшаю объём ручных операций для команд."
 
 experience:
 - company:
@@ -160,7 +162,7 @@ experience:
     ru: Инженер-DevOps
   detailed: true
   scope:
-    en: Was responsible for builds, releases, and infrastructure of the Java/Liferay platform on OpenStack, including provisioning automation and Kubernetes operations.
+    en: Maintained builds, releases, and infrastructure for the Java/Liferay platform on OpenStack, including provisioning automation and Kubernetes operations.
     ru: Отвечал за сборку, выпуск и инфраструктуру Java/Liferay-платформы в OpenStack, включая автоматизацию развёртывания и эксплуатацию Kubernetes.
   responsibilities:
   - en: Maintained the Java build and release process for Liferay and OSGi applications, including versions and dependencies.
@@ -517,7 +519,6 @@ skills:
   - name: Kubernetes Operators
     featured: true
   - name: GitHub
-    featured: true
   - name: Cloudflare
     featured: true
   - name: Docker Swarm
@@ -540,7 +541,6 @@ skills:
   - name: Argo CD
     featured: true
   - name: Flux CD
-    featured: true
   - name: Google Config Connector
     featured: true
   - name: AWS CloudFormation
@@ -571,13 +571,13 @@ skills:
     featured: true
   - name: Kafka
     featured: true
-  - name: Redis / Valkey
+  - name: Redis/Valkey
     featured: true
   - name: ClickHouse
     featured: true
-  - name: Elasticsearch / OpenSearch
+  - name: Elasticsearch/OpenSearch
     featured: true
-  - name: MySQL / MariaDB
+  - name: MySQL/MariaDB
 
 - area:
     en: Observability
@@ -630,7 +630,9 @@ skills:
     featured: true
   - name: KVM/Libvirt
   - name: VMware vSphere
+    featured: true
   - name: Proxmox
+    featured: true
   - name: Cisco
 
 about:
