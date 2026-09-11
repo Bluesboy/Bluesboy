@@ -42,7 +42,7 @@ target:
 
 summary:
 - en: "I build and operate fault-tolerant, multi-region production platforms: Kubernetes, GitOps, IaC, CI/CD, observability and operator-managed stateful services."
-  ru: "Строю и эксплуатирую отказоустойчивые multi-region production-платформы: Kubernetes, GitOps, IaC, CI/CD, наблюдаемость и stateful-сервисы под операторами."
+  ru: "Строю и эксплуатирую multi-region production-платформы: Kubernetes, GitOps, IaC, CI/CD, наблюдаемость и stateful-сервисы под управлением Kubernetes-операторов."
 - en: The platform I run today spans four regions on GCP/GKE. I have completed three zero-downtime infrastructure migrations, introduced GitOps for 20+ services, and moved cloud resource management from Terraform to Crossplane. I standardize delivery and reduce manual operational work across development and operations.
   ru: Текущая платформа работает в четырёх регионах в GCP/GKE. Провёл три миграции инфраструктуры без простоя, внедрил GitOps для 20+ сервисов и перевёл управление облачными ресурсами с Terraform на Crossplane. На стыке разработки и эксплуатации стандартизирую доставку и уменьшаю объём ручных операций.
 
@@ -52,24 +52,24 @@ selected_work:
     en: Zero-downtime platform migrations
     ru: Миграции платформы без простоя
   outcome:
-    en: ~300 RPS · zero downtime, twice
-    ru: ~300 RPS · дважды без простоя
+    en: ~300 RPS · zero downtime
+    ru: ~300 RPS · без простоя
   skill_ids: [docker-swarm, ansible, gke, terraform]
 - achievement_id: gitops-platform
   title:
     en: GitOps delivery
     ru: GitOps для 20+ сервисов
   outcome:
-    en: 20+ services · up to ten a day · rollback in 2 min
-    ru: 20+ сервисов · до десяти в день · откат за 2 мин
+    en: 20+ services · 2–3/week to 10/day · rollback <2 min
+    ru: 20+ сервисов · с 2–3/нед. до 10/день · откат <2 мин
   skill_ids: [argo-cd, kubernetes]
 - achievement_id: crossplane-infrastructure
   title:
     en: Declarative infrastructure with Crossplane
     ru: Декларативная инфраструктура на Crossplane
   outcome:
-    en: 3 compositions · environments in minutes
-    ru: три композиции · окружение за минуты
+    en: 3 Crossplane compositions · environments in minutes
+    ru: 3 Crossplane-композиции · окружение за минуты
   skill_ids: [crossplane, google-cloud-platform, gke]
 
 experience:
@@ -111,20 +111,20 @@ experience:
     ru: Перенёс платформу с нагрузкой ~300 RPS с настроенного вручную VPS в Docker Swarm под управлением Ansible, затем в GKE под управлением Terraform; обе миграции прошли без простоя.
     featured: true
   - id: multi-region-platform
-    en: Built a four-region production platform on four Kubernetes clusters (GKE) joined by a Multi-Cluster Gateway, with separate staging and infrastructure clusters.
-    ru: Развернул production-платформу в четырёх регионах на четырёх Kubernetes-кластерах (GKE), объединив их через Multi-Cluster Gateway и выделив отдельные кластеры для staging и инфраструктуры.
+    en: Built a production platform on four Kubernetes clusters (GKE) across four regions, plus dedicated staging and infrastructure clusters; the production clusters are joined by a Multi-Cluster Gateway.
+    ru: Развернул production-платформу на четырёх Kubernetes-кластерах (GKE) в четырёх регионах и выделил отдельные кластеры для staging и инфраструктуры; production-кластеры объединил через Multi-Cluster Gateway.
     featured: true
   - id: gitops-platform
-    en: Introduced Argo CD GitOps for 20+ services and internal tools serving six senior developers; deployment time fell from over three minutes to one, frequency rose from two or three a week to as many as ten a day, and rollback became one Git commit applied in under two minutes.
-    ru: Внедрил GitOps на Argo CD для 20+ сервисов и внутренних инструментов, которыми пользуются шесть senior-разработчиков; время развёртывания упало с более чем трёх минут до минуты, частота выросла с двух-трёх в неделю до десяти в день, а откат свёлся к одному коммиту в Git, который применяется меньше чем за две минуты.
+    en: Introduced Argo CD GitOps for 20+ services and internal tools used by a six-developer engineering team; cut deployment time from over three minutes to about one and raised deployment frequency from two or three a week to as many as ten a day. Rollback is one reverted Git commit and completes in under two minutes.
+    ru: "Внедрил GitOps на Argo CD для 20+ сервисов и внутренних инструментов команды из шести разработчиков: сократил время развёртывания с более чем трёх минут примерно до одной и поднял частоту с двух-трёх в неделю до десяти в день. Откат — отмена одного коммита в Git, выполняется меньше чем за две минуты."
     featured: true
   - id: cloud-cost
-    en: Cut monthly cloud spend several times over by moving suitable workloads onto spot nodes and replacing SaaS ClickHouse, PostgreSQL and Dragonfly with operator-managed clusters.
+    en: Reduced monthly cloud spend several-fold by moving suitable workloads onto spot nodes and replacing SaaS ClickHouse, PostgreSQL and Dragonfly with operator-managed clusters.
     ru: "Сократил ежемесячные расходы на облако в несколько раз: перевёл подходящие нагрузки на spot-узлы и заменил SaaS-версии ClickHouse, PostgreSQL и Dragonfly кластерами под управлением операторов."
     featured: true
   - id: crossplane-infrastructure
-    en: Unified application and infrastructure management under GitOps by moving infrastructure from Terraform to Crossplane; cluster, network and cache infrastructure is modelled through three compositions, and a new environment takes minutes instead of days.
-    ru: Объединил управление приложениями и инфраструктурой в единый процесс GitOps, переведя инфраструктуру с Terraform на Crossplane; кластеры, сети и кэш описаны тремя композициями, а новое окружение поднимается за минуты вместо дней.
+    en: Unified application and infrastructure management under GitOps by moving infrastructure from Terraform to Crossplane; cluster, network and cache infrastructure is modelled through three Crossplane compositions, and a new environment takes minutes instead of days.
+    ru: Объединил управление приложениями и инфраструктурой в единый процесс GitOps, переведя инфраструктуру с Terraform на Crossplane; кластеры, сети и кэш описаны тремя Crossplane-композициями, а новое окружение поднимается за минуты вместо дней.
     featured: true
   - en: Moved deployments under Argo CD management, then replaced Helm template rendering in Argo CD with pre-rendered YAML manifests (Rendered Manifests Pattern). Changes are visible in plain YAML diffs, and Argo CD does not spend resources rendering templates.
     ru: Перевёл развёртывание под управление Argo CD, затем заменил рендеринг Helm-шаблонов в Argo CD готовыми YAML-манифестами (Rendered Manifests Pattern). Изменения видны в обычных YAML-диффах, а Argo CD не тратит ресурсы на рендеринг шаблонов.
@@ -175,8 +175,8 @@ experience:
   - en: Standardized continuous delivery for 15+ microservices, giving 8 developers a shared path to production instead of per-service scripts.
     ru: "Унифицировал доставку 15+ микросервисов: 8 разработчиков получили единый путь в продакшен вместо отдельных скриптов для каждого сервиса."
     featured: true
-  - en: Built microservice observability with EFK, Prometheus, and Grafana, giving the team one place to look for logs and metrics during an incident.
-    ru: "Внедрил наблюдаемость микросервисов на EFK, Prometheus и Grafana: журналы и метрики собрались в одном месте, куда команда смотрит при инциденте."
+  - en: Centralized microservice logs and metrics with EFK, Prometheus, and Grafana, giving the team a single place for incident diagnostics.
+    ru: Централизовал журналы и метрики микросервисов в EFK, Prometheus и Grafana, создав единую точку диагностики при инцидентах.
     featured: true
   - en: Moved web service assets to MinIO object storage, taking file state off the application servers.
     ru: Перенёс файлы веб-сервисов в объектное хранилище MinIO, чтобы приложения не хранили состояние локально.
