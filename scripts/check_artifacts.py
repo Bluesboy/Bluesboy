@@ -44,6 +44,16 @@ def flatten(text: str) -> str:
     return re.sub(r"\s+", " ", text)
 
 
+def squeeze(text: str) -> str:
+    """Text without any whitespace at all.
+
+    A PDF line can break inside a token that carries no space of its own —
+    "GCP/GKE" wraps after the slash — and extraction then reports "GCP/ GKE".
+    Comparing without whitespace keeps a presence check about the words.
+    """
+    return re.sub(r"\s+", "", text)
+
+
 def skills(featured_only: bool) -> list[str]:
     return [item["name"] for group in cv["skills"] for item in group["items"]
             if item.get("featured", False) or not featured_only]
@@ -77,6 +87,10 @@ for lang in LOCALES:
     pages = [page.extract_text() or "" for page in reader.pages]
     page_flats = [flatten(page) for page in pages]
     flat = flatten("\n".join(pages))
+    # Long strings are matched without whitespace: a PDF line may break inside
+    # a token such as "GCP/GKE", and extraction then reports "GCP/ GKE".
+    page_squeezed = [squeeze(page) for page in pages]
+    flat_squeezed = squeeze(flat)
 
     check(len(pages) == 2, f"{name}: {len(pages)} pages, expected two")
 
@@ -101,39 +115,39 @@ for lang in LOCALES:
     check(cv["target"]["position"][lang] in page_flats[0],
           f"{name}: target position is missing from the header")
     for paragraph in cv["summary"]:
-        check(flatten(paragraph[lang]) in flat, f"{name}: summary paragraph is missing")
+        check(squeeze(paragraph[lang]) in flat_squeezed, f"{name}: summary paragraph is missing")
 
     domain = re.sub(r"^https?://", "", cv["site"]["url"]).rstrip("/")
     contacts = [cv["personal"]["email"]]
     contacts += [profile.get("label", profile["network"]) for profile in cv["personal"]["profiles"]
                  if lang in profile.get("resume_languages", list(LOCALES))]
     contacts.append(domain)
-    check(" · ".join(contacts) in page_flats[0],
+    check(squeeze(" · ".join(contacts)) in page_squeezed[0],
           f"{name}: visible contact bar is incomplete or out of order")
 
     for job in detailed():
         company, position = job["company"][lang], job["position"][lang]
         check(company in flat and position in flat,
               f"{name}: detailed role {company!r} — {position!r} is incomplete")
-        scope = flatten(job["scope"][lang])
-        check(scope in flat,
+        scope = squeeze(job["scope"][lang])
+        check(scope in flat_squeezed,
               f"{name}: scope of {company!r} is missing")
-        role_parts = [company, position, pdf_period(job, lang), scope]
+        role_parts = [squeeze(part) for part in (company, position, pdf_period(job, lang))] + [scope]
         for item in job["achievements"]:
             if item.get("featured", False):
-                achievement = flatten(item[lang])
+                achievement = squeeze(item[lang])
                 role_parts.append(achievement)
-                check(achievement in flat,
+                check(achievement in flat_squeezed,
                       f"{name}: featured achievement of {company!r} is missing")
-        check(any(all(part in page for part in role_parts) for page in page_flats),
+        check(any(all(part in page for part in role_parts) for page in page_squeezed),
               f"{name}: detailed role {company!r} is split across pages")
 
     earlier = [job for job in cv["experience"] if not job["detailed"]]
     for job in earlier:
         if "resume_group" not in job:
             company = job.get("resume_company", job["company"])[lang]
-            entry = f"{pdf_period(job, lang)} — {company} — {job['position'][lang]}"
-            check(entry in flat, f"{name}: earlier role {company!r} is incomplete")
+            entry = squeeze(f"{pdf_period(job, lang)} — {company} — {job['position'][lang]}")
+            check(entry in flat_squeezed, f"{name}: earlier role {company!r} is incomplete")
     for group, label in ui["resumeGroups"].items():
         jobs = [job for job in earlier if job.get("resume_group") == group]
         if jobs:
