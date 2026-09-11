@@ -122,6 +122,7 @@
   - `shamil-sattarov-resume-en.pdf`
   - `shamil-sattarov-resume-ru.pdf`
 - Show the web URL as its linked domain, derived from `site.url`.
+- Keep PDF metadata free of build identifiers; keywords carry the core skills and the CV domain.
 - Keep a compact textual contact bar: email and visible profile network labels, followed by the domain.
 - Keep contacts clickable; allow wrapping rather than shrinking text or clipping.
 - Put location and work format on a separate compact line; no photo, salary, or citizenship in PDF.
@@ -133,7 +134,7 @@
 - Keep target positioning independent of historical job titles and grades; preserve factual historical titles.
 - Render core skills as compact named text groups, aiming for about 30–35 visible items.
 - Detailed roles show company, factual title, month-level dates, location/remote, scope, and featured achievements.
-- Keep the role introduction and first achievement together; allow later achievements to flow across pages.
+- Keep each detailed role whole: a role that no longer fits starts the next page, heading and results together.
 - Earlier roles show dates, company, and title; do not expand their responsibilities or achievements.
 - Language proficiency is plain text (language — level), without dots or progress bars.
 - Target two readable pages per language through natural pagination, not forced page breaks or tiny type.

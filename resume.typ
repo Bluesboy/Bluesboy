@@ -1,5 +1,4 @@
 #let lang = sys.inputs.at("lang", default: "en")
-#let version = sys.inputs.at("version", default: "dev")
 #let source = yaml("data/cv.yaml")
 #let ui = yaml("data/ui.yaml")
 #let t(value) = value.at(lang)
@@ -30,12 +29,12 @@
   title: t(source.personal.full_name) + " — " + l("resumeTitle"),
   author: t(source.personal.full_name),
   description: source.summary.map(t).join(" "),
-  keywords: core.map(item => item.name) + (source.site.url, version),
+  keywords: core.map(item => item.name) + (source.site.url,),
   date: none,
 )
 #set page(
   paper: "a4",
-  margin: (x: 16mm, y: 15mm),
+  margin: (x: 15mm, y: 15mm),
   footer: context align(center, text(size: 8pt, fill: muted)[
     #t(source.personal.full_name) · #link(source.site.url, domain) · #counter(page).display("1/1", both: true)
   ]),
@@ -47,8 +46,8 @@
   lang: lang,
   hyphenate: false,
 )
-#set par(leading: 0.6em, spacing: 0.6em)
-#set list(indent: 0pt, body-indent: 1em, tight: false, spacing: 0.55em)
+#set par(leading: 0.66em, spacing: 0.6em)
+#set list(indent: 0pt, body-indent: 1em, tight: false, spacing: 0.45em)
 #show link: set text(fill: accent)
 #show heading.where(level: 1): it => block(
   above: 0.9em,
@@ -62,6 +61,7 @@
 #show heading.where(level: 2): set text(size: 12pt, weight: "bold")
 #show heading.where(level: 2): set block(above: 1em, below: 0.5em)
 
+#set par(spacing: 0.45em)
 #text(size: 25pt, weight: "bold", t(source.personal.full_name))
 #parbreak()
 #text(size: 13pt, weight: "bold", fill: accent, t(source.target.position))
@@ -81,6 +81,7 @@
   size: 10pt,
   fill: muted,
 )[#place(source.personal.location) · #t(source.target.work_format)]
+#set par(spacing: 0.6em)
 
 #heading(level: 1, l("summary"))
 #for paragraph in source.summary {
@@ -91,32 +92,36 @@
 #for group in source.skills {
   let items = group.items.filter(featured)
   if items.len() > 0 {
-    block(above: 0pt, below: 0.7em, breakable: false)[
+    block(above: 0pt, below: 0.5em, breakable: false)[
       #strong(t(group.area) + ":") #items.map(item => item.name).join(", ")
     ]
   }
 }
 
 #heading(level: 1, l("experience"))
-#for job in source.experience.filter(item => item.detailed) {
+#for (index, job) in (
+  source.experience.filter(item => item.detailed).enumerate()
+) {
   let achievements = job.achievements.filter(featured).map(t)
-  // Keep the introduction and first result together; later results may flow.
-  block(breakable: false, {
-    let company = if job.website == "" { t(job.company) } else {
-      link("https://" + job.website, t(job.company))
-    }
-    heading(level: 2)[#company — #t(job.position)]
-    block(above: 0pt, below: 0.7em)[
-      #text(size: 9.5pt, fill: muted)[
-        #period(job.period) · #place(job.location)#if job.at("remote", default: false) { " · " + l("remote") }
+  // A role is read as one unit: keep it whole, and start the next page when
+  // it no longer fits rather than splitting its results off the heading.
+  block(
+    breakable: false,
+    above: if index == 0 { 0pt } else { 1.8em },
+    {
+      let company = if job.website == "" { t(job.company) } else {
+        link("https://" + job.website, t(job.company))
+      }
+      heading(level: 2)[#company — #t(job.position)]
+      block(above: 0pt, below: 0.55em)[
+        #text(size: 9.5pt, fill: muted)[
+          #period(job.period) · #place(job.location)#if job.at("remote", default: false) { " · " + l("remote") }
+        ]
       ]
-    ]
-    block(above: 0pt, below: 0.7em, t(job.scope))
-    list(achievements.first())
-  })
-  if achievements.len() > 1 {
-    list(..achievements.slice(1))
-  }
+      block(above: 0pt, below: 0.55em, t(job.scope))
+      list(..achievements)
+    },
+  )
 }
 
 #heading(level: 1, l("earlier"))
