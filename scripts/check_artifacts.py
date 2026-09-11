@@ -401,6 +401,14 @@ for lang in LOCALES:
     expected_ids.update(item["achievement_id"] for item in cv["selected_work"])
     check(expected_ids <= page.ids,
           f"{where}: stable anchors are missing: {sorted(expected_ids - page.ids)}")
+    # Every in-page link has to land somewhere: the section nav, the Selected
+    # Work cards and the skip link all navigate by fragment and nothing else.
+    fragments = {href[1:] for href in page.hrefs if href.startswith("#") and len(href) > 1}
+    check(fragments <= page.ids,
+          f"{where}: fragment links point at no element: {sorted(fragments - page.ids)}")
+    for section in ("selected-work", "experience", "stack", "education"):
+        check(f"#{section}" in page.hrefs,
+              f"{where}: the section nav does not link to #{section}")
     for item in cv["selected_work"]:
         achievement, role_id = achievement_by_id[item["achievement_id"]]
         for value in (item["title"][lang], achievement[lang],
