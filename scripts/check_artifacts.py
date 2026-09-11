@@ -21,6 +21,8 @@ from pypdf import PdfReader
 LOCALES = ("en", "ru")
 # Order is the contract from AGENTS.md; the labels themselves live in ui.yaml.
 PDF_SECTIONS = ("summary", "coreSkills", "experience", "earlier", "education", "languages")
+# The website keeps its own order, which mobile reads top to bottom.
+SITE_SECTIONS = ("summary", "contacts", "core", "additional", "about", "experience", "education")
 
 root = Path(__file__).resolve().parent.parent
 with (root / "data/cv.yaml").open(encoding="utf-8") as source:
@@ -147,6 +149,13 @@ for lang in LOCALES:
     for field in ("/Title", "/Author", "/Subject"):
         check(bool(meta.get(field)), f"{name}: document metadata {field} is empty")
 
+    keywords = [word.strip() for word in str(meta.get("/Keywords", "")).split(",")]
+    for skill in skills(featured_only=True):
+        check(skill in keywords, f"{name}: keyword {skill!r} is missing from the metadata")
+    check(cv["site"]["url"] in keywords, f"{name}: the CV domain is not among the keywords")
+    builds = [word for word in keywords if re.fullmatch(r"v?\d+\.\d+\.\d+[\w.-]*", word)]
+    check(not builds, f"{name}: keywords carry a build identifier: {builds}")
+
     # A block rendered twice reads as a duplicate to a human and to a parser.
     lines = [line.strip() for page in pages for line in page.splitlines()]
     counted: dict[str, int] = {}
@@ -180,6 +189,8 @@ class Page(html.parser.HTMLParser):
         self.hreflang: set[str] = set()
         self.canonical = ""
         self.headings: list[tuple[int, str]] = []
+        self.sections: list[str] = []
+        self.details = 0
         self.images: list[dict[str, str]] = []
         self.hrefs: set[str] = set()
         self.links: list[tuple[dict[str, str], str]] = []
@@ -192,6 +203,13 @@ class Page(html.parser.HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         a = {k: (v or "") for k, v in attrs}
+        if tag == "p" and any("summary-stack" in b.get("class", "") for _, b in self._open):
+            self.summaries += 1
+        if tag == "section":
+            self.sections += [c[:-len("-section")] for c in a.get("class", "").split()
+                              if c.endswith("-section") and c not in ("main-section", "side-section")]
+        elif tag == "details":
+            self.details += 1
         if tag == "html":
             self.lang = a.get("lang", "")
         elif tag == "meta":
@@ -222,7 +240,11 @@ class Page(html.parser.HTMLParser):
             self.handle_endtag(tag)
 
     def handle_data(self, data):
-        self.text.append(data)
+        # JSON-LD repeats the skills, the lead paragraph, the employer and the
+        # schools. Counting it as page text would let the machine-readable copy
+        # stand in for content the reader lost, so the corpus stops at <script>.
+        if not any(tag in ("script", "style") for tag, _ in self._open):
+            self.text.append(data)
         for tag, attrs in reversed(self._open):
             if tag == "title":
                 self.title += data
@@ -236,12 +258,9 @@ class Page(html.parser.HTMLParser):
             if tag == "script" and attrs.get("type") == "application/ld+json":
                 self.jsonld.append(json.loads(data))
                 break
-            if tag == "p" and any(
-                    "summary-stack" in a.get("class", "") for _, a in self._open):
-                self.summaries += 1
-                break
 
 
+site_shape: dict[str, tuple[int, int, int, int]] = {}
 site = build / "site"
 # English lives at /, and the redirect Hugo writes at /en/ is removed by the
 # build; a reappearance means that step was dropped.
@@ -264,6 +283,9 @@ for lang in LOCALES:
     canonical = cv["site"]["url"].rstrip("/") + ("/" if lang == "en" else f"/{lang}/")
 
     check(page.lang == lang, f"{where}: <html lang> is {page.lang!r}, expected {lang!r}")
+    check(tuple(page.sections) == SITE_SECTIONS,
+          f"{where}: section order is {page.sections}, expected {list(SITE_SECTIONS)}")
+    site_shape[lang] = (len(page.sections), len(page.headings), page.details, len(page.hrefs))
     check(flatten(page.title) == title, f"{where}: title does not match name and target.position")
     check(page.canonical == canonical,
           f"{where}: canonical is {page.canonical!r}, expected {canonical!r}")
@@ -356,6 +378,12 @@ for lang in LOCALES:
         knows = set(profile.get("knowsAbout", []))
         missing = sorted(set(skills(featured_only=False)) - knows)
         check(not missing, f"{where}: JSON-LD knowsAbout omits {missing[:3]}")
+
+if len(site_shape) == len(LOCALES):
+    en, ru = site_shape["en"], site_shape["ru"]
+    check(en == ru,
+          f"website: the locales render different shapes, "
+          f"(sections, headings, details, links) is {en} for en and {ru} for ru")
 
 for lang in LOCALES:
     path = site / ("404.html" if lang == "en" else f"{lang}/404.html")
