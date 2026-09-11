@@ -53,6 +53,15 @@ def detailed() -> list[dict]:
     return [job for job in cv["experience"] if job["detailed"]]
 
 
+def pdf_period(job: dict, lang: str) -> str:
+    def month(value: str) -> str:
+        year, number = value.split("-")
+        return f"{ui['months']['short'][lang][int(number) - 1]} {year}"
+
+    end = ui["present"][lang] if job["period"]["end"] is None else month(job["period"]["end"])
+    return f"{month(job['period']['start'])} – {end}"
+
+
 # --- PDF ------------------------------------------------------------------
 
 pdf_shape: dict[str, tuple[int, int, int]] = {}
@@ -66,6 +75,7 @@ for lang in LOCALES:
 
     reader = PdfReader(path)
     pages = [page.extract_text() or "" for page in reader.pages]
+    page_flats = [flatten(page) for page in pages]
     flat = flatten("\n".join(pages))
 
     # Two pages is the budget; a third means the content outgrew the format.
@@ -87,24 +97,53 @@ for lang in LOCALES:
     for skill in skills(featured_only=True):
         check(skill in flat, f"{name}: core skill {skill!r} is not in the text")
 
+    check(cv["personal"]["full_name"][lang] in page_flats[0],
+          f"{name}: candidate name is missing from the header")
+    check(cv["target"]["position"][lang] in page_flats[0],
+          f"{name}: target position is missing from the header")
+    for paragraph in cv["summary"]:
+        check(flatten(paragraph[lang]) in flat, f"{name}: summary paragraph is missing")
+
+    domain = re.sub(r"^https?://", "", cv["site"]["url"]).rstrip("/")
+    contacts = [cv["personal"]["email"]]
+    contacts += [profile.get("label", profile["network"]) for profile in cv["personal"]["profiles"]
+                 if lang in profile.get("resume_languages", list(LOCALES))]
+    contacts.append(domain)
+    check(" · ".join(contacts) in page_flats[0],
+          f"{name}: visible contact bar is incomplete or out of order")
+
     for job in detailed():
         company, position = job["company"][lang], job["position"][lang]
         check(company in flat and position in flat,
               f"{name}: detailed role {company!r} — {position!r} is incomplete")
-        check(flatten(job["scope"][lang])[:60] in flat,
+        scope = flatten(job["scope"][lang])
+        check(scope in flat,
               f"{name}: scope of {company!r} is missing")
+        role_parts = [company, position, pdf_period(job, lang), scope]
         for item in job["achievements"]:
             if item.get("featured", False):
-                check(flatten(item[lang])[:60] in flat,
+                achievement = flatten(item[lang])
+                role_parts.append(achievement)
+                check(achievement in flat,
                       f"{name}: featured achievement of {company!r} is missing")
+        check(any(all(part in page for part in role_parts) for page in page_flats),
+              f"{name}: detailed role {company!r} is split across pages")
 
     for job in cv["experience"]:
         if not job["detailed"]:
             company = job.get("resume_company", job["company"])[lang]
-            check(company in flat, f"{name}: earlier role {company!r} is missing")
+            entry = f"{pdf_period(job, lang)} — {company} — {job['position'][lang]}"
+            check(entry in flat, f"{name}: earlier role {company!r} is incomplete")
+
+    for item in cv["education"]:
+        entry = (f"{item['year']} — {item['institution'][lang]} "
+                 f"{item['specialization'][lang]} · {item['level'][lang]}")
+        check(entry in flat, f"{name}: education entry {item['institution'][lang]!r} is incomplete")
+    for item in cv["languages"]:
+        entry = f"{item['language'][lang]} — {item['level'][lang]}"
+        check(entry in flat, f"{name}: language entry {item['language'][lang]!r} is incomplete")
 
     # The footer carries identity onto a page that may be read on its own.
-    domain = re.sub(r"^https?://", "", cv["site"]["url"]).rstrip("/")
     for number, page in enumerate(pages, 1):
         page_flat = flatten(page)
         check(cv["personal"]["full_name"][lang] in page_flat
@@ -191,8 +230,11 @@ class Page(html.parser.HTMLParser):
         self.headings: list[tuple[int, str]] = []
         self.sections: list[str] = []
         self.details = 0
+        self.open_details = 0
+        self.skill_sections: dict[str, list[str]] = {"core": [], "additional": []}
         self.images: list[dict[str, str]] = []
         self.hrefs: set[str] = set()
+        self.anchors: list[dict[str, str]] = []
         self.links: list[tuple[dict[str, str], str]] = []
         self.jsonld: list[dict] = []
         self.lang = ""
@@ -210,6 +252,7 @@ class Page(html.parser.HTMLParser):
                               if c.endswith("-section") and c not in ("main-section", "side-section")]
         elif tag == "details":
             self.details += 1
+            self.open_details += int("open" in a)
         if tag == "html":
             self.lang = a.get("lang", "")
         elif tag == "meta":
@@ -225,6 +268,7 @@ class Page(html.parser.HTMLParser):
             self.images.append(a)
         elif tag == "a":
             self.hrefs.add(a.get("href", ""))
+            self.anchors.append(a)
         if tag not in self.VOID:
             self._open.append((tag, a))
 
@@ -245,6 +289,15 @@ class Page(html.parser.HTMLParser):
         # stand in for content the reader lost, so the corpus stops at <script>.
         if not any(tag in ("script", "style") for tag, _ in self._open):
             self.text.append(data)
+        if any(tag == "dd" for tag, _ in self._open):
+            for tag, attrs in reversed(self._open):
+                if tag != "section":
+                    continue
+                classes = attrs.get("class", "").split()
+                for section in self.skill_sections:
+                    if f"{section}-section" in classes:
+                        self.skill_sections[section] += [name.strip() for name in data.split(",")]
+                break
         for tag, attrs in reversed(self._open):
             if tag == "title":
                 self.title += data
@@ -315,6 +368,11 @@ for lang in LOCALES:
     check(page.summaries == len(cv["summary"]),
           f"{where}: {page.summaries} summary paragraphs rendered, "
           f"{len(cv['summary'])} in the data")
+    expected_details = len(detailed()) + int(any(not job["detailed"] for job in cv["experience"]))
+    check(page.details == expected_details,
+          f"{where}: {page.details} details blocks rendered, expected {expected_details}")
+    check(page.open_details == 0,
+          f"{where}: {page.open_details} details blocks are initially open")
 
     # A collapsed block is still part of the full CV and must survive in the
     # HTML. Check every canonical entry, not only the visible core subset.
@@ -361,23 +419,61 @@ for lang in LOCALES:
                   for attrs, label in links),
               f"{where}: <a href={href!r}> has no accessible name")
 
-    # The website shows every skill; the PDF shows the featured subset.
-    for skill in skills(featured_only=False):
-        check(skill in text, f"{where}: skill {skill!r} is not rendered")
+    # The website shows every skill exactly once and keeps the selected and
+    # additional subsets in separate adjacent sections.
+    expected_core = skills(featured_only=True)
+    expected_additional = [item["name"] for group in cv["skills"] for item in group["items"]
+                           if not item.get("featured", False)]
+    check(page.skill_sections["core"] == expected_core,
+          f"{where}: core skills differ from the featured data")
+    check(page.skill_sections["additional"] == expected_additional,
+          f"{where}: additional skills differ from the non-featured data")
 
     check(len(page.jsonld) == 1, f"{where}: expected exactly one JSON-LD block")
     for profile in page.jsonld:
+        check(profile.get("@context") == "https://schema.org" and profile.get("@type") == "Person",
+              f"{where}: JSON-LD root is not a schema.org Person")
+        check(profile.get("name") == full_name, f"{where}: JSON-LD name is incorrect")
+        check(profile.get("url") == canonical, f"{where}: JSON-LD URL is not canonical")
+        check(profile.get("email") == f"mailto:{cv['personal']['email']}",
+              f"{where}: JSON-LD email is incorrect")
         check(profile.get("jobTitle") == cv["target"]["position"][lang],
               f"{where}: JSON-LD jobTitle does not match target.position")
         check(profile.get("description") == lead,
               f"{where}: JSON-LD description is not the lead summary paragraph")
+        check(str(profile.get("image", "")).startswith(cv["site"]["url"]),
+              f"{where}: JSON-LD image is not an absolute site URL")
+        address = profile.get("address", {})
+        check(address.get("addressLocality") == cv["personal"]["location"]["city"][lang]
+              and address.get("addressCountry") == cv["personal"]["location"]["country_code"],
+              f"{where}: JSON-LD personal address is incorrect")
         same_as = set(profile.get("sameAs", []))
         for contact in cv["personal"]["profiles"]:
             check(contact["url"] in same_as,
-                  f"{where}: JSON-LD sameAs omits {contact['network']}")
+                   f"{where}: JSON-LD sameAs omits {contact['network']}")
         knows = set(profile.get("knowsAbout", []))
-        missing = sorted(set(skills(featured_only=False)) - knows)
-        check(not missing, f"{where}: JSON-LD knowsAbout omits {missing[:3]}")
+        check(knows == set(skills(featured_only=False))
+              and len(profile.get("knowsAbout", [])) == len(skills(featured_only=False)),
+              f"{where}: JSON-LD knowsAbout differs from the skill data")
+
+        current = next(job for job in cv["experience"] if job["period"]["end"] is None)
+        works_for = profile.get("worksFor", {})
+        check(works_for.get("name") == current["company"][lang],
+              f"{where}: JSON-LD worksFor name is incorrect")
+        if current["website"]:
+            check(works_for.get("url") == f"https://{current['website']}",
+                  f"{where}: JSON-LD worksFor URL is incorrect")
+        work_address = works_for.get("address", {})
+        check(work_address.get("addressLocality") == current["location"]["city"][lang]
+              and work_address.get("addressCountry") == current["location"]["country_code"],
+              f"{where}: JSON-LD worksFor address is incorrect")
+
+        alumni = [item.get("name") for item in profile.get("alumniOf", [])]
+        check(alumni == [item["institution"][lang] for item in cv["education"]],
+              f"{where}: JSON-LD alumniOf differs from education data")
+        spoken = [item.get("name") for item in profile.get("knowsLanguage", [])]
+        check(spoken == [item["language"][lang] for item in cv["languages"]],
+              f"{where}: JSON-LD knowsLanguage differs from language data")
 
 if len(site_shape) == len(LOCALES):
     en, ru = site_shape["en"], site_shape["ru"]
@@ -392,8 +488,21 @@ for lang in LOCALES:
         continue
     page = Page()
     page.feed(path.read_text(encoding="utf-8"))
-    check(page.meta.get("robots") == "noindex",
-          f"{path.relative_to(root)}: robots meta is not noindex")
+    where = str(path.relative_to(root))
+    check(page.lang == lang, f"{where}: <html lang> is {page.lang!r}, expected {lang!r}")
+    check(page.meta.get("robots") == "noindex", f"{where}: robots meta is not noindex")
+    h1 = [text for level, text in page.headings if level == 1]
+    check(h1 == [ui["notFoundTitle"][lang]], f"{where}: localized h1 is incorrect")
+    text = flatten("".join(page.text))
+    check(ui["notFoundBody"][lang] in text, f"{where}: localized explanation is missing")
+    for home_lang, href in (("en", "/"), ("ru", "/ru/")):
+        matches = [anchor for anchor in page.anchors if anchor.get("href") == href]
+        check(len(matches) == 1
+              and matches[0].get("lang") == home_lang
+              and matches[0].get("hreflang") == home_lang,
+              f"{where}: {home_lang} home link is missing or lacks language metadata")
+        check(f"{ui['notFoundHome'][home_lang]} · {home_lang.upper()}" in text,
+              f"{where}: {home_lang} home-link label is missing")
 
 if problems:
     for problem in problems:

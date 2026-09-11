@@ -71,7 +71,10 @@
 )
 #for profile in source.personal.profiles {
   if lang in profile.at("resume_languages", default: ("en", "ru")) {
-    contacts.push(link(profile.url, profile.network))
+    contacts.push(link(profile.url, profile.at(
+      "label",
+      default: profile.network,
+    )))
   }
 }
 #contacts.push(link(source.site.url, domain))
