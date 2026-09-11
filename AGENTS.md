@@ -180,6 +180,8 @@
 - `make preview`: Hugo development server.
 - `make build`: website, both PDFs, and bilingual TXT exports.
 - `make build/text`: generate profile, skills, experience, and education TXT files for EN and RU.
+- Those TXT files are a local convenience artifact for pasting into job boards and forms:
+  they ship neither to the website nor to a GitHub Release, and nothing links to them.
 - `make fmt`: format Typst.
 - `make lint`: YAML, Actions, and Typst lint.
 - `make ci VERSION=v1.0.0`: schema validation and complete reproducible build.
