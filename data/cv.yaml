@@ -41,10 +41,10 @@ target:
     ru: Удалённо
 
 summary:
-- en: "I build fault-tolerant production platforms and keep them running: four regions on GCP/GKE, GitOps, IaC, CI/CD, observability, and stateful workloads."
-  ru: "Строю отказоустойчивые production-платформы и отвечаю за их работу: четыре региона в GCP/GKE, GitOps, IaC, CI/CD, наблюдаемость и stateful-сервисы."
-- en: I have completed three zero-downtime infrastructure migrations, introduced GitOps for 20+ services, and moved cloud resource management from Terraform to Crossplane. I standardize delivery and reduce manual operational work across development and operations.
-  ru: Провёл три миграции инфраструктуры без простоя, внедрил GitOps для 20+ сервисов и перевёл управление облачными ресурсами с Terraform на Crossplane. На стыке разработки и эксплуатации стандартизирую доставку и уменьшаю объём ручных операций.
+- en: "I build and operate fault-tolerant, multi-region production platforms: Kubernetes, GitOps, IaC, CI/CD, observability and operator-managed stateful services."
+  ru: "Строю и эксплуатирую отказоустойчивые multi-region production-платформы: Kubernetes, GitOps, IaC, CI/CD, наблюдаемость и stateful-сервисы под операторами."
+- en: The platform I run today spans four regions on GCP/GKE. I have completed three zero-downtime infrastructure migrations, introduced GitOps for 20+ services, and moved cloud resource management from Terraform to Crossplane. I standardize delivery and reduce manual operational work across development and operations.
+  ru: Текущая платформа работает в четырёх регионах в GCP/GKE. Провёл три миграции инфраструктуры без простоя, внедрил GitOps для 20+ сервисов и перевёл управление облачными ресурсами с Terraform на Crossplane. На стыке разработки и эксплуатации стандартизирую доставку и уменьшаю объём ручных операций.
 
 selected_work:
 - achievement_id: funnelflux-migration
@@ -52,24 +52,24 @@ selected_work:
     en: Zero-downtime platform migrations
     ru: Миграции платформы без простоя
   outcome:
-    en: ~300 RPS · VPS to GKE · zero downtime
-    ru: ~300 RPS · с VPS в GKE · без простоя
+    en: ~300 RPS · zero downtime, twice
+    ru: ~300 RPS · дважды без простоя
   skill_ids: [docker-swarm, ansible, gke, terraform]
 - achievement_id: gitops-platform
   title:
     en: GitOps delivery
     ru: GitOps для 20+ сервисов
   outcome:
-    en: 20+ services · up to ten deploys a day
-    ru: 20+ сервисов · до десяти деплоев в день
+    en: 20+ services · up to ten a day · rollback in 2 min
+    ru: 20+ сервисов · до десяти в день · откат за 2 мин
   skill_ids: [argo-cd, kubernetes]
 - achievement_id: crossplane-infrastructure
   title:
-    en: Cloud infrastructure through Crossplane
-    ru: Инфраструктура на Crossplane
+    en: Declarative infrastructure with Crossplane
+    ru: Декларативная инфраструктура на Crossplane
   outcome:
-    en: Terraform to Crossplane · environments in minutes
-    ru: с Terraform на Crossplane · окружение за минуты
+    en: 3 compositions · environments in minutes
+    ru: три композиции · окружение за минуты
   skill_ids: [crossplane, google-cloud-platform, gke]
 
 experience:
@@ -92,8 +92,8 @@ experience:
     ru: Senior Platform Engineer
   detailed: true
   scope:
-    en: "Own the production platform and delivery infrastructure on GCP/GKE, covering CI/CD, GitOps, reliability, observability, secrets, and stateful services."
-    ru: "Отвечаю за production-платформу и delivery-инфраструктуру в GCP/GKE: CI/CD, GitOps, отказоустойчивость, наблюдаемость, секреты и stateful-сервисы."
+    en: "Own a multi-region Kubernetes production platform and its delivery infrastructure: CI/CD, GitOps, reliability, observability, secrets, and stateful services; the current implementation runs on GCP/GKE."
+    ru: "Отвечаю за multi-region Kubernetes-платформу и её delivery-инфраструктуру: CI/CD, GitOps, отказоустойчивость, наблюдаемость, секреты и stateful-сервисы; текущая реализация работает в GCP/GKE."
   responsibilities:
   - en: Set up and maintain CI/CD.
     ru: Настройка и сопровождение CI/CD.
@@ -111,20 +111,20 @@ experience:
     ru: Перенёс платформу с нагрузкой ~300 RPS с настроенного вручную VPS в Docker Swarm под управлением Ansible, затем в GKE под управлением Terraform; обе миграции прошли без простоя.
     featured: true
   - id: multi-region-platform
-    en: Built out the production platform across four GKE clusters in four regions joined by a Multi-Cluster Gateway, with separate staging and infrastructure clusters.
-    ru: Развернул production-платформу на четырёх кластерах GKE в четырёх регионах, объединив их через Multi-Cluster Gateway и выделив отдельные кластеры для staging и инфраструктуры.
+    en: Built a four-region production platform on four Kubernetes clusters (GKE) joined by a Multi-Cluster Gateway, with separate staging and infrastructure clusters.
+    ru: Развернул production-платформу в четырёх регионах на четырёх Kubernetes-кластерах (GKE), объединив их через Multi-Cluster Gateway и выделив отдельные кластеры для staging и инфраструктуры.
     featured: true
   - id: gitops-platform
     en: Introduced Argo CD GitOps for 20+ services and internal tools serving six senior developers; deployment time fell from over three minutes to one, frequency rose from two or three a week to as many as ten a day, and rollback became one Git commit applied in under two minutes.
     ru: Внедрил GitOps на Argo CD для 20+ сервисов и внутренних инструментов, которыми пользуются шесть senior-разработчиков; время развёртывания упало с более чем трёх минут до минуты, частота выросла с двух-трёх в неделю до десяти в день, а откат свёлся к одному коммиту в Git, который применяется меньше чем за две минуты.
     featured: true
   - id: cloud-cost
-    en: Cut monthly cloud spend several times over by moving workloads onto spot nodes and replacing SaaS ClickHouse, PostgreSQL and Dragonfly with operator-managed clusters.
-    ru: "Сократил ежемесячные расходы на облако в несколько раз: перевёл нагрузку на spot-узлы и заменил SaaS-версии ClickHouse, PostgreSQL и Dragonfly кластерами под управлением операторов."
+    en: Cut monthly cloud spend several times over by moving suitable workloads onto spot nodes and replacing SaaS ClickHouse, PostgreSQL and Dragonfly with operator-managed clusters.
+    ru: "Сократил ежемесячные расходы на облако в несколько раз: перевёл подходящие нагрузки на spot-узлы и заменил SaaS-версии ClickHouse, PostgreSQL и Dragonfly кластерами под управлением операторов."
     featured: true
   - id: crossplane-infrastructure
-    en: Unified application and cloud infrastructure management in one GitOps process by moving cloud resources from Terraform to Crossplane; all cloud infrastructure is declared through three compositions — clusters, networks and cache — and a new environment takes minutes instead of days.
-    ru: Объединил управление приложениями и облачной инфраструктурой в единый процесс GitOps, переведя облачные ресурсы с Terraform на Crossplane; вся облачная инфраструктура описана тремя композициями — кластеры, сети и кэш, — а новое окружение поднимается за минуты вместо дней.
+    en: Unified application and infrastructure management under GitOps by moving infrastructure from Terraform to Crossplane; cluster, network and cache infrastructure is modelled through three compositions, and a new environment takes minutes instead of days.
+    ru: Объединил управление приложениями и инфраструктурой в единый процесс GitOps, переведя инфраструктуру с Terraform на Crossplane; кластеры, сети и кэш описаны тремя композициями, а новое окружение поднимается за минуты вместо дней.
     featured: true
   - en: Moved deployments under Argo CD management, then replaced Helm template rendering in Argo CD with pre-rendered YAML manifests (Rendered Manifests Pattern). Changes are visible in plain YAML diffs, and Argo CD does not spend resources rendering templates.
     ru: Перевёл развёртывание под управление Argo CD, затем заменил рендеринг Helm-шаблонов в Argo CD готовыми YAML-манифестами (Rendered Manifests Pattern). Изменения видны в обычных YAML-диффах, а Argo CD не тратит ресурсы на рендеринг шаблонов.
@@ -547,15 +547,9 @@ languages:
 
 skills:
 - area:
-    en: Cloud & Platform
-    ru: Облако и платформа
+    en: Platform & Cloud
+    ru: Платформа и облако
   items:
-  - id: google-cloud-platform
-    name: Google Cloud Platform
-    featured: true
-  - id: gke
-    name: Google Kubernetes Engine
-    featured: true
   - id: kubernetes
     name: Kubernetes
     featured: true
@@ -566,6 +560,12 @@ skills:
   - name: Kustomize
     featured: true
   - name: Kubernetes Operators
+    featured: true
+  - id: google-cloud-platform
+    name: Google Cloud Platform
+    featured: true
+  - id: gke
+    name: Google Kubernetes Engine
     featured: true
   - name: GitHub
   - name: Cloudflare
@@ -596,7 +596,6 @@ skills:
     featured: true
   - name: Flux CD
   - name: Google Config Connector
-    featured: true
   - name: AWS CloudFormation
   - name: OpenStack Heat
   - name: Google Cloud Deployment Manager
