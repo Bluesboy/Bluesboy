@@ -188,7 +188,7 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outli
   border-radius: var(--radius);
   color: var(--muted);
   text-decoration: none;
-  font: 700 .8rem/1.4 var(--display-font);
+  font: 700 .82rem/1.4 var(--display-font);
   letter-spacing: .08em;
   text-transform: uppercase;
 }
@@ -249,7 +249,7 @@ h1 {
 .mini-meta.strong { margin-top: .3rem; color: var(--ink); }
 .remote-flag { color: var(--accent); font-weight: 700; }
 .bullet-list, .about-list { margin: .7rem 0 0; padding-left: 1.15rem; }
-.bullet-list { display: grid; gap: .45rem; }
+.bullet-list { display: grid; gap: .6rem; }
 .achievement-box { margin-top: 1rem; padding-top: .85rem; border-top: 1px solid var(--line); }
 .achievement-box .mini-meta { color: var(--accent); font-weight: 700; text-transform: uppercase; }
 details { margin-top: 1.25rem; }
