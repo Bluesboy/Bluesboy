@@ -66,7 +66,7 @@ selected_work:
 - achievement_id: crossplane-infrastructure
   title:
     en: Cloud infrastructure through Crossplane
-    ru: Облачная инфраструктура через Crossplane
+    ru: Инфраструктура на Crossplane
   outcome:
     en: Terraform to Crossplane · one GitOps workflow
     ru: с Terraform на Crossplane · единый GitOps-процесс
