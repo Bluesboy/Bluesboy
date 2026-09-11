@@ -60,8 +60,8 @@ selected_work:
     en: GitOps delivery
     ru: GitOps для 20+ сервисов
   outcome:
-    en: 20+ services · 2–3/week to 10/day · rollback <2 min
-    ru: 20+ сервисов · с 2–3/нед. до 10/день · откат <2 мин
+    en: 20+ services · up to 10 deploys a day
+    ru: 20+ сервисов · до 10 деплоев в день
   skill_ids: [argo-cd, kubernetes]
 - achievement_id: crossplane-infrastructure
   title:
@@ -93,7 +93,7 @@ experience:
   detailed: true
   scope:
     en: "Own a multi-region Kubernetes production platform and its delivery infrastructure: CI/CD, GitOps, reliability, observability, secrets, and stateful services; the current implementation runs on GCP/GKE."
-    ru: "Отвечаю за multi-region Kubernetes-платформу и её delivery-инфраструктуру: CI/CD, GitOps, отказоустойчивость, наблюдаемость, секреты и stateful-сервисы; текущая реализация работает в GCP/GKE."
+    ru: "Отвечаю за Kubernetes-платформу в нескольких регионах и её delivery-инфраструктуру: CI/CD, GitOps, отказоустойчивость, наблюдаемость, секреты и stateful-сервисы; текущая реализация работает в GCP/GKE."
   responsibilities:
   - en: Set up and maintain CI/CD.
     ru: Настройка и сопровождение CI/CD.
@@ -115,8 +115,8 @@ experience:
     ru: Развернул production-платформу на четырёх Kubernetes-кластерах (GKE) в четырёх регионах и выделил отдельные кластеры для staging и инфраструктуры; production-кластеры объединил через Multi-Cluster Gateway.
     featured: true
   - id: gitops-platform
-    en: Introduced Argo CD GitOps for 20+ services and internal tools used by a six-developer engineering team; cut deployment time from over three minutes to about one and raised deployment frequency from two or three a week to as many as ten a day. Rollback is one reverted Git commit and completes in under two minutes.
-    ru: "Внедрил GitOps на Argo CD для 20+ сервисов и внутренних инструментов команды из шести разработчиков: сократил время развёртывания с более чем трёх минут примерно до одной и поднял частоту с двух-трёх в неделю до десяти в день. Откат — отмена одного коммита в Git, выполняется меньше чем за две минуты."
+    en: Introduced Argo CD GitOps for 20+ services and internal tools used by a six-developer engineering team; cut deployment time from over three minutes to about one and raised deployment frequency from two or three a week to as many as ten a day. Rollback requires reverting a single Git commit and completes in under two minutes.
+    ru: "Внедрил GitOps на Argo CD для 20+ сервисов и внутренних инструментов команды из шести разработчиков: сократил время развёртывания с более чем трёх минут примерно до одной и поднял частоту с двух-трёх в неделю до десяти в день. Откат выполняется отменой одного коммита в Git и занимает менее двух минут."
     featured: true
   - id: cloud-cost
     en: Reduced monthly cloud spend several-fold by moving suitable workloads onto spot nodes and replacing SaaS ClickHouse, PostgreSQL and Dragonfly with operator-managed clusters.
