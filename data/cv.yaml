@@ -12,9 +12,9 @@ personal:
       en: Russia
       ru: Россия
     country_code: RU
-  availability:
-    en: Open to business trips
-    ru: Готов к командировкам
+  business_travel:
+    en: Available
+    ru: Готов
   email: youngreg@ya.ru
   profiles:
   - network: Telegram

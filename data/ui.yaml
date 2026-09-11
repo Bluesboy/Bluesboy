@@ -40,9 +40,9 @@ theme:
 location:
   en: Location
   ru: Локация
-availability:
-  en: Availability
-  ru: Доступность
+businessTravel:
+  en: Business travel
+  ru: Командировки
 format:
   en: Work format
   ru: Формат работы

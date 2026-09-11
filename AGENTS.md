@@ -70,6 +70,8 @@
 - Store language proficiency as a localized semantic `level`, never a visual `rating`.
 - Phone is optional. Never reintroduce it when absent from `data/cv.yaml`.
 - Do not store or render a birth date; it is personal data with no rendering purpose.
+- Name a personal field after what its value says: `personal.business_travel` holds availability for
+  travel, not general availability.
 - Store every external profile, Telegram included, in `personal.profiles`.
 - Use the optional `label` on a profile when the displayed text differs from the network name.
 - Do not hardcode profile links or per-network branches in renderers.

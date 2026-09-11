@@ -4,7 +4,7 @@
 {{ $fullName := partial "localized.html" (dict "value" $data.personal.full_name "lang" $lang) }}
 {{ $title := partial "localized.html" (dict "value" $data.target.position "lang" $lang) }}
 {{ $location := partial "location.html" (dict "location" $data.personal.location "lang" $lang) }}
-{{ $availability := partial "localized.html" (dict "value" $data.personal.availability "lang" $lang) }}
+{{ $businessTravel := partial "localized.html" (dict "value" $data.personal.business_travel "lang" $lang) }}
 {{ $pdfFile := cond (eq $lang "ru") "shamil-sattarov-resume-ru.pdf" "shamil-sattarov-resume-en.pdf" }}
 {{ $pdfURL := printf "%s/%s" site.Params.releaseDownloadURL $pdfFile }}
 {{ $skillsByID := dict }}
@@ -84,7 +84,7 @@
       <dl class="fact-list">
         <div><dt>{{ partial "label.html" (dict "key" "format" "lang" $lang) }}</dt><dd>{{ partial "localized.html" (dict "value" $data.target.work_format "lang" $lang) }}</dd></div>
         <div><dt>{{ partial "label.html" (dict "key" "location" "lang" $lang) }}</dt><dd>{{ $location }}</dd></div>
-        <div><dt>{{ partial "label.html" (dict "key" "availability" "lang" $lang) }}</dt><dd>{{ $availability }}</dd></div>
+        <div><dt>{{ partial "label.html" (dict "key" "businessTravel" "lang" $lang) }}</dt><dd>{{ $businessTravel }}</dd></div>
       </dl>
       <h3 class="contact-details-title">{{ partial "label.html" (dict "key" "languages" "lang" $lang) }}</h3>
       {{/* One line, still a definition list: the rail cannot afford three
