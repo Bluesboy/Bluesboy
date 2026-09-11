@@ -17,6 +17,9 @@
   --on-accent: #fff;
   --on-ink: #fff;
   --shadow: 0 24px 70px rgba(15, 32, 35, .14);
+  /* One radius for every control, so a filled button and an outlined
+     disclosure read as the same family. Not a colour: defined once. */
+  --radius: .55rem;
   /* IBM Plex Sans ships in assets/fonts and is declared in head.html, so
      the page renders the same everywhere and matches the PDF. The rest of
      the stack only covers the swap window and a failed font load. */
@@ -107,6 +110,7 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outli
   min-width: 2.7rem;
   padding: .45rem .65rem;
   border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
   color: var(--ink);
   cursor: pointer;
 }
@@ -131,6 +135,7 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outli
   min-width: 2.7rem;
   padding: .45rem .65rem;
   border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
   text-align: center;
   text-decoration: none;
   font: 700 .78rem/1 var(--display-font);
@@ -211,8 +216,18 @@ h1 {
 .achievement-box { margin-top: .85rem; padding-top: .75rem; border-top: 1px solid var(--line); }
 .achievement-box .mini-meta { color: var(--accent); font-weight: 700; text-transform: uppercase; }
 details { margin-top: 1rem; }
-summary { width: fit-content; padding: .55rem .7rem; border: 1px solid var(--line-strong); color: var(--accent); font-weight: 700; cursor: pointer; overflow-wrap: anywhere; }
-summary:hover { color: var(--accent-strong); }
+/* The primary action and the disclosures differ only in fill: same box,
+   same radius, same type, so the page speaks one button language. */
+.download-link,
+summary {
+  padding: .62rem .95rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  font: 700 .95rem/1.25 var(--body-font);
+  letter-spacing: .02em;
+}
+summary { width: fit-content; border-color: var(--line-strong); color: var(--accent); cursor: pointer; overflow-wrap: anywhere; }
+summary:hover { color: var(--accent-strong); border-color: var(--accent); }
 .earlier-experience { margin-top: 2rem; }
 .earlier-experience > .experience-list { margin-top: 1.5rem; }
 
@@ -248,12 +263,9 @@ summary:hover { color: var(--accent-strong); }
 .download-link {
   display: inline-block;
   margin-top: 1rem;
-  padding: .7rem 1rem;
   color: var(--on-accent);
   background: var(--accent);
   text-decoration: none;
-  font-weight: 700;
-  letter-spacing: .08em;
 }
 .download-link:hover { color: var(--on-accent); background: var(--accent-strong); }
 .fact-list, .language-list { display: grid; gap: .8rem; margin: 0; }
