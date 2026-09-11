@@ -47,9 +47,10 @@
   default to `company`. Hugo always shows the full `company` name.
 - `selected_work` stores a localized short title, a localized one-line `outcome` and references to one
   achievement and existing skills; resolve technology names from their canonical entries.
-- The `outcome` line restates figures the referenced achievement already states, stays under 60 characters,
-  and is website-only: `scripts/validate_cv.py` rejects a figure the achievement does not support and
-  `scripts/check_artifacts.py` fails if the line reaches the PDF.
+- The `outcome` line restates what the referenced achievement already says, stays under 60 characters,
+  and is website-only. It may carry a figure but does not have to: `scripts/validate_cv.py` rejects a
+  figure the achievement does not support, and `scripts/check_artifacts.py` fails if the line reaches
+  the PDF. Prefer what a result means over a count that ages.
 - Detailed roles need stable IDs. Selected Work achievement and skill references must resolve to stable IDs.
 - Optional `resume_group` compacts contiguous earlier roles in the PDF through a localized `ui.resumeGroups`
   label and a date range derived from their periods; Hugo still renders every role separately.
