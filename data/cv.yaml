@@ -41,8 +41,8 @@ target:
     ru: Удалённо
 
 summary:
-- en: "I specialize in production infrastructure on GCP/GKE: GitOps, IaC, CI/CD, observability, and stateful workloads."
-  ru: "Специализируюсь на production-инфраструктуре в GCP/GKE: GitOps, IaC, CI/CD, наблюдаемость и эксплуатация stateful-сервисов."
+- en: "I build fault-tolerant production platforms and keep them running: four regions on GCP/GKE, GitOps, IaC, CI/CD, observability, and stateful workloads."
+  ru: "Строю отказоустойчивые production-платформы и отвечаю за их работу: четыре региона в GCP/GKE, GitOps, IaC, CI/CD, наблюдаемость и stateful-сервисы."
 - en: I have completed three zero-downtime infrastructure migrations, introduced GitOps for 20+ services, and moved cloud resource management from Terraform to Crossplane. I standardize delivery and reduce manual operational work across development and operations.
   ru: Провёл три миграции инфраструктуры без простоя, внедрил GitOps для 20+ сервисов и перевёл управление облачными ресурсами с Terraform на Crossplane. На стыке разработки и эксплуатации стандартизирую доставку и уменьшаю объём ручных операций.
 
@@ -133,8 +133,8 @@ experience:
   - en: Standardized lifecycle management for PostgreSQL, ClickHouse, Redis (now Dragonfly), and Elasticsearch with Kubernetes operators; migrated Kafka from SaaS to a Strimzi-managed cluster.
     ru: Стандартизировал управление жизненным циклом PostgreSQL, ClickHouse, Redis (сейчас Dragonfly) и Elasticsearch с помощью Kubernetes-операторов; перенёс Kafka из SaaS в кластер под управлением Strimzi.
     featured: true
-  - en: Moved static delivery from Nginx to Google Cloud Storage behind a CDN. This eliminated outages and configuration overhead.
-    ru: Перенёс раздачу статики с Nginx в Google Cloud Storage за CDN. Это устранило сбои и избавило от обслуживания конфигурации.
+  - en: "Moved static delivery from Nginx to Google Cloud Storage behind a CDN: an update no longer leaves Nginx serving the previous files, and its configuration left the platform."
+    ru: "Перенёс раздачу статики с Nginx в Google Cloud Storage за CDN: после обновления статики больше не отдаются старые файлы, а конфигурация Nginx ушла из платформы."
 - id: rossko
   company:
     en: Rossko
@@ -175,8 +175,8 @@ experience:
   - en: Standardized continuous delivery for 15+ microservices, giving 8 developers a shared path to production instead of per-service scripts.
     ru: "Унифицировал доставку 15+ микросервисов: 8 разработчиков получили единый путь в продакшен вместо отдельных скриптов для каждого сервиса."
     featured: true
-  - en: Built microservice observability with EFK, Prometheus, and Grafana, centralizing logs and metrics to speed up failure detection and diagnosis.
-    ru: Внедрил наблюдаемость микросервисов на EFK, Prometheus и Grafana; объединил журналы и метрики, ускорив обнаружение и диагностику сбоев.
+  - en: Built microservice observability with EFK, Prometheus, and Grafana, giving the team one place to look for logs and metrics during an incident.
+    ru: "Внедрил наблюдаемость микросервисов на EFK, Prometheus и Grafana: журналы и метрики собрались в одном месте, куда команда смотрит при инциденте."
     featured: true
   - en: Moved web service assets to MinIO object storage, taking file state off the application servers.
     ru: Перенёс файлы веб-сервисов в объектное хранилище MinIO, чтобы приложения не хранили состояние локально.
