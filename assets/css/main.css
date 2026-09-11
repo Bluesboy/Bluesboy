@@ -147,9 +147,9 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outli
     "summary contacts"
     "core core"
     "additional additional"
+    "about about"
     "experience experience"
-    "education languages"
-    "about about";
+    "education education";
   gap: 2.6rem 2rem;
   padding: clamp(2rem, 4vw, 3.2rem);
   overflow: hidden;
@@ -163,7 +163,6 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outli
 .experience-section { grid-area: experience; }
 .experience-section > .experience-list, .earlier-experience { max-width: 90ch; }
 .education-section { grid-area: education; }
-.languages-section { grid-area: languages; }
 .additional-section { grid-area: additional; }
 .about-section { grid-area: about; }
 .side-section { align-self: start; padding: 1.5rem; background: var(--side); }
@@ -244,7 +243,6 @@ summary:hover { color: var(--accent-strong); }
   border-radius: 50%;
   box-shadow: 0 10px 30px rgba(15, 32, 35, .16);
 }
-.avatar-wrap figcaption { margin-top: .75rem; color: var(--muted); font: 700 .72rem/1.2 var(--display-font); letter-spacing: .12em; text-transform: uppercase; }
 .contact-details-title { margin: 1.5rem 0 .75rem; font-size: .9rem; }
 .contact-list { display: grid; gap: .45rem; font-style: normal; }
 .contact-list a { display: flex; align-items: center; gap: .55rem; width: fit-content; }
@@ -265,7 +263,6 @@ summary:hover { color: var(--accent-strong); }
 .fact-list dt, .language-list dt { color: var(--muted); font-size: .82rem; text-transform: uppercase; }
 .fact-list dd, .language-list dd { margin: 0; text-align: right; }
 .language-list dd { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: .35rem .55rem; }
-.language-level { color: var(--muted); font-size: .82rem; }
 .skill-groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .55rem 2rem; margin: 0; font-size: .9rem; }
 .additional-section > h2, .additional-section .skill-groups { color: var(--muted); }
 .skill-group dt { display: inline; margin-inline-end: .25em; font-weight: 700; }
@@ -326,6 +323,7 @@ summary:hover { color: var(--accent-strong); }
   .page-shell { width: 100%; padding: 0; }
   .resume-sheet { display: block; padding: 0; overflow: visible; box-shadow: none; }
   .main-section, .side-section { margin-top: 2rem; padding: 0; background: var(--paper); }
-  .main-section, .side-section, .experience-card, .education-item { break-inside: avoid; }
+  .main-section > h2, .side-section > h2 { break-after: avoid; }
+  .side-section, .experience-card, .education-item { break-inside: avoid; }
   .download-link { color: var(--ink); background: transparent; border: 1px solid var(--ink); }
 }

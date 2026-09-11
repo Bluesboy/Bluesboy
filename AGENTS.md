@@ -76,8 +76,9 @@
 - Do not show the website URL as a contact linking to the current page.
 - Resume buttons point to stable GitHub Release assets, not Pages copies.
 - Keep the site responsive, semantic, accessible, and JavaScript-free.
-- Keep mobile DOM order: identity, summary, contacts, core stack, additional technologies,
-  experience, education, languages, How I work. Keep both skill sections together on desktop too.
+- Keep mobile DOM order: identity, summary, contacts with languages, core stack,
+  additional technologies, How I work, experience, education. Keep both skill sections together
+  on desktop too.
 - Size type in `rem`, never in `px`, so a raised browser font size scales the whole page.
 - Stack label/value pairs into one column below 560px.
 - Keep fonts and icons local. Do not add CDN or runtime network dependencies.
@@ -129,8 +130,8 @@
 - Keep section headings smaller than the candidate name and role headings.
 - Use a single column with semantic top-to-bottom plain-text extraction; no sidebars or content tables.
 - Keep order: name, target role, contacts, summary, core expertise, experience, earlier experience, education, languages.
-- Target positioning never changes historical job titles.
-- Render core skills as compact named text groups, aiming for about 25–30 visible items.
+- Keep target positioning independent of historical job titles and grades; preserve factual historical titles.
+- Render core skills as compact named text groups, aiming for about 30–35 visible items.
 - Detailed roles show company, factual title, month-level dates, location/remote, scope, and featured achievements.
 - Keep the role introduction and first achievement together; allow later achievements to flow across pages.
 - Earlier roles show dates, company, and title; do not expand their responsibilities or achievements.

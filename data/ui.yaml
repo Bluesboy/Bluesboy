@@ -37,9 +37,6 @@ languageSwitch:
 theme:
   en: Dark theme
   ru: Тёмная тема
-heroEyebrow:
-  en: Platform engineering profile
-  ru: Профиль платформенного инженера
 location:
   en: Location
   ru: Локация

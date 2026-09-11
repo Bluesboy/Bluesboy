@@ -1,5 +1,4 @@
 {{ $person := .person }}
-{{ $lang := .lang }}
 {{/* Rendered at most 220 CSS px wide (.avatar-wrap in main.css), so 440
      and 660 cover 2x and 3x. WebP for browsers that take it, JPEG for
      the rest; the master is 1254x1254 and was previously shipped raw. */}}
@@ -21,5 +20,4 @@
       loading="eager"
       decoding="async">
   </picture>
-  <figcaption>{{ partial "label.html" (dict "key" "heroEyebrow" "lang" $lang) }}</figcaption>
 </figure>

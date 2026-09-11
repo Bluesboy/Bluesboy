@@ -29,12 +29,11 @@
 <main id="main" class="resume-sheet" tabindex="-1">
   <header class="identity">
     <div>
-      <p class="kicker">{{ partial "label.html" (dict "key" "heroEyebrow" "lang" $lang) }}</p>
       <h1>{{ $fullName }}</h1>
       <p class="headline">{{ $title }}</p>
       <div class="title-rule" aria-hidden="true"></div>
     </div>
-    {{ partial "avatar.html" (dict "person" $fullName "lang" $lang) }}
+    {{ partial "avatar.html" (dict "person" $fullName) }}
   </header>
 
     <section class="main-section summary-section">
@@ -72,6 +71,15 @@
         <div><dt>{{ partial "label.html" (dict "key" "availability" "lang" $lang) }}</dt><dd>{{ $availability }}</dd></div>
         <div><dt>{{ partial "label.html" (dict "key" "format" "lang" $lang) }}</dt><dd>{{ partial "localized.html" (dict "value" $data.target.work_format "lang" $lang) }}</dd></div>
       </dl>
+      <h3 class="contact-details-title">{{ partial "label.html" (dict "key" "languages" "lang" $lang) }}</h3>
+      <dl class="language-list">
+        {{ range $data.languages }}
+          <div>
+            <dt>{{ partial "localized.html" (dict "value" .language "lang" $lang) }}</dt>
+            <dd>{{ partial "localized.html" (dict "value" .level "lang" $lang) }}</dd>
+          </div>
+        {{ end }}
+      </dl>
     </section>
 
     <section class="main-section core-section">
@@ -82,6 +90,13 @@
     <section class="main-section additional-section">
       <h2>{{ partial "label.html" (dict "key" "additionalSkills" "lang" $lang) }}</h2>
       {{ partial "skill-groups.html" (dict "featured" false "lang" $lang) }}
+    </section>
+
+    <section class="main-section about-section">
+      <h2>{{ partial "label.html" (dict "key" "about" "lang" $lang) }}</h2>
+      <ul class="about-list">
+        {{ range $data.about }}<li>{{ index . $lang | default (index . "en") }}</li>{{ end }}
+      </ul>
     </section>
 
     <section class="main-section experience-section">
@@ -117,25 +132,5 @@
       </div>
     </section>
 
-    <section class="side-section languages-section">
-      <h2>{{ partial "label.html" (dict "key" "languages" "lang" $lang) }}</h2>
-      <dl class="language-list">
-        {{ range $data.languages }}
-          <div>
-            <dt>{{ partial "localized.html" (dict "value" .language "lang" $lang) }}</dt>
-            <dd>
-              <span class="language-level">{{ partial "localized.html" (dict "value" .level "lang" $lang) }}</span>
-            </dd>
-          </div>
-        {{ end }}
-      </dl>
-    </section>
-
-    <section class="main-section about-section">
-      <h2>{{ partial "label.html" (dict "key" "about" "lang" $lang) }}</h2>
-      <ul class="about-list">
-        {{ range $data.about }}<li>{{ index . $lang | default (index . "en") }}</li>{{ end }}
-      </ul>
-    </section>
 </main>
 {{ end }}
