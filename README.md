@@ -5,8 +5,8 @@
 👋 Platform engineer. I take systems that someone keeps alive by hand and make
 them declarative — Kubernetes, GitOps. If it isn't in Git, it doesn't exist.
 
-🎂 A Pentium 100 MHz turned up as a birthday present in '95, and one thing led
-to another.
+🎂 30+ years with computers. It started with a Pentium 100 MHz birthday present
+in '95, and one thing led to another.
 
 🧠 Somewhere in the mind palace there is still a network engineer who remembers
 what a VLAN is and how STP differs from RSTP. And a practitioner who knows that
@@ -33,7 +33,8 @@ YAML indentation.
 их декларативными — Kubernetes, GitOps. Если чего-то нет в Git — этого нет
 нигде.
 
-🎂 В 95-м подарили на день рождения Pentium 100 МГц — и всё заверте…
+🎂 30+ лет с компьютерами. Всё началось с подаренного на день рождения в 95-м
+Pentium 100 МГц — и всё заверте…
 
 🧠 Где-то в чертогах разума всё ещё живёт сетевой инженер, который помнит, что
 такое VLAN и чем отличается STP от RSTP. А также практик, который знает, что
