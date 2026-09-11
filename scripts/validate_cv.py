@@ -143,6 +143,40 @@ for i, item in enumerate(cv["selected_work"]):
 check(len(selected_achievements) == len(set(selected_achievements)),
       "selected_work: achievement references must not be duplicated")
 
+# The outcome line is a restatement, not a source: every figure in it has to
+# be stated by the achievement it points at, in either language, whether the
+# achievement spells the number out or writes it in digits.
+NUMBER_WORDS = {
+    "one": "1", "two": "2", "three": "3", "four": "4", "five": "5",
+    "six": "6", "seven": "7", "eight": "8", "nine": "9", "ten": "10",
+    "один": "1", "одну": "1", "одной": "1", "минуты": "1",
+    "два": "2", "две": "2", "двух": "2", "три": "3", "трёх": "3", "трех": "3",
+    "четыре": "4", "четырёх": "4", "пять": "5", "пяти": "5",
+}
+achievement_text = {
+    item["id"]: " ".join(item[lang] for lang in ("en", "ru"))
+    for job in cv["experience"] for item in job["achievements"] if "id" in item
+}
+
+
+def figures(text: str) -> set[str]:
+    found = set(re.findall(r"\d+", text))
+    for word, digit in NUMBER_WORDS.items():
+        if re.search(rf"\b{word}\b", text, re.I):
+            found.add(digit)
+    return found
+
+
+for i, item in enumerate(cv["selected_work"]):
+    supported = figures(achievement_text.get(item["achievement_id"], ""))
+    for lang in ("en", "ru"):
+        line = item["outcome"][lang]
+        check(len(line) <= 60,
+              f"selected_work[{i}].outcome.{lang}: {len(line)} characters, keep the line under 60")
+        unsupported = sorted(figures(line) - supported)
+        check(not unsupported,
+              f"selected_work[{i}].outcome.{lang}: figure(s) {unsupported} are not in the achievement")
+
 
 def check_ui(node, path="ui"):
     if not isinstance(node, dict):

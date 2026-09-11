@@ -135,6 +135,7 @@
             {{ $outcome = replace $outcome "<" "&lt;" }}
             {{ $outcome = replace $outcome ">" "&gt;" }}
             {{ $outcome = replaceRE `([~≈]?\d+(?:[.,]\d+)?\+?)` "<b>${1}</b>" $outcome }}
+            <p class="selected-work-outcome">{{ partial "localized.html" (dict "value" $work.outcome "lang" $lang) }}</p>
             <p>{{ $outcome | safeHTML }}</p>
             <p class="selected-work-tech"><strong>{{ partial "label.html" (dict "key" "technologies" "lang" $lang) }}:</strong>
               {{ range $index, $skillID := $work.skill_ids }}{{ if $index }} · {{ end }}{{ index $skillsByID $skillID }}{{ end }}

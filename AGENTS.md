@@ -43,8 +43,11 @@
 - Experience may have localized `scope`; every detailed role needs one plus at least one featured achievement.
 - Earlier roles may have optional localized `resume_company` for a shorter PDF display name;
   default to `company`. Hugo always shows the full `company` name.
-- `selected_work` stores only a localized short title plus references to one achievement and existing skills;
-  resolve factual outcomes and technology names from their canonical entries instead of copying them.
+- `selected_work` stores a localized short title, a localized one-line `outcome` and references to one
+  achievement and existing skills; resolve technology names from their canonical entries.
+- The `outcome` line restates figures the referenced achievement already states, stays under 60 characters,
+  and is website-only: `scripts/validate_cv.py` rejects a figure the achievement does not support and
+  `scripts/check_artifacts.py` fails if the line reaches the PDF.
 - Detailed roles need stable IDs. Selected Work achievement and skill references must resolve to stable IDs.
 - Optional `resume_group` compacts contiguous earlier roles in the PDF through a localized `ui.resumeGroups`
   label and a date range derived from their periods; Hugo still renders every role separately.

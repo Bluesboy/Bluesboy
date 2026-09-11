@@ -231,7 +231,10 @@ h1 {
 .selected-work-card p + p { margin-top: .8rem; }
 /* The figures are already in the sentence; bold is the whole emphasis. */
 .selected-work-card b { color: var(--ink); }
-.selected-work-tech { color: var(--muted); font-size: .9rem; line-height: 1.55; }
+/* The figures the card is about, restated in one line. Weight carries the
+   emphasis: no counters, no colour of its own. */
+.selected-work-outcome { margin-top: .15rem; font-weight: 700; font-size: .95rem; letter-spacing: .01em; }
+.selected-work-tech { margin-top: .9rem; color: var(--muted); font-size: .92rem; line-height: 1.6; }
 /* Nothing is sticky, so this is only breathing room above a jump target. */
 .main-section,
 .selected-work-card,

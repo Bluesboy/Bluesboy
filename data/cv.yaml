@@ -51,16 +51,25 @@ selected_work:
   title:
     en: Zero-downtime platform migrations
     ru: Миграции платформы без простоя
+  outcome:
+    en: ~300 RPS · VPS to GKE · zero downtime
+    ru: ~300 RPS · с VPS в GKE · без простоя
   skill_ids: [docker-swarm, ansible, gke, terraform]
 - achievement_id: gitops-platform
   title:
     en: GitOps delivery
-    ru: GitOps-доставка
+    ru: GitOps для 20+ сервисов
+  outcome:
+    en: 20+ services · deploys from 3 min to 1 min
+    ru: 20+ сервисов · деплой с 3 мин до 1 мин
   skill_ids: [argo-cd, kubernetes]
 - achievement_id: crossplane-infrastructure
   title:
     en: Cloud infrastructure through Crossplane
     ru: Облачная инфраструктура через Crossplane
+  outcome:
+    en: Terraform to Crossplane · one GitOps workflow
+    ru: с Terraform на Crossplane · единый GitOps-процесс
   skill_ids: [crossplane, google-cloud-platform, gke]
 
 experience:

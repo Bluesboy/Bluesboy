@@ -191,6 +191,12 @@ for lang in LOCALES:
     check(embedded == {"IBMPlexSansRoman-Regular", "IBMPlexSansRoman-Bold"},
           f"{name}: embedded faces are {sorted(embedded)}, expected the two IBM Plex weights")
 
+    # Selected Work is a website section: its outcome lines summarise what the
+    # PDF already states in full, and must not leak into the two-page resume.
+    for item in cv["selected_work"]:
+        check(flatten(item["outcome"][lang]) not in flat,
+              f"{name}: the Selected Work outcome line reached the PDF")
+
     meta = reader.metadata or {}
     for field in ("/Title", "/Author", "/Subject"):
         check(bool(meta.get(field)), f"{name}: document metadata {field} is empty")
@@ -411,7 +417,7 @@ for lang in LOCALES:
               f"{where}: the section nav does not link to #{section}")
     for item in cv["selected_work"]:
         achievement, role_id = achievement_by_id[item["achievement_id"]]
-        for value in (item["title"][lang], achievement[lang],
+        for value in (item["title"][lang], item["outcome"][lang], achievement[lang],
                       *(skill_by_id[skill_id] for skill_id in item["skill_ids"])):
             check(flatten(value) in selected_text,
                   f"{where}: Selected Work value {value!r} is missing")
