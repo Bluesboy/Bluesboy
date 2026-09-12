@@ -56,22 +56,22 @@ selected_work:
     en: ~300 RPS · zero downtime
     ru: ~300 RPS · без простоя
   skill_ids: [docker-swarm, ansible, gke, terraform]
-- achievement_id: gitops-platform
+- achievement_id: cloud-cost
   title:
-    en: GitOps delivery
-    ru: GitOps для 20+ сервисов
+    en: Infrastructure cost
+    ru: Расходы на инфраструктуру
   outcome:
-    en: 20+ services · up to 10 deploys a day
-    ru: 20+ сервисов · до 10 деплоев в день
-  skill_ids: [argo-cd, kubernetes]
-- achievement_id: crossplane-infrastructure
+    en: Spot nodes and operators · 5x cheaper
+    ru: Spot-узлы и операторы · в 5 раз ниже
+  skill_ids: [gke, kubernetes-operators, clickhouse]
+- achievement_id: rossko-delivery
   title:
-    en: Infrastructure with Crossplane
-    ru: Инфраструктура на Crossplane
+    en: One path to production
+    ru: Единый путь в продакшен
   outcome:
-    en: Compositions · state reconciliation
-    ru: Композиции · синхронизация состояния
-  skill_ids: [crossplane, google-cloud-platform, gke]
+    en: 15+ microservices · 8 developers
+    ru: 15+ микросервисов · 8 разработчиков
+  skill_ids: [docker, docker-swarm, ansible]
 
 experience:
 - id: funnelflux
@@ -120,8 +120,8 @@ experience:
     ru: "Внедрил GitOps на Argo CD для 20+ сервисов и внутренних инструментов команды из шести разработчиков: сократил время развёртывания с более чем трёх минут примерно до одной и поднял частоту с двух-трёх в неделю до десяти в день. Откат выполняется отменой одного коммита в Git и занимает менее двух минут."
     featured: true
   - id: cloud-cost
-    en: Reduced monthly cloud spend several-fold by moving suitable workloads onto spot nodes and replacing SaaS ClickHouse, PostgreSQL and Dragonfly with operator-managed clusters.
-    ru: "Сократил ежемесячные расходы на облако в несколько раз: перевёл подходящие нагрузки на spot-узлы и заменил SaaS-версии ClickHouse, PostgreSQL и Dragonfly кластерами под управлением операторов."
+    en: Reduced monthly cloud spend five times over by moving suitable workloads onto spot nodes and replacing SaaS ClickHouse, PostgreSQL and Dragonfly with operator-managed clusters.
+    ru: "Сократил ежемесячные расходы на облако в пять раз: перевёл подходящие нагрузки на spot-узлы и заменил SaaS-версии ClickHouse, PostgreSQL и Dragonfly кластерами под управлением операторов."
     featured: true
   - id: crossplane-infrastructure
     en: Unified application and infrastructure management under GitOps by moving infrastructure from Terraform to Crossplane; compositions define the resources and the controller continuously reconciles them to the desired state.
@@ -173,7 +173,8 @@ experience:
   - en: Automated provisioning for 20+ vSphere hosts and ~100 VMs with Ansible, Ansible Tower (AWX), and Terraform, replacing manual server configuration.
     ru: Перевёл 20+ хостов vSphere и ~100 виртуальных машин на воспроизводимое развёртывание через Ansible, Ansible Tower (AWX) и Terraform вместо ручной настройки.
     featured: true
-  - en: Standardized continuous delivery for 15+ microservices, giving 8 developers a shared path to production instead of per-service scripts.
+  - id: rossko-delivery
+    en: Standardized continuous delivery for 15+ microservices, giving 8 developers a shared path to production instead of per-service scripts.
     ru: "Унифицировал доставку 15+ микросервисов: 8 разработчиков получили единый путь в продакшен вместо отдельных скриптов для каждого сервиса."
     featured: true
   - en: Centralized microservice logs and metrics with EFK, Prometheus, and Grafana, giving the team a single place for incident diagnostics.
@@ -554,11 +555,13 @@ skills:
   - id: kubernetes
     name: Kubernetes
     featured: true
-  - name: Docker
+  - id: docker
+    name: Docker
     featured: true
   - name: Helm/Kustomize
     featured: true
-  - name: Kubernetes Operators
+  - id: kubernetes-operators
+    name: Kubernetes Operators
     featured: true
   - id: google-cloud-platform
     name: Google Cloud Platform
@@ -629,7 +632,8 @@ skills:
     featured: true
   - name: Redis/Valkey/Dragonfly
     featured: true
-  - name: ClickHouse (Altinity)
+  - id: clickhouse
+    name: ClickHouse (Altinity)
     featured: true
   - name: Elasticsearch/OpenSearch (ECK)
     featured: true
