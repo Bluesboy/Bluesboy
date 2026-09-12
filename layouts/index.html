@@ -84,6 +84,7 @@
       <dl class="fact-list">
         <div><dt>{{ partial "label.html" (dict "key" "format" "lang" $lang) }}</dt><dd>{{ partial "localized.html" (dict "value" $data.target.work_format "lang" $lang) }}</dd></div>
         <div><dt>{{ partial "label.html" (dict "key" "location" "lang" $lang) }}</dt><dd>{{ $location }}</dd></div>
+        <div><dt>{{ partial "label.html" (dict "key" "timezone" "lang" $lang) }}</dt><dd>{{ $data.personal.timezone }}</dd></div>
         <div><dt>{{ partial "label.html" (dict "key" "businessTravel" "lang" $lang) }}</dt><dd>{{ $businessTravel }}</dd></div>
       </dl>
       <h3 class="contact-details-title">{{ partial "label.html" (dict "key" "languages" "lang" $lang) }}</h3>

@@ -8,11 +8,12 @@
     "personal": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["avatar", "full_name", "location", "business_travel", "email", "profiles"],
+      "required": ["avatar", "full_name", "location", "timezone", "business_travel", "email", "profiles"],
       "properties": {
         "avatar": { "type": "string" },
         "full_name": { "$ref": "#/$defs/i18nString" },
         "location": { "$ref": "#/$defs/location" },
+        "timezone": { "type": "string" },
         "business_travel": { "$ref": "#/$defs/i18nString" },
         "phone": { "type": "string" },
         "email": { "type": "string", "format": "email" },

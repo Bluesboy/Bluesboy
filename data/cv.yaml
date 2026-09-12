@@ -12,10 +12,11 @@ personal:
       en: Russia
       ru: Россия
     country_code: RU
+  timezone: GMT+5
   business_travel:
     en: Available
     ru: Готов
-  email: youngreg@ya.ru
+  email: shamil@shamil.pro
   profiles:
   - network: Telegram
     label: '@youngbluesman'
@@ -542,8 +543,8 @@ languages:
     en: English
     ru: Английский
   level:
-    en: B2
-    ru: B2
+    en: B2, working
+    ru: B2, рабочий
 
 skills:
 - area:

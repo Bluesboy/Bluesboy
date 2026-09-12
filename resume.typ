@@ -83,7 +83,7 @@
 #text(
   size: 10pt,
   fill: muted,
-)[#place(source.personal.location) · #t(source.target.work_format)]
+)[#place(source.personal.location) · #t(source.target.work_format) · #source.personal.timezone]
 #set par(spacing: 0.6em)
 
 #heading(level: 1, l("summary"))

@@ -43,6 +43,9 @@ location:
 businessTravel:
   en: Business travel
   ru: Командировки
+timezone:
+  en: Time zone
+  ru: Часовой пояс
 format:
   en: Work format
   ru: Формат работы
