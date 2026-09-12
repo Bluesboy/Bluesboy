@@ -39,7 +39,7 @@ theme:
   ru: Тёмная тема
 location:
   en: Location
-  ru: Локация
+  ru: Местоположение
 businessTravel:
   en: Business travel
   ru: Командировки
@@ -50,8 +50,8 @@ format:
   en: Work format
   ru: Формат работы
 details:
-  en: Work preferences
-  ru: Условия работы
+  en: Working arrangements
+  ru: Организация работы
 contacts:
   en: Contacts
   ru: Контакты
@@ -63,7 +63,7 @@ summary:
   ru: Кратко
 stack:
   en: Core stack
-  ru: Ключевой стек
+  ru: Основной стек
 selectedWork:
   en: Selected work
   ru: Ключевые достижения
@@ -86,8 +86,8 @@ technologies:
   en: Technologies
   ru: Технологии
 additionalSkills:
-  en: Additional experience
-  ru: Дополнительный опыт
+  en: Additional technologies
+  ru: Дополнительные технологии
 responsibilities:
   en: Responsibilities
   ru: Обязанности

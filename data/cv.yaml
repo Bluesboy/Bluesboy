@@ -42,10 +42,10 @@ target:
     ru: Удалённо
 
 summary:
-- en: "I build and operate fault-tolerant production platforms: Kubernetes, GitOps, IaC, CI/CD, observability and operator-managed stateful services."
-  ru: "Строю и эксплуатирую отказоустойчивые продакшен-платформы: Kubernetes, GitOps, IaC, CI/CD, наблюдаемость и сервисы с состоянием под управлением Kubernetes-операторов."
-- en: "I know cloud platforms layer by layer and have prepared and moved systems into the cloud. An automation and standard-tooling enthusiast, I follow GitOps: every change goes through Git, and a system must not depend on tribal knowledge. A good platform needs no manual intervention."
-  ru: "Разбираюсь во всех аспектах облачных платформ, есть опыт подготовки и переноса систем в облако. Фанат автоматизации и стандартных инструментов, придерживаюсь GitOps: все изменения идут через Git, а система не должна держаться на знаниях, которые живут только в головах. Хорошая платформа не требует ручного вмешательства."
+- en: "I build and operate fault-tolerant Kubernetes platforms: GitOps, IaC, CI/CD, observability, and operator-managed stateful services."
+  ru: "Строю и эксплуатирую отказоустойчивые Kubernetes-платформы: GitOps, IaC, CI/CD, наблюдаемость и Kubernetes-операторы для сервисов с состоянием."
+- en: I work across cloud platform layers, preparing and migrating systems to the cloud and automating their operation. I prefer standard tooling and GitOps so platform changes go through Git, operational knowledge is documented, and routine manual intervention is reduced.
+  ru: "Работаю на разных уровнях облачной платформы: готовлю и переношу системы в облако, автоматизирую их эксплуатацию. Предпочитаю стандартные инструменты и GitOps, чтобы изменения платформы проходили через Git, эксплуатационные знания были документированы, а рутинных ручных операций становилось меньше."
 
 selected_work:
 - achievement_id: funnelflux-migration
@@ -61,8 +61,8 @@ selected_work:
     en: Lower infrastructure cost
     ru: Сокращение расходов
   outcome:
-    en: Spot nodes and operators · 5x cheaper
-    ru: Spot-узлы и операторы · в 5 раз ниже
+    en: Monthly cloud spend · reduced 5-fold
+    ru: Расходы на облако · снижены в 5 раз
   skill_ids: [gke, kubernetes-operators, clickhouse]
 - achievement_id: rossko-delivery
   title:
@@ -93,8 +93,8 @@ experience:
     ru: Senior Platform Engineer
   detailed: true
   scope:
-    en: "Own the multi-region Kubernetes production platform a six-developer team ships on, and its delivery infrastructure: CI/CD, GitOps, reliability, observability, secrets, and stateful services; the current implementation runs on GCP/GKE."
-    ru: "Отвечаю за Kubernetes-платформу в нескольких регионах для команды из шести разработчиков и за её инфраструктуру поставки: CI/CD, GitOps, отказоустойчивость, наблюдаемость, секреты и сервисы с состоянием; сейчас работает на GCP/GKE."
+    en: "Own the multi-region Kubernetes production platform used by a six-developer team and its application delivery infrastructure: CI/CD, GitOps, reliability, observability, secrets, and stateful services. The current implementation runs on GCP/GKE."
+    ru: "Отвечаю за многорегиональную Kubernetes-платформу для команды из шести разработчиков и за инфраструктуру сборки и развёртывания приложений: CI/CD, GitOps, отказоустойчивость, наблюдаемость, секреты и сервисы с состоянием. Текущая реализация работает на GCP/GKE."
   responsibilities:
   - en: "Coach team members in DevOps practices: IaC, branching strategies, and twelve-factor application development."
     ru: "Обучение команды практикам DevOps: IaC, стратегии ветвления и разработка 12-факторных приложений."
@@ -110,8 +110,8 @@ experience:
     ru: Перенёс платформу с нагрузкой ~300 RPS с настроенного вручную VPS в Docker Swarm под управлением Ansible, затем в GKE под управлением Terraform; обе миграции прошли без простоя.
     featured: true
   - id: multi-region-platform
-    en: Built production on four Kubernetes clusters (GKE) across four regions, plus dedicated staging and infrastructure clusters, and joined the production clusters with a Multi-Cluster Gateway.
-    ru: Развернул продакшен в четырёх регионах на четырёх кластерах GKE, плюс отдельные кластеры для стейджинга и инфраструктуры; объединил их через Multi-Cluster Gateway.
+    en: Built four production GKE clusters across four regions plus dedicated staging and infrastructure clusters, and linked the production clusters through a Multi-Cluster Gateway.
+    ru: Развернул четыре продакшен-кластера GKE в четырёх регионах и отдельные кластеры стейджинга и инфраструктуры; связал продакшен-кластеры через Multi-Cluster Gateway.
     featured: true
   - id: gitops-platform
     en: Introduced Argo CD GitOps for 20+ services and internal tools; cut deployment time from five minutes to a minute and a half and increased release frequency from two or three a week to as many as ten a day. Rollback requires reverting a single Git commit and completes in under two minutes.
@@ -123,18 +123,18 @@ experience:
     featured: true
   - id: crossplane-infrastructure
     en: "Unified application and infrastructure management under GitOps by moving infrastructure from Terraform to Crossplane: resources are plain YAML manifests in the Kubernetes API, and the controller continuously reconciles them to the desired state."
-    ru: "Объединил приложения и инфраструктуру в один процесс GitOps, переведя инфраструктуру с Terraform на Crossplane: ресурсы описаны обычными YAML-манифестами и живут в Kubernetes API, а контроллер динамически приводит их к нужному состоянию."
+    ru: "Объединил управление приложениями и инфраструктурой в один процесс GitOps, переведя инфраструктуру с Terraform на Crossplane: ресурсы описаны YAML-манифестами в Kubernetes API, а контроллер непрерывно приводит их к заданному состоянию."
     featured: true
-  - en: Moved deployments under Argo CD management, then replaced Helm template rendering in Argo CD with pre-rendered YAML manifests (Rendered Manifests Pattern). Changes are visible in plain YAML diffs, and Argo CD does not spend resources rendering templates.
-    ru: Перевёл развёртывание под управление Argo CD, затем заменил рендеринг Helm-шаблонов в Argo CD готовыми YAML-манифестами (Rendered Manifests Pattern). Изменения видны в обычных YAML-диффах, а Argo CD не тратит ресурсы на рендеринг шаблонов.
-  - en: Moved secrets management to the External Secrets Operator, putting secrets in the same GitOps flow as the rest of the platform.
-    ru: "Перенёс управление секретами в External Secrets Operator: секреты идут тем же GitOps-потоком, что и вся платформа."
+  - en: Replaced Helm template rendering in Argo CD with pre-rendered YAML manifests (Rendered Manifests Pattern). Changes are visible in plain YAML diffs, and Argo CD does not spend resources rendering templates.
+    ru: Заменил рендеринг Helm-шаблонов в Argo CD готовыми YAML-манифестами (Rendered Manifests Pattern). Изменения видны в обычных YAML-диффах, а Argo CD не тратит ресурсы на рендеринг шаблонов.
+  - en: Moved secret synchronization configuration into GitOps with External Secrets Operator while keeping secret values outside Git.
+    ru: Перенёс конфигурацию синхронизации секретов в GitOps через External Secrets Operator, оставив значения вне Git.
     featured: true
   - en: Unified lifecycle management for PostgreSQL, ClickHouse, Redis (now Dragonfly), and Elasticsearch under Kubernetes operators; migrated Kafka from SaaS to a Strimzi-managed cluster.
     ru: Унифицировал управление жизненным циклом PostgreSQL, ClickHouse, Redis (сейчас Dragonfly) и Elasticsearch через Kubernetes-операторы; Kafka перенёс из SaaS в кластер Strimzi.
     featured: true
-  - en: "Took static delivery off Nginx into Google Cloud Storage behind a CDN: an update no longer serves stale files, and the Nginx configuration burden is gone."
-    ru: "Вынес раздачу статики из Nginx в Google Cloud Storage за CDN: после обновления больше не отдаются старые файлы, а сопровождение конфигурации Nginx ушло из платформы."
+  - en: "Moved static file serving from Nginx to Google Cloud Storage behind a CDN: updates no longer serve stale files, and the Nginx configuration no longer needs to be maintained."
+    ru: "Перенёс раздачу статики из Nginx в Google Cloud Storage за CDN: после обновлений старые файлы больше не отдаются, а конфигурацию Nginx больше не нужно сопровождать."
 - id: rossko
   company:
     en: Rossko
@@ -157,8 +157,8 @@ experience:
     ru: Главный инженер-DevOps
   detailed: true
   scope:
-    en: "Supported infrastructure and delivery for an auto parts distribution portal serving repair shops and retailers: 15+ microservices, virtual infrastructure, CI/CD, and container platform operations."
-    ru: "Сопровождал инфраструктуру и процессы доставки портала дистрибуции автозапчастей для сервисных центров и магазинов: 15+ микросервисов, виртуальная инфраструктура, CI/CD и эксплуатация контейнерной платформы."
+    en: Supported an auto parts distribution portal for repair shops and retailers, maintaining virtual infrastructure, CI/CD, and the container platform.
+    ru: "Сопровождал портал дистрибуции автозапчастей для сервисных центров и магазинов: виртуальную инфраструктуру, CI/CD и контейнерную платформу."
   responsibilities:
   - en: "Maintained CI/CD for the portal services: build, test, and release pipelines."
     ru: "Сопровождение CI/CD сервисов портала: сборка, тестирование и выкладка."
@@ -171,14 +171,14 @@ experience:
     ru: Перевёл 20+ хостов vSphere и ~100 виртуальных машин на воспроизводимое развёртывание через Ansible, Ansible Tower (AWX) и Terraform вместо ручной настройки.
     featured: true
   - id: rossko-delivery
-    en: Standardized continuous delivery for 15+ microservices, giving 8 developers a shared path to production instead of per-service scripts.
-    ru: "Унифицировал доставку 15+ микросервисов: 8 разработчиков получили единый путь в продакшен вместо отдельных скриптов для каждого сервиса."
+    en: Standardized continuous delivery for 15+ microservices on Docker Swarm clusters provisioned with Ansible, giving 8 developers a shared path to production instead of per-service scripts.
+    ru: "Унифицировал доставку 15+ микросервисов в кластеры Docker Swarm, развёрнутые через Ansible: 8 разработчиков получили единый путь в продакшен вместо отдельных скриптов для каждого сервиса."
     featured: true
   - en: Centralized microservice logs and metrics with EFK, Prometheus, and Grafana, giving the team a single place for incident diagnostics.
     ru: Централизовал журналы и метрики микросервисов в EFK, Prometheus и Grafana, создав единую точку диагностики при инцидентах.
     featured: true
-  - en: Took web service assets off the application servers into MinIO object storage.
-    ru: Убрал файлы веб-сервисов с серверов приложений в объектное хранилище MinIO.
+  - en: Moved web service assets from application servers to MinIO object storage.
+    ru: Перенёс файлы веб-сервисов с серверов приложений в объектное хранилище MinIO.
 - id: plussell
   company:
     en: Plussell
@@ -258,8 +258,8 @@ experience:
   achievements:
   - en: Integrated FreeIPA, Foreman, ISC DHCP, and Zabbix into a single server provisioning and monitoring workflow.
     ru: Объединил FreeIPA, Foreman, ISC DHCP и Zabbix в единый процесс развёртывания и мониторинга серверов.
-  - en: Automated test environment provisioning for testing and validating hypotheses.
-    ru: Автоматизировал подготовку тестовых сред для тестирования и проверки гипотез.
+  - en: Automated environment provisioning for testing and hypothesis validation.
+    ru: Автоматизировал подготовку сред для тестов и проверки гипотез.
 - company:
     en: Freelance
     ru: Фриланс
@@ -397,7 +397,7 @@ experience:
     end: '2009-01'
   position:
     en: System Administrator
-    ru: системный администратор
+    ru: Системный администратор
   detailed: false
   resume_group: earlier-commercial
   responsibilities:
@@ -425,7 +425,7 @@ experience:
     end: '2008-06'
   position:
     en: System Administrator
-    ru: системный администратор
+    ru: Системный администратор
   detailed: false
   resume_group: earlier-commercial
   responsibilities:
@@ -458,8 +458,8 @@ experience:
   - en: "Administered Active Directory, Exchange, and 1C:Enterprise, and maintained Panasonic PBX systems."
     ru: "Администрирование Active Directory, Exchange и 1С:Предприятие, обслуживание АТС Panasonic."
   achievements:
-  - en: Relocated the office together with its telephony without interrupting the working day.
-    ru: Перенёс офис вместе с телефонией на новую площадку без остановки рабочего процесса.
+  - en: Relocated the office and its telephone system without disrupting operations.
+    ru: Перенёс офис и телефонию на новую площадку без перерыва в работе.
 - company:
     en: Soyuz-Region LLC
     ru: ООО «Союз-Регион»
@@ -546,8 +546,8 @@ languages:
     en: English
     ru: Английский
   level:
-    en: B2, working
-    ru: B2, рабочий
+    en: B2 · professional working proficiency
+    ru: B2 · использую в работе
 
 skills:
 - area:
@@ -572,17 +572,19 @@ skills:
     name: Google Kubernetes Engine
     featured: true
   - name: GitHub
-  - name: Cloudflare Zero Trust
+  - name: Cloudflare
     featured: true
   - name: ExternalDNS
-    featured: true
   - name: Gateway API
     featured: true
   - name: Nginx Ingress
+  - name: Nginx
   - name: GCLB
+  - name: Google Cloud Storage
   - id: docker-swarm
     name: Docker Swarm
   - name: AWS
+    featured: true
   - name: Azure
   - name: Alibaba Cloud
   - name: Yandex Cloud
@@ -601,10 +603,13 @@ skills:
   - id: ansible
     name: Ansible
     featured: true
+  - name: Ansible Tower (AWX)
+  - name: Foreman
   - id: argo-cd
     name: Argo CD
     featured: true
   - name: Flux CD
+    featured: true
   - name: Google Config Connector
   - name: AWS CloudFormation
   - name: OpenStack Heat
@@ -621,7 +626,6 @@ skills:
   - name: GitLab CI
     featured: true
   - name: Jenkins
-    featured: true
   - name: Concourse CI
   - name: Bitbucket Pipelines
   - name: Tekton
@@ -638,10 +642,10 @@ skills:
     featured: true
   - id: clickhouse
     name: ClickHouse (Altinity)
-    featured: true
-  - name: Elasticsearch/OpenSearch (ECK)
+  - name: Elasticsearch (ECK)
     featured: true
   - name: MySQL/MariaDB
+  - name: MinIO
 
 - area:
     en: Security & Secrets
@@ -652,7 +656,8 @@ skills:
   - name: Vault/OpenBao (Bank-Vaults)
     featured: true
   - name: cert-manager
-    featured: true
+  - name: FreeIPA
+  - name: Active Directory
 - area:
     en: Observability
     ru: Наблюдаемость
@@ -667,6 +672,8 @@ skills:
     featured: true
   - name: Jaeger
     featured: true
+  - name: Zabbix
+  - name: Nagios
 
 - area:
     en: Build & Packaging
@@ -683,32 +690,40 @@ skills:
     en: Engineering & Automation
     ru: Разработка и автоматизация
   items:
-  - name: Go
+  - name: Bash
     featured: true
   - name: Python
     featured: true
-  - name: Bash
+  - name: Go
     featured: true
   - name: GNU Make
     featured: true
   - name: Taskfile
 
 - area:
-    en: OS & Virtualization
-    ru: ОС и виртуализация
+    en: Systems & Networking
+    ru: Системы и сети
   items:
   - name: GNU+Linux
     featured: true
   - name: KVM/Libvirt
     featured: true
   - name: Windows Server
+  - name: FreeBSD
   - name: VMware vSphere
+    featured: true
   - name: Proxmox
   - name: Cisco
+    featured: true
+  - name: MikroTik
+  - name: Juniper
+  - name: OpenStack Neutron
+  - name: Flannel
+  - name: ISC DHCP
 
 about:
-- en: Build infrastructure with monitoring, disaster recovery, and secret rotation in place from the start, not added later.
-  ru: Строю инфраструктуру сразу с мониторингом, аварийным восстановлением и ротацией секретов, а не достраиваю их потом.
+- en: Prefer CNCF projects where they fit, and account for monitoring, disaster recovery, and secret rotation when designing a platform.
+  ru: По возможности использую проекты CNCF, а мониторинг, аварийное восстановление и ротацию секретов учитываю при проектировании платформы.
 - en: "Know how applications in Go, Java, Python, Node.js, .NET, and Rust are built and released: dependency management, packaging, and artifact repositories."
   ru: "Знаю, как собираются и выпускаются приложения на Go, Java, Python, Node.js, .NET и Rust: управление зависимостями, пакетирование и репозитории артефактов."
 - en: Share what I know and help teams adopt new processes and technologies. Set up development and release workflows - branching strategy, semantic versioning, automated releases, twelve-factor principles.

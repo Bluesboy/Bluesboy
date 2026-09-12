@@ -44,6 +44,7 @@ def render_profile(cv: dict, ui: dict, lang: str) -> str:
     personal = cv["personal"]
     details = [
         f"{localized(ui['location'], lang)}: {place(personal['location'], lang)}",
+        f"{localized(ui['timezone'], lang)}: {personal['timezone']}",
         f"{localized(ui['format'], lang)}: "
         f"{localized(cv['target']['work_format'], lang)}",
         f"{localized(ui['businessTravel'], lang)}: "

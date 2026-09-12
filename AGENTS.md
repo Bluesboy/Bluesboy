@@ -181,6 +181,8 @@
 - `make preview`: Hugo development server.
 - `make build`: website, both PDFs, and bilingual TXT exports.
 - `make build/text`: generate profile, skills, experience, and education TXT files for EN and RU.
+- Profile TXT includes location, time zone, work format, business-travel availability, contacts,
+  languages, and How I work.
 - Those TXT files are a local convenience artifact for pasting into job boards and forms:
   they ship neither to the website nor to a GitHub Release, and nothing links to them.
 - `make fmt`: format Typst.

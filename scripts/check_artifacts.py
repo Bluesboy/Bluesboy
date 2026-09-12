@@ -611,6 +611,7 @@ for lang in LOCALES:
         cv["personal"]["full_name"][lang],
         cv["target"]["position"][lang],
         cv["personal"]["email"],
+        cv["personal"]["timezone"],
         cv["site"]["url"],
         *(item[lang] for item in cv["summary"]),
         *(item[lang] for item in cv["about"]),
