@@ -517,18 +517,18 @@ education:
     ru: Академия ВЭГУ
   year: '2018'
   level:
-    en: Higher education
-    ru: Высшее
+    en: Bachelor's degree
+    ru: Бакалавр
   specialization:
     en: Applied Computer Science
     ru: Прикладная информатика
 - institution:
-    en: South Ural State University (National Research University)
-    ru: Южно-Уральский государственный университет (Национальный исследовательский университет)
+    en: South Ural State University
+    ru: Южно-Уральский государственный университет
   year: '2008'
   level:
-    en: Higher education
-    ru: Высшее
+    en: Bachelor's degree
+    ru: Бакалавр
   specialization:
     en: Information and Measurement Technology
     ru: Информационно-измерительная техника и технологии
