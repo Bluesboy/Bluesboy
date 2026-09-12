@@ -246,8 +246,8 @@ experience:
     start: '2015-04'
     end: '2017-01'
   position:
-    en: System Administrator, Leading Expert
-    ru: системный администратор, «ведущий специалист-эксперт»
+    en: System Administrator (formally Leading Expert)
+    ru: Системный администратор, «ведущий специалист-эксперт»
   detailed: false
   responsibilities:
   - en: Deployed and operated Proxmox and VMware vSphere virtualization clusters.
@@ -257,10 +257,10 @@ experience:
   - en: Performed information security audits, vulnerability remediation, and load testing.
     ru: Аудит информационной безопасности, устранение уязвимостей и нагрузочное тестирование.
   achievements:
-  - en: Integrated FreeIPA, Foreman, isc-dhcp, and Zabbix into a single server provisioning and monitoring workflow.
-    ru: Объединил FreeIPA, Foreman, isc-dhcp и Zabbix в единый процесс развёртывания и мониторинга серверов.
-  - en: Automated test environment preparation for incident-response drills.
-    ru: Автоматизировал подготовку тестовых сред для учений по реагированию на инциденты.
+  - en: Integrated FreeIPA, Foreman, ISC DHCP, and Zabbix into a single server provisioning and monitoring workflow.
+    ru: Объединил FreeIPA, Foreman, ISC DHCP и Zabbix в единый процесс развёртывания и мониторинга серверов.
+  - en: Automated test environment provisioning for testing and validating hypotheses.
+    ru: Автоматизировал подготовку тестовых сред для тестирования и проверки гипотез.
 - company:
     en: Freelance
     ru: Фриланс
@@ -279,7 +279,7 @@ experience:
     end: '2015-04'
   position:
     en: System and Network Engineer
-    ru: системный и сетевой инженер
+    ru: Системный и сетевой инженер
   detailed: false
   responsibilities:
   - en: Designed and deployed network and server infrastructure for small companies.
@@ -290,6 +290,9 @@ experience:
 - company:
     en: Bashkir National Library named after Akhmet-Zaki Validi
     ru: Национальная библиотека Республики Башкортостан им. Ахмет-Заки Валиди
+  resume_company:
+    en: Bashkir National Library
+    ru: Национальная библиотека Башкортостана
   location:
     city:
       en: Ufa
@@ -303,8 +306,8 @@ experience:
     start: '2012-03'
     end: '2014-04'
   position:
-    en: Network Engineer, Software Engineer
-    ru: сетевой инженер, «инженер-программист»
+    en: Network Engineer (formally Software Engineer)
+    ru: Сетевой инженер, «инженер-программист»
   detailed: false
   responsibilities:
   - en: Designed and deployed network infrastructure, including structured cabling and active equipment from Cisco, MikroTik, and Juniper.
@@ -314,12 +317,12 @@ experience:
   - en: Deployed and maintained Nagios monitoring.
     ru: Развёртывание и сопровождение системы мониторинга Nagios.
   achievements:
-  - en: Built a secure multiservice network connecting the central office and remote sites. Set up remote staff access through OpenVPN.
-    ru: Построил защищённую мультисервисную сеть, связав центральный офис с удалёнными площадками. Организовал удалённый доступ сотрудников через OpenVPN.
-  - en: "Fully modernized the LAN: designed structured cabling, selected and configured equipment, prepared specifications, and coordinated with vendors."
-    ru: "Полностью модернизировал ЛВС: спроектировал СКС, выбрал и настроил оборудование, подготовил спецификации, работал с поставщиками."
+  - en: Built a secure network connecting the central office with remote sites, and set up remote staff access through OpenVPN.
+    ru: Построил защищённую сеть, связавшую центральный офис с удалёнными площадками, и организовал удалённый доступ сотрудников через OpenVPN.
+  - en: "Modernized the LAN: designed structured cabling, selected and configured equipment, prepared specifications, and coordinated with vendors."
+    ru: "Модернизировал ЛВС: спроектировал СКС, выбрал и настроил оборудование, подготовил спецификации, работал с поставщиками."
 - company:
-    en: State Budgetary Institution "Center for Information and Communication Technologies under the Government of the Republic of Bashkortostan"
+    en: ICT Center under the Government of Bashkortostan
     ru: ГБУ «Центр информационно-коммуникационных технологий при Аппарате Правительства Республики Башкортостан»
   resume_company:
     en: ICT Center under the Government of Bashkortostan
@@ -337,8 +340,8 @@ experience:
     start: '2010-11'
     end: '2012-03'
   position:
-    en: Network Engineer, Leading Expert
-    ru: сетевой инженер, «ведущий специалист-эксперт»
+    en: Network Engineer (formally Leading Expert)
+    ru: Сетевой инженер, «ведущий специалист-эксперт»
   detailed: false
   responsibilities:
   - en: Designed and deployed network solutions for government institutions.
@@ -346,10 +349,10 @@ experience:
   - en: Prepared project documentation and technical specifications.
     ru: Подготовка проектной документации и технических заданий.
   achievements:
-  - en: Led the creation of the republic's largest fault-tolerant network for public authorities.
-    ru: Руководил созданием крупнейшей в республике отказоустойчивой сети для органов государственной власти.
+  - en: "Led the build-out of a fault-tolerant network for public authorities: 30+ institutions in the city and every district centre in the republic."
+    ru: "Руководил созданием отказоустойчивой сети для органов власти: более 30 учреждений в городе и все районные центры республики."
 - company:
-    en: Chelyabtyazhproekt
+    en: Chelyabtyazhmashproekt OJSC
     ru: ОАО «Челябтяжмашпроект»
   location:
     city:
@@ -364,8 +367,8 @@ experience:
     start: '2009-01'
     end: '2010-10'
   position:
-    en: System Administrator, Information Security Administrator
-    ru: системный администратор, «администратор информационной безопасности вычислительной сети»
+    en: System Administrator (formally Information Security Administrator)
+    ru: Системный администратор, «администратор информационной безопасности вычислительной сети»
   detailed: false
   resume_group: earlier-commercial
   responsibilities:
@@ -407,7 +410,7 @@ experience:
   - en: Migrated Windows Server 2003 R2 to 2008 without interrupting services.
     ru: Перевёл Windows Server 2003 R2 на 2008 без остановки сервисов.
 - company:
-    en: Heineken Logistic-C LLC
+    en: Heineken Logistics-Chelyabinsk
     ru: ООО «Хайнекен Логистик-Ч»
   location:
     city:
@@ -448,8 +451,8 @@ experience:
     start: '2006-12'
     end: '2007-12'
   position:
-    en: System Administrator, IT Specialist
-    ru: системный администратор, «специалист отдела информационных технологий»
+    en: System Administrator (formally IT Specialist)
+    ru: Системный администратор, «специалист отдела информационных технологий»
   detailed: false
   resume_group: earlier-commercial
   responsibilities:
@@ -475,15 +478,15 @@ experience:
     end: '2006-12'
   position:
     en: Senior System Administrator
-    ru: старший системный администратор
+    ru: Старший системный администратор
   detailed: false
   resume_group: earlier-commercial
   responsibilities:
   - en: Administered the internet café network and the FreeBSD gateway.
     ru: Администрирование сети интернет-кафе и шлюза на FreeBSD.
   achievements:
-  - en: Prepared a new retail point for launch — cabling, workstations, and staff training.
-    ru: "Подготовил новую торговую точку к запуску: СКС, рабочие места, обучение персонала."
+  - en: Prepared a new site for launch — cabling, workstations, and staff training.
+    ru: "Подготовил новую площадку к запуску: СКС, рабочие места, обучение персонала."
 - company:
     en: Profsistemy LLC
     ru: ООО «Профсистемы»
@@ -501,7 +504,7 @@ experience:
     end: '2006-08'
   position:
     en: PC Service Technician
-    ru: техник по ремонту и обслуживанию ПК
+    ru: Техник по ремонту и обслуживанию ПК
   detailed: false
   resume_group: earlier-commercial
   responsibilities:
