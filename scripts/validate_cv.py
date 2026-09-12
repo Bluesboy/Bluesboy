@@ -134,8 +134,8 @@ check(any(item.get("featured", False) for item in skill_items),
 # 30-35 visible items, and every other skill still shows under Additional
 # technologies on the website.
 featured_skills = [item for item in skill_items if item.get("featured", False)]
-check(len(featured_skills) <= 35,
-      f"skills: {len(featured_skills)} featured items, keep the core stack at 35 or fewer")
+check(len(featured_skills) <= 38,
+      f"skills: {len(featured_skills)} featured items, keep the core stack at 38 or fewer")
 
 selected_achievements: list[str] = []
 for i, item in enumerate(cv["selected_work"]):

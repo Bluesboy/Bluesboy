@@ -556,9 +556,7 @@ skills:
     featured: true
   - name: Docker
     featured: true
-  - name: Helm
-    featured: true
-  - name: Kustomize
+  - name: Helm/Kustomize
     featured: true
   - name: Kubernetes Operators
     featured: true
@@ -569,7 +567,11 @@ skills:
     name: Google Kubernetes Engine
     featured: true
   - name: GitHub
-  - name: Cloudflare
+  - name: Cloudflare Zero Trust
+    featured: true
+  - name: Nginx Ingress
+    featured: true
+  - name: Gateway API
     featured: true
   - id: docker-swarm
     name: Docker Swarm
@@ -621,20 +623,26 @@ skills:
     en: Data
     ru: Данные
   items:
-  - name: PostgreSQL
+  - name: PostgreSQL (CloudNativePG)
     featured: true
-  - name: Kafka
+  - name: Kafka (Strimzi)
     featured: true
-  - name: Redis/Valkey
+  - name: Redis/Valkey/Dragonfly
     featured: true
-  - name: Dragonfly
+  - name: ClickHouse (Altinity)
     featured: true
-  - name: ClickHouse
-    featured: true
-  - name: Elasticsearch/OpenSearch
+  - name: Elasticsearch/OpenSearch (ECK)
     featured: true
   - name: MySQL/MariaDB
 
+- area:
+    en: Security & secrets
+    ru: Безопасность и секреты
+  items:
+  - name: External Secrets Operator
+    featured: true
+  - name: Vault/OpenBao (Bank-Vaults)
+    featured: true
 - area:
     en: Observability
     ru: Наблюдаемость
@@ -654,22 +662,17 @@ skills:
     en: Build & packaging
     ru: Сборка и пакеты
   items:
-  - name: Maven
-  - name: Gradle
-  - name: npm
+  - name: Maven/Gradle/npm/pip/Cargo
+    featured: true
+  - name: Artifactory/Nexus
+    featured: true
   - name: NuGet
-  - name: pip
-  - name: Cargo
   - name: Go modules
-  - name: Artifactory
-  - name: Nexus
 
 - area:
     en: Engineering & Automation
     ru: Разработка и автоматизация
   items:
-  - name: Linux
-    featured: true
   - name: Go
     featured: true
   - name: Python
@@ -684,7 +687,10 @@ skills:
     en: Infrastructure
     ru: Инфраструктура
   items:
+  - name: Linux
+    featured: true
   - name: KVM/Libvirt
+    featured: true
   - name: VMware vSphere
   - name: Proxmox
   - name: Cisco
