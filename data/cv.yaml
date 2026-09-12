@@ -43,8 +43,8 @@ target:
 summary:
 - en: "I build and operate fault-tolerant production platforms: Kubernetes, GitOps, IaC, CI/CD, observability and operator-managed stateful services."
   ru: "Строю и эксплуатирую отказоустойчивые production-платформы: Kubernetes, GitOps, IaC, CI/CD, наблюдаемость и stateful-сервисы под управлением Kubernetes-операторов."
-- en: I take systems from manual operation to declarative infrastructure, standardize delivery for the teams that use it and stay responsible for running what I build; today that is a four-region platform on GCP/GKE.
-  ru: Перевожу системы от ручного управления к декларативной инфраструктуре, стандартизирую доставку для команд и отвечаю за работу того, что построил; сейчас это платформа в четырёх регионах на GCP/GKE.
+- en: "I know cloud platforms layer by layer and have prepared and moved systems into the cloud. An automation and standard-tooling enthusiast, I follow GitOps: every change goes through Git, and a system must not depend on tribal knowledge. A good platform needs no manual intervention."
+  ru: "Разбираюсь во всех аспектах облачных платформ, есть опыт подготовки и переноса систем в облако. Фанат автоматизации и стандартных инструментов, придерживаюсь GitOps: все изменения идут через Git, а система не должна держаться на знаниях, которые живут только в головах. Хорошая платформа не требует ручного вмешательства."
 
 selected_work:
 - achievement_id: funnelflux-migration
