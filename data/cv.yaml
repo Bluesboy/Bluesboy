@@ -572,10 +572,12 @@ skills:
   - name: GitHub
   - name: Cloudflare Zero Trust
     featured: true
-  - name: Nginx Ingress
+  - name: ExternalDNS
     featured: true
   - name: Gateway API
     featured: true
+  - name: Nginx Ingress
+  - name: GCLB
   - id: docker-swarm
     name: Docker Swarm
   - name: AWS
@@ -640,12 +642,14 @@ skills:
   - name: MySQL/MariaDB
 
 - area:
-    en: Security & secrets
+    en: Security & Secrets
     ru: Безопасность и секреты
   items:
   - name: External Secrets Operator
     featured: true
   - name: Vault/OpenBao (Bank-Vaults)
+    featured: true
+  - name: cert-manager
     featured: true
 - area:
     en: Observability
@@ -663,7 +667,7 @@ skills:
     featured: true
 
 - area:
-    en: Build & packaging
+    en: Build & Packaging
     ru: Сборка и пакеты
   items:
   - name: Maven/Gradle/npm/pip/Cargo
@@ -688,23 +692,22 @@ skills:
   - name: Taskfile
 
 - area:
-    en: Infrastructure
-    ru: Инфраструктура
+    en: OS & Virtualization
+    ru: ОС и виртуализация
   items:
-  - name: Linux
+  - name: GNU+Linux
     featured: true
   - name: KVM/Libvirt
     featured: true
+  - name: Windows Server
   - name: VMware vSphere
   - name: Proxmox
   - name: Cisco
 
 about:
-- en: Build and maintain infrastructure. Set up monitoring, disaster recovery, and secret rotation from the start.
-  ru: Создаю и сопровождаю инфраструктуру. Сразу настраиваю мониторинг, аварийное восстановление и ротацию секретов.
-- en: Enjoy sharing knowledge and helping colleagues simplify their work and automate routine tasks.
-  ru: Люблю делиться знаниями и помогать коллегам упрощать работу и автоматизировать рутинные задачи.
-- en: 'Know the Go, Java, Python, Node.js, .NET, and Rust ecosystems well from a build and release perspective: dependency management, packaging, and working with artifact repositories.'
-  ru: 'Хорошо знаю экосистемы Go, Java, Python, Node.js, .NET и Rust со стороны сборки и выпуска приложений: управление зависимостями, пакетирование и работу с репозиториями артефактов.'
-- en: 'Help teams adopt new processes and technologies and establish application development and release workflows: choose branching strategies, set up semantic versioning, automate releases, and apply twelve-factor principles.'
-  ru: 'Помогаю командам осваивать новые процессы и технологии, налаживать разработку и выпуск приложений: выбирать стратегию ветвления, настраивать семантическое версионирование, автоматизировать релизы и применять принципы 12-факторных приложений.'
+- en: Build infrastructure with monitoring, disaster recovery, and secret rotation in place from the start, not added later.
+  ru: Строю инфраструктуру сразу с мониторингом, аварийным восстановлением и ротацией секретов, а не достраиваю их потом.
+- en: "Know how applications in Go, Java, Python, Node.js, .NET, and Rust are built and released: dependency management, packaging, and artifact repositories."
+  ru: "Знаю, как собираются и выпускаются приложения на Go, Java, Python, Node.js, .NET и Rust: управление зависимостями, пакетирование и репозитории артефактов."
+- en: Share what I know and help teams adopt new processes and technologies. Set up development and release workflows - branching strategy, semantic versioning, automated releases, twelve-factor principles.
+  ru: "Делюсь знаниями и помогаю командам осваивать новые процессы и технологии. Налаживаю разработку и выпуск приложений: стратегия ветвления, семантическое версионирование, автоматизация релизов, принципы 12-факторных приложений."
