@@ -98,8 +98,9 @@
   experience, How I work, education, additional technologies.
 - The contacts card is a rail beside Summary and Core stack, so Core stack starts under Summary
   instead of waiting for the taller card.
-- Languages stay in that card as one compact line, not a third label/value block: a full block
-  makes the rail outgrow the left column and reopens the gap under Core stack.
+- Languages stay in that card, one row per language. They were a single line while the rail was
+  the taller column; the core stack is longer now, so the rows cost nothing. Measure before
+  changing this back: the rail must not outgrow the left column, or the gap under Core stack returns.
 - Anchor the sections the nav points at (`#selected-work`, `#experience`, `#stack`, `#education`)
   and keep that nav anchors-only, under the headline, with no second navigation model.
 - Selected Work cards carry one link stretched over the card; never nest a second anchor inside.

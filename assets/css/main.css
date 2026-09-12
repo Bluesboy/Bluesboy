@@ -321,11 +321,13 @@ summary:hover { color: var(--accent-strong); border-color: var(--accent); }
 .fact-list dd { margin: 0; text-align: right; }
 /* Two facts on one line keep the rail from outgrowing the left column.
    The dash comes from CSS so the markup stays a plain pair. */
-.language-inline { display: flex; flex-wrap: wrap; row-gap: .25rem; margin: 0; font-size: .9rem; }
-.language-inline div { display: flex; }
-.language-inline dt::after { content: " —"; }
-.language-inline dd { margin-left: .35rem; color: var(--muted); }
-.language-inline div + div::before { content: "·"; margin: 0 .5rem; color: var(--line-strong); }
+/* One row per language. The single-line variant fit while the rail was the
+   taller column; the core stack is now some 400px longer, so the rows cost
+   nothing and no separator is left hanging at a wrap. */
+.language-list { display: grid; row-gap: .2rem; margin: 0; font-size: .9rem; }
+.language-list div { display: flex; }
+.language-list dt::after { content: " —"; }
+.language-list dd { margin-left: .35rem; color: var(--muted); }
 .skill-groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem 2rem; margin: 0; font-size: .94rem; line-height: 1.6; }
 .additional-section > h2, .additional-section .skill-groups { color: var(--muted); }
 .skill-group dt { display: inline; margin-inline-end: .25em; font-weight: 700; }

@@ -88,9 +88,9 @@
         <div><dt>{{ partial "label.html" (dict "key" "businessTravel" "lang" $lang) }}</dt><dd>{{ $businessTravel }}</dd></div>
       </dl>
       <h3 class="contact-details-title">{{ partial "label.html" (dict "key" "languages" "lang" $lang) }}</h3>
-      {{/* One line, still a definition list: the rail cannot afford three
-           rows for two facts, and a screen reader still hears the pairs. */}}
-      <dl class="language-inline">
+      {{/* A definition list: a screen reader hears the pairs, and the rail
+           has room for a row per language again. */}}
+      <dl class="language-list">
         {{ range $data.languages }}
           <div>
             <dt>{{ partial "localized.html" (dict "value" .language "lang" $lang) }}</dt>
