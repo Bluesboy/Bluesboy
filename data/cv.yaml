@@ -43,7 +43,7 @@ target:
 
 summary:
 - en: "I build and operate fault-tolerant production platforms: Kubernetes, GitOps, IaC, CI/CD, observability and operator-managed stateful services."
-  ru: "Строю и эксплуатирую отказоустойчивые production-платформы: Kubernetes, GitOps, IaC, CI/CD, наблюдаемость и stateful-сервисы под управлением Kubernetes-операторов."
+  ru: "Строю и эксплуатирую отказоустойчивые продакшен-платформы: Kubernetes, GitOps, IaC, CI/CD, наблюдаемость и сервисы с состоянием под управлением Kubernetes-операторов."
 - en: "I know cloud platforms layer by layer and have prepared and moved systems into the cloud. An automation and standard-tooling enthusiast, I follow GitOps: every change goes through Git, and a system must not depend on tribal knowledge. A good platform needs no manual intervention."
   ru: "Разбираюсь во всех аспектах облачных платформ, есть опыт подготовки и переноса систем в облако. Фанат автоматизации и стандартных инструментов, придерживаюсь GitOps: все изменения идут через Git, а система не должна держаться на знаниях, которые живут только в головах. Хорошая платформа не требует ручного вмешательства."
 
@@ -58,8 +58,8 @@ selected_work:
   skill_ids: [docker-swarm, ansible, gke, terraform]
 - achievement_id: cloud-cost
   title:
-    en: Infrastructure cost
-    ru: Расходы на инфраструктуру
+    en: Lower infrastructure cost
+    ru: Сокращение расходов
   outcome:
     en: Spot nodes and operators · 5x cheaper
     ru: Spot-узлы и операторы · в 5 раз ниже
@@ -93,17 +93,15 @@ experience:
     ru: Senior Platform Engineer
   detailed: true
   scope:
-    en: "Own a multi-region Kubernetes production platform and its delivery infrastructure: CI/CD, GitOps, reliability, observability, secrets, and stateful services; the current implementation runs on GCP/GKE."
-    ru: "Отвечаю за Kubernetes-платформу в нескольких регионах и её delivery-инфраструктуру: CI/CD, GitOps, отказоустойчивость, наблюдаемость, секреты и stateful-сервисы; текущая реализация работает на GCP/GKE."
+    en: "Own the multi-region Kubernetes production platform a six-developer team ships on, and its delivery infrastructure: CI/CD, GitOps, reliability, observability, secrets, and stateful services; the current implementation runs on GCP/GKE."
+    ru: "Отвечаю за Kubernetes-платформу в нескольких регионах для команды из шести разработчиков и за её инфраструктуру поставки: CI/CD, GitOps, отказоустойчивость, наблюдаемость, секреты и сервисы с состоянием; сейчас работает на GCP/GKE."
   responsibilities:
-  - en: Set up and maintain CI/CD.
-    ru: Настройка и сопровождение CI/CD.
-  - en: "Coach team members in DevOps practices: IaC, Gitflow, and twelve-factor application development."
-    ru: "Обучение команды практикам DevOps: IaC, Gitflow и разработке 12-факторных приложений."
-  - en: "Ensure application resilience and configure cloud infrastructure: GCP, GKE, GCLB, Cloudflare, and SingleStore."
-    ru: "Обеспечение отказоустойчивости приложений и настройка облачной инфраструктуры: GCP, GKE, GCLB, Cloudflare и SingleStore."
-  - en: "Deploy supporting services and databases through operators: ExternalDNS, cert-manager, Prometheus, Jaeger, Elasticsearch, ClickHouse, Redis, and PostgreSQL."
-    ru: "Развёртывание вспомогательных служб и баз данных через операторы: ExternalDNS, cert-manager, Prometheus, Jaeger, Elasticsearch, ClickHouse, Redis и PostgreSQL."
+  - en: "Coach team members in DevOps practices: IaC, branching strategies, and twelve-factor application development."
+    ru: "Обучение команды практикам DevOps: IaC, стратегии ветвления и разработка 12-факторных приложений."
+  - en: "Ensure application resilience and high availability; configure cloud infrastructure: GCP, GKE, GCLB, and Cloudflare."
+    ru: "Обеспечение отказоустойчивости и высокой доступности приложений; настройка облачной инфраструктуры: GCP, GKE, GCLB и Cloudflare."
+  - en: "Deploy supporting services and databases through operators: ExternalDNS, cert-manager, Prometheus, Jaeger, Elasticsearch, ClickHouse, Dragonfly, and PostgreSQL."
+    ru: "Развёртывание вспомогательных служб и баз данных через Kubernetes-операторы: ExternalDNS, cert-manager, Prometheus, Jaeger, Elasticsearch, ClickHouse, Dragonfly и PostgreSQL."
   - en: "Help developers prepare applications for cloud operations: monitoring, logging, and tracing."
     ru: "Помощь разработчикам в подготовке приложений к эксплуатации в облаке: мониторинг, журналирование и трассировка."
   achievements:
@@ -112,30 +110,31 @@ experience:
     ru: Перенёс платформу с нагрузкой ~300 RPS с настроенного вручную VPS в Docker Swarm под управлением Ansible, затем в GKE под управлением Terraform; обе миграции прошли без простоя.
     featured: true
   - id: multi-region-platform
-    en: Built a production platform on four Kubernetes clusters (GKE) across four regions, plus dedicated staging and infrastructure clusters; the production clusters are joined by a Multi-Cluster Gateway.
-    ru: Развернул production-платформу на четырёх Kubernetes-кластерах (GKE) в четырёх регионах и выделил отдельные кластеры для staging и инфраструктуры; production-кластеры объединил через Multi-Cluster Gateway.
+    en: Built production on four Kubernetes clusters (GKE) across four regions, plus dedicated staging and infrastructure clusters, and joined the production clusters with a Multi-Cluster Gateway.
+    ru: Развернул продакшен в четырёх регионах на четырёх кластерах GKE, плюс отдельные кластеры для стейджинга и инфраструктуры; объединил их через Multi-Cluster Gateway.
     featured: true
   - id: gitops-platform
-    en: Introduced Argo CD GitOps for 20+ services and internal tools used by a six-developer engineering team; cut deployment time from over three minutes to about one and raised deployment frequency from two or three a week to as many as ten a day. Rollback requires reverting a single Git commit and completes in under two minutes.
-    ru: "Внедрил GitOps на Argo CD для 20+ сервисов и внутренних инструментов команды из шести разработчиков: сократил время развёртывания с более чем трёх минут примерно до одной и поднял частоту с двух-трёх в неделю до десяти в день. Откат выполняется отменой одного коммита в Git и занимает менее двух минут."
+    en: Introduced Argo CD GitOps for 20+ services and internal tools; cut deployment time from five minutes to a minute and a half and increased release frequency from two or three a week to as many as ten a day. Rollback requires reverting a single Git commit and completes in under two minutes.
+    ru: "Внедрил GitOps на Argo CD для 20+ сервисов и внутренних инструментов: сократил время развёртывания с пяти минут до полутора и увеличил частоту выпусков с двух-трёх в неделю до десяти в день. Откат выполняется отменой одного коммита в Git и занимает менее двух минут."
     featured: true
   - id: cloud-cost
-    en: Reduced monthly cloud spend five times over by moving suitable workloads onto spot nodes and replacing SaaS ClickHouse, PostgreSQL and Dragonfly with operator-managed clusters.
+    en: "Cut monthly cloud spend by 80 percent: moved suitable workloads onto spot nodes and replaced SaaS ClickHouse, PostgreSQL, and Dragonfly with operator-managed clusters."
     ru: "Сократил ежемесячные расходы на облако в пять раз: перевёл подходящие нагрузки на spot-узлы и заменил SaaS-версии ClickHouse, PostgreSQL и Dragonfly кластерами под управлением операторов."
     featured: true
   - id: crossplane-infrastructure
-    en: Unified application and infrastructure management under GitOps by moving infrastructure from Terraform to Crossplane; compositions define the resources and the controller continuously reconciles them to the desired state.
-    ru: Объединил управление приложениями и инфраструктурой в единый процесс GitOps, переведя инфраструктуру с Terraform на Crossplane; композиции описывают ресурсы, а контроллер динамически приводит инфраструктуру к нужному состоянию.
+    en: "Unified application and infrastructure management under GitOps by moving infrastructure from Terraform to Crossplane: resources are plain YAML manifests in the Kubernetes API, and the controller continuously reconciles them to the desired state."
+    ru: "Объединил приложения и инфраструктуру в один процесс GitOps, переведя инфраструктуру с Terraform на Crossplane: ресурсы описаны обычными YAML-манифестами и живут в Kubernetes API, а контроллер динамически приводит их к нужному состоянию."
     featured: true
   - en: Moved deployments under Argo CD management, then replaced Helm template rendering in Argo CD with pre-rendered YAML manifests (Rendered Manifests Pattern). Changes are visible in plain YAML diffs, and Argo CD does not spend resources rendering templates.
     ru: Перевёл развёртывание под управление Argo CD, затем заменил рендеринг Helm-шаблонов в Argo CD готовыми YAML-манифестами (Rendered Manifests Pattern). Изменения видны в обычных YAML-диффах, а Argo CD не тратит ресурсы на рендеринг шаблонов.
   - en: Moved secrets management to the External Secrets Operator, putting secrets in the same GitOps flow as the rest of the platform.
-    ru: "Перенёс управление секретами в External Secrets Operator: секреты пошли по тому же GitOps-потоку, что и остальная платформа."
-  - en: Standardized lifecycle management for PostgreSQL, ClickHouse, Redis (now Dragonfly), and Elasticsearch with Kubernetes operators; migrated Kafka from SaaS to a Strimzi-managed cluster.
-    ru: Стандартизировал управление жизненным циклом PostgreSQL, ClickHouse, Redis (сейчас Dragonfly) и Elasticsearch с помощью Kubernetes-операторов; перенёс Kafka из SaaS в кластер под управлением Strimzi.
+    ru: "Перенёс управление секретами в External Secrets Operator: секреты идут тем же GitOps-потоком, что и вся платформа."
     featured: true
-  - en: "Moved static delivery from Nginx to Google Cloud Storage behind a CDN: an update no longer leaves Nginx serving the previous files, and its configuration left the platform."
-    ru: "Перенёс раздачу статики с Nginx в Google Cloud Storage за CDN: после обновления статики больше не отдаются старые файлы, а конфигурация Nginx ушла из платформы."
+  - en: Unified lifecycle management for PostgreSQL, ClickHouse, Redis (now Dragonfly), and Elasticsearch under Kubernetes operators; migrated Kafka from SaaS to a Strimzi-managed cluster.
+    ru: Унифицировал управление жизненным циклом PostgreSQL, ClickHouse, Redis (сейчас Dragonfly) и Elasticsearch через Kubernetes-операторы; Kafka перенёс из SaaS в кластер Strimzi.
+    featured: true
+  - en: "Took static delivery off Nginx into Google Cloud Storage behind a CDN: an update no longer serves stale files, and the Nginx configuration burden is gone."
+    ru: "Вынес раздачу статики из Nginx в Google Cloud Storage за CDN: после обновления больше не отдаются старые файлы, а сопровождение конфигурации Nginx ушло из платформы."
 - id: rossko
   company:
     en: Rossko
@@ -158,15 +157,13 @@ experience:
     ru: Главный инженер-DevOps
   detailed: true
   scope:
-    en: "Supported infrastructure and delivery for the distribution portal: 15+ microservices, virtual infrastructure, CI/CD, and container platform operations."
-    ru: "Сопровождал инфраструктуру и процессы доставки портала дистрибуции: 15+ микросервисов, виртуальная инфраструктура, CI/CD и эксплуатация контейнерной платформы."
+    en: "Supported infrastructure and delivery for an auto parts distribution portal serving repair shops and retailers: 15+ microservices, virtual infrastructure, CI/CD, and container platform operations."
+    ru: "Сопровождал инфраструктуру и процессы доставки портала дистрибуции автозапчастей для сервисных центров и магазинов: 15+ микросервисов, виртуальная инфраструктура, CI/CD и эксплуатация контейнерной платформы."
   responsibilities:
-  - en: Supported distribution portal development and CI/CD workflows.
-    ru: Поддержка разработки портала дистрибуции и CI/CD-процессов.
-  - en: Containerized web applications and helped the team adopt twelve-factor principles.
-    ru: Контейнеризация веб-приложений и помощь команде в переходе на принципы 12-факторных приложений.
-  - en: Containerized infrastructure services and operated Docker Swarm.
-    ru: Контейнеризация инфраструктурных сервисов и эксплуатация Docker Swarm.
+  - en: "Maintained CI/CD for the portal services: build, test, and release pipelines."
+    ru: "Сопровождение CI/CD сервисов портала: сборка, тестирование и выкладка."
+  - en: Containerized web applications and infrastructure services, maintained Docker Swarm clusters, and helped the team adopt twelve-factor principles.
+    ru: Контейнеризация веб-приложений и инфраструктурных сервисов, обслуживание кластеров Docker Swarm, помощь команде в переходе на принципы 12-факторных приложений.
   - en: "Trained the system and network administration team in DevOps practices: IaC, configuration management, CI/CD, and Git."
     ru: "Обучение команды системных и сетевых администраторов практикам DevOps: IaC, управлению конфигурациями, CI/CD и работе с Git."
   achievements:
@@ -180,8 +177,8 @@ experience:
   - en: Centralized microservice logs and metrics with EFK, Prometheus, and Grafana, giving the team a single place for incident diagnostics.
     ru: Централизовал журналы и метрики микросервисов в EFK, Prometheus и Grafana, создав единую точку диагностики при инцидентах.
     featured: true
-  - en: Moved web service assets to MinIO object storage, taking file state off the application servers.
-    ru: Перенёс файлы веб-сервисов в объектное хранилище MinIO, чтобы приложения не хранили состояние локально.
+  - en: Took web service assets off the application servers into MinIO object storage.
+    ru: Убрал файлы веб-сервисов с серверов приложений в объектное хранилище MinIO.
 - id: plussell
   company:
     en: Plussell
@@ -204,31 +201,33 @@ experience:
     ru: Инженер-DevOps
   detailed: true
   scope:
-    en: Maintained builds, releases, and infrastructure for the Java/Liferay platform on OpenStack, including provisioning automation and Kubernetes operations.
-    ru: Отвечал за сборку, выпуск и инфраструктуру Java/Liferay-платформы в OpenStack, включая автоматизацию развёртывания и эксплуатацию Kubernetes.
+    en: Maintained builds, releases, and infrastructure for a Java platform on OpenStack, including provisioning automation and Kubernetes operations.
+    ru: Отвечал за сборку, выпуск и инфраструктуру Java-платформы в OpenStack, включая автоматизацию развёртывания и эксплуатацию Kubernetes.
   responsibilities:
   - en: Maintained the Java build and release process for Liferay and OSGi applications, including versions and dependencies.
     ru: "Сопровождение сборки и выпуска Java-приложений на Liferay и OSGi: управление версиями и зависимостями."
-  - en: Deployed servers with OpenStack Heat/CloudFormation, Ansible, and shell/Python.
-    ru: Развёртывание серверов через OpenStack Heat/CloudFormation, Ansible и shell/Python.
+  - en: Deployed servers with OpenStack Heat through its AWS CloudFormation-compatible API, Ansible, and shell/Python.
+    ru: Развёртывание серверов через OpenStack Heat по API, совместимому с AWS CloudFormation, Ansible и shell/Python.
   - en: Operated Docker and Kubernetes-based container infrastructure.
     ru: Эксплуатация контейнерной инфраструктуры на Docker и Kubernetes.
-  - en: Designed and maintained LDAP and PKI infrastructure with FreeIPA, and deployed SDN with OpenStack Neutron and Flannel.
-    ru: Проектирование и сопровождение инфраструктуры LDAP и PKI на FreeIPA. Развёртывание SDN с OpenStack Neutron и Flannel.
+  - en: Designed and maintained LDAP and PKI infrastructure with FreeIPA.
+    ru: Проектирование и сопровождение инфраструктуры LDAP и PKI на FreeIPA.
+  - en: Deployed SDN with OpenStack Neutron and Flannel.
+    ru: Развёртывание SDN с OpenStack Neutron и Flannel.
   achievements:
   - en: Automated builds with Jenkins and Nexus, and moved dependency management to Gradle. Build time fell from hours to minutes.
     ru: Автоматизировал сборку с Jenkins и Nexus, перевёл управление зависимостями на Gradle. Время сборки сократилось с часов до минут.
     featured: true
-  - en: Migrated the platform from two hand-configured bare-metal servers to Mail.ru Cloud running on OpenStack. Provisioned infrastructure with Heat and Ansible.
-    ru: Перенёс платформу с двух вручную настроенных физических серверов в Mail.ru Cloud на базе OpenStack. Инфраструктуру развёртывал через Heat и Ansible.
+  - en: Migrated the platform from two hand-configured bare-metal servers to Mail.ru Cloud (now VK Cloud) running on OpenStack. Provisioned infrastructure with Heat and Ansible.
+    ru: Перенёс платформу с двух настроенных вручную физических серверов в Mail.ru Cloud (сейчас VK Cloud) на базе OpenStack. Инфраструктуру развёртывал через Heat и Ansible.
     featured: true
-  - en: Built a Kubernetes cluster on OpenStack with fully automated provisioning. Moved Elasticsearch, Jenkins, and Nexus onto it.
-    ru: Развернул Kubernetes-кластер на OpenStack, полностью автоматизировав его развёртывание. Перенёс на него Elasticsearch, Jenkins и Nexus.
+  - en: Built a Kubernetes cluster on OpenStack with its provisioning described in code. Moved Elasticsearch, Jenkins, and Nexus onto it.
+    ru: Развернул Kubernetes-кластер на OpenStack, описав его развёртывание кодом. Перенёс на него Elasticsearch, Jenkins и Nexus.
     featured: true
   - en: Moved the Liferay portal from Tomcat to WildFly.
     ru: Перевёл портал Liferay с Tomcat на WildFly.
 - company:
-    en: State Unitary Enterprise "Center for Information and Communication Technologies of the Republic of Bashkortostan"
+    en: Republic of Bashkortostan ICT Center
     ru: ГУП «Центр информационно-коммуникационных технологий Республики Башкортостан»
   resume_company:
     en: Republic of Bashkortostan ICT Center
