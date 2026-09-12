@@ -50,7 +50,7 @@ format:
   en: Work format
   ru: Формат работы
 details:
-  en: Work details
+  en: Work preferences
   ru: Условия работы
 contacts:
   en: Contacts
@@ -72,7 +72,7 @@ sections:
   ru: Разделы
 navWork:
   en: Selected work
-  ru: Проекты
+  ru: Достижения
 navExperience:
   en: Experience
   ru: Опыт
@@ -86,17 +86,17 @@ technologies:
   en: Technologies
   ru: Технологии
 additionalSkills:
-  en: Additional technologies
-  ru: Дополнительные технологии
+  en: Additional experience
+  ru: Дополнительный опыт
 responsibilities:
   en: Responsibilities
   ru: Обязанности
 earlierWebsite:
-  en: Earlier infrastructure & network engineering experience
+  en: Earlier experience
   ru: Предыдущий опыт
 highlights:
-  en: Key outcomes
-  ru: Ключевые результаты
+  en: Outcomes
+  ru: Результаты
 about:
   en: How I work
   ru: Как я работаю
@@ -108,15 +108,15 @@ notFoundBody:
   ru: Такого адреса на сайте нет.
 notFoundHome:
   en: Open the CV
-  ru: Открыть CV
+  ru: Открыть резюме
 
 # Text exports only.
 email:
   en: Email
-  ru: Электронная почта
+  ru: Почта
 cvSite:
   en: CV website
-  ru: Сайт CV
+  ru: Сайт резюме
 exportAbout:
   en: About
   ru: О себе
@@ -127,8 +127,8 @@ earlier:
   ru: Предыдущий опыт
 resumeGroups:
   earlier-commercial:
-    en: Commercial systems and network administration roles
-    ru: Коммерческие роли в системном и сетевом администрировании
+    en: Systems and network administration
+    ru: Системное и сетевое администрирование
 coreSkills:
   en: Core expertise
   ru: Ключевые компетенции
