@@ -61,8 +61,8 @@ selected_work:
     en: Lower infrastructure cost
     ru: Сокращение расходов
   outcome:
-    en: Monthly cloud spend · reduced 5-fold
-    ru: Расходы на облако · снижены в 5 раз
+    en: Almost five-fold cost reduction
+    ru: Снижение расходов почти в пять раз
   skill_ids: [gke, kubernetes-operators, clickhouse]
 - achievement_id: rossko-delivery
   title:
@@ -118,8 +118,8 @@ experience:
     ru: "Внедрил GitOps на Argo CD для 20+ сервисов и внутренних инструментов: сократил время развёртывания с пяти минут до полутора и увеличил частоту выпусков с двух-трёх в неделю до десяти в день. Откат выполняется отменой одного коммита в Git и занимает менее двух минут."
     featured: true
   - id: cloud-cost
-    en: "Cut monthly cloud spend by 80 percent: moved suitable workloads onto spot nodes and replaced SaaS ClickHouse, PostgreSQL, and Dragonfly with operator-managed clusters."
-    ru: "Сократил ежемесячные расходы на облако в пять раз: перевёл подходящие нагрузки на spot-узлы и заменил SaaS-версии ClickHouse, PostgreSQL и Dragonfly кластерами под управлением операторов."
+    en: "Achieved an almost five-fold reduction in monthly cloud spend by moving suitable workloads onto spot nodes and replacing SaaS ClickHouse, PostgreSQL, and Dragonfly with operator-managed clusters."
+    ru: "Сократил ежемесячные расходы на облако почти в пять раз: перевёл подходящие нагрузки на spot-узлы и заменил SaaS-версии ClickHouse, PostgreSQL и Dragonfly кластерами под управлением операторов."
     featured: true
   - id: crossplane-infrastructure
     en: "Unified application and infrastructure management under GitOps by moving infrastructure from Terraform to Crossplane: resources are plain YAML manifests in the Kubernetes API, and the controller continuously reconciles them to the desired state."
@@ -610,8 +610,8 @@ skills:
   - name: Google Cloud Deployment Manager
 
 - area:
-    en: CI/CD
-    ru: CI/CD
+    en: CI/CD & GitOps
+    ru: CI/CD и GitOps
   items:
   - name: GitHub Actions
     featured: true
@@ -622,7 +622,7 @@ skills:
   - id: argo-cd
     name: Argo CD
     featured: true
-  - name: Flux CD
+  - name: Flux
     featured: true
   - name: Jenkins
   - name: Concourse CI
