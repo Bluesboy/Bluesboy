@@ -51,7 +51,7 @@
   and is website-only. It may carry a figure but does not have to: `scripts/validate_cv.py` rejects a
   figure the achievement does not support, and `scripts/check_artifacts.py` fails if the line reaches
   the PDF. Prefer what a result means over a count that ages.
-- Detailed roles need stable IDs. Selected Work achievement and skill references must resolve to stable IDs.
+- Detailed roles need stable IDs. Selected Achievements references must resolve to stable achievement and skill IDs.
 - Optional `resume_group` compacts contiguous earlier roles in the PDF through a localized `ui.resumeGroups`
   label and a date range derived from their periods; Hugo still renders every role separately.
 - Validate data through `scripts/validate_cv.py` or `make test/schema`.
@@ -70,7 +70,7 @@
 - Achievements describe completed results and use past tense.
 - Write `summary` as first-person prose in both languages; keep every list item verb-first with no subject.
 - Keep `summary` about the person and the work he does. Project results and their figures
-  belong to Selected Work and the experience entries; the summary must not recite them.
+  belong to Selected Achievements and the experience entries; the summary must not recite them.
 - PDF detailed roles render a short scope and selected achievements; full responsibilities stay on the website.
 - Do not store or render salary or citizenship; neither has a public CV use case.
 - Avatar and About are website-only; preserve useful context without repeating the summary.
@@ -94,7 +94,7 @@
 - Do not show the website URL as a contact linking to the current page.
 - Resume buttons point to stable GitHub Release assets, not Pages copies.
 - Keep the site responsive, semantic, accessible, and JavaScript-free.
-- Keep mobile DOM order: identity, summary, contacts with languages, core stack, Selected Work,
+- Keep mobile DOM order: identity, summary, contacts with languages, core stack, Selected Achievements,
   experience, How I work, education, additional technologies.
 - The contacts card is a rail beside Summary and Core stack, so Core stack starts under Summary
   instead of waiting for the taller card.
@@ -103,7 +103,7 @@
   changing this back: the rail must not outgrow the left column, or the gap under Core stack returns.
 - Anchor the sections the nav points at (`#selected-work`, `#experience`, `#stack`, `#education`)
   and keep that nav anchors-only, under the headline, with no second navigation model.
-- Selected Work cards carry one link stretched over the card; never nest a second anchor inside.
+- Selected Achievements cards carry one link stretched over the card; never nest a second anchor inside.
 - Emphasise figures the data already states; never derive a new metric line for a card.
 - Size type in `rem`, never in `px`, so a raised browser font size scales the whole page.
 - Stack label/value pairs into one column below 560px.
@@ -130,7 +130,7 @@
 - Never hardcode `#fff` on an `--accent` or `--ink` fill; use `--on-accent` / `--on-ink`.
 - Respect `prefers-reduced-motion`.
 - Render external profiles as clickable contacts and include them in JSON-LD `sameAs`.
-- Render Selected Work before Experience from canonical achievement and skill references. Give Selected Work
+- Render Selected Achievements before Experience from canonical achievement and skill references. Give its
   items and detailed roles stable language-independent anchors; never derive anchors from localized text.
 - Minification is configured in `hugo.toml`; do not rely on the `--minify` flag.
 - Do not edit `build/`, `public/`, or other generated output manually.
@@ -234,7 +234,7 @@
 - `make test/build` runs `scripts/check_artifacts.py` over the built files: section order, literal
   core-skill keywords, clickable contacts per locale, the two-page budget, identity footers,
   embedded fonts, duplicated lines, EN/RU parity, complete website content, canonical/social metadata,
-  grouped earlier experience, Selected Work references and anchors, JSON-LD, heading levels, image alt text,
+  grouped earlier experience, Selected Achievements references and anchors, JSON-LD, heading levels, image alt text,
   404 indexing, and complete bilingual TXT exports.
 - Inspect the rendered pages for what no check can see: spacing, widows, and where pages break.
 - For link changes, verify PDF annotations and generated Hugo URLs.

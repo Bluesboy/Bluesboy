@@ -214,11 +214,11 @@ for lang in LOCALES:
     check(embedded == {"IBMPlexSansRoman-Regular", "IBMPlexSansRoman-Bold"},
           f"{name}: embedded faces are {sorted(embedded)}, expected the two IBM Plex weights")
 
-    # Selected Work is a website section: its outcome lines summarise what the
+    # The Selected Achievements website section summarises what the
     # PDF already states in full, and must not leak into the two-page resume.
     for item in cv["selected_work"]:
         check(flatten(item["outcome"][lang]) not in flat,
-              f"{name}: the Selected Work outcome line reached the PDF")
+              f"{name}: the Selected Achievements outcome line reached the PDF")
 
     meta = reader.metadata or {}
     for field in ("/Title", "/Author", "/Subject"):
@@ -443,9 +443,9 @@ for lang in LOCALES:
         for value in (item["title"][lang], item["outcome"][lang], achievement[lang],
                       *(skill_by_id[skill_id] for skill_id in item["skill_ids"])):
             check(flatten(value) in selected_text,
-                  f"{where}: Selected Work value {value!r} is missing")
+                  f"{where}: Selected Achievements value {value!r} is missing")
         check(f"#{role_id}" in page.hrefs,
-              f"{where}: Selected Work item {item['achievement_id']!r} does not link to its role")
+              f"{where}: Selected Achievements item {item['achievement_id']!r} does not link to its role")
 
     # A collapsed block is still part of the full CV and must survive in the
     # HTML. Check every canonical entry, not only the visible core subset.
@@ -492,7 +492,7 @@ for lang in LOCALES:
                   for attrs, label in links),
               f"{where}: <a href={href!r}> has no accessible name")
 
-    # The skill inventory appears once; Selected Work resolves references to
+    # The skill inventory appears once; Selected Achievements resolves references to
     # the same canonical items rather than defining another inventory.
     expected_core = skills(featured_only=True)
     expected_additional = [item["name"] for group in cv["skills"] for item in group["items"]
