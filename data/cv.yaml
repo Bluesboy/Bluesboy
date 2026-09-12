@@ -68,8 +68,8 @@ selected_work:
     en: Infrastructure with Crossplane
     ru: Инфраструктура на Crossplane
   outcome:
-    en: Compositions · continuous reconciliation
-    ru: Композиции · непрерывная синхронизация
+    en: Compositions · state reconciliation
+    ru: Композиции · синхронизация состояния
   skill_ids: [crossplane, google-cloud-platform, gke]
 
 experience:
@@ -124,7 +124,7 @@ experience:
     featured: true
   - id: crossplane-infrastructure
     en: Unified application and infrastructure management under GitOps by moving infrastructure from Terraform to Crossplane; compositions define the resources and the controller continuously reconciles them to the desired state.
-    ru: Объединил управление приложениями и инфраструктурой в единый процесс GitOps, переведя инфраструктуру с Terraform на Crossplane; используются композиции, а контроллер динамически приводит инфраструктуру к нужному состоянию.
+    ru: Объединил управление приложениями и инфраструктурой в единый процесс GitOps, переведя инфраструктуру с Terraform на Crossplane; композиции описывают ресурсы, а контроллер динамически приводит инфраструктуру к нужному состоянию.
     featured: true
   - en: Moved deployments under Argo CD management, then replaced Helm template rendering in Argo CD with pre-rendered YAML manifests (Rendered Manifests Pattern). Changes are visible in plain YAML diffs, and Argo CD does not spend resources rendering templates.
     ru: Перевёл развёртывание под управление Argo CD, затем заменил рендеринг Helm-шаблонов в Argo CD готовыми YAML-манифестами (Rendered Manifests Pattern). Изменения видны в обычных YAML-диффах, а Argo CD не тратит ресурсы на рендеринг шаблонов.
