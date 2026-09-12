@@ -42,10 +42,10 @@ target:
     ru: Удалённо
 
 summary:
-- en: "I build and operate fault-tolerant Kubernetes platforms: GitOps, IaC, CI/CD, observability, and operator-managed stateful services."
+- en: I build and operate fault-tolerant Kubernetes platforms using GitOps, IaC, CI/CD, observability, and operator-managed stateful services.
   ru: "Строю и эксплуатирую отказоустойчивые Kubernetes-платформы: GitOps, IaC, CI/CD, наблюдаемость и Kubernetes-операторы для сервисов с состоянием."
-- en: I work across cloud platform layers, preparing and migrating systems to the cloud and automating their operation. I prefer standard tooling and GitOps so platform changes go through Git, operational knowledge is documented, and routine manual intervention is reduced.
-  ru: "Работаю на разных уровнях облачной платформы: готовлю и переношу системы в облако, автоматизирую их эксплуатацию. Предпочитаю стандартные инструменты и GitOps, чтобы изменения платформы проходили через Git, эксплуатационные знания были документированы, а рутинных ручных операций становилось меньше."
+- en: I work across the platform lifecycle, from infrastructure provisioning and migration to application delivery and operations. I prefer standard tooling and declarative workflows that keep platform changes and operational knowledge in Git and minimize routine manual intervention.
+  ru: Работаю со всем жизненным циклом платформы — от подготовки инфраструктуры и миграций до доставки приложений и эксплуатации. Предпочитаю стандартные инструменты и декларативные процессы, чтобы изменения платформы и эксплуатационные знания оставались в Git, а ручных операций было меньше.
 
 selected_work:
 - achievement_id: funnelflux-migration
@@ -129,7 +129,6 @@ experience:
     ru: Заменил рендеринг Helm-шаблонов в Argo CD готовыми YAML-манифестами (Rendered Manifests Pattern). Изменения видны в обычных YAML-диффах, а Argo CD не тратит ресурсы на рендеринг шаблонов.
   - en: Moved secret synchronization configuration into GitOps with External Secrets Operator while keeping secret values outside Git.
     ru: Перенёс конфигурацию синхронизации секретов в GitOps через External Secrets Operator, оставив значения вне Git.
-    featured: true
   - en: Unified lifecycle management for PostgreSQL, ClickHouse, Redis (now Dragonfly), and Elasticsearch under Kubernetes operators; migrated Kafka from SaaS to a Strimzi-managed cluster.
     ru: Унифицировал управление жизненным циклом PostgreSQL, ClickHouse, Redis (сейчас Dragonfly) и Elasticsearch через Kubernetes-операторы; Kafka перенёс из SaaS в кластер Strimzi.
     featured: true
@@ -546,7 +545,7 @@ languages:
     en: English
     ru: Английский
   level:
-    en: B2 · professional working proficiency
+    en: B2 · used professionally
     ru: B2 · использую в работе
 
 skills:
@@ -591,8 +590,8 @@ skills:
   - name: OpenStack
 
 - area:
-    en: IaC & GitOps
-    ru: IaC и GitOps
+    en: Infrastructure as Code
+    ru: Инфраструктура как код
   items:
   - id: crossplane
     name: Crossplane
@@ -605,11 +604,6 @@ skills:
     featured: true
   - name: Ansible Tower (AWX)
   - name: Foreman
-  - id: argo-cd
-    name: Argo CD
-    featured: true
-  - name: Flux CD
-    featured: true
   - name: Google Config Connector
   - name: AWS CloudFormation
   - name: OpenStack Heat
@@ -624,6 +618,11 @@ skills:
   - name: Argo Workflows
     featured: true
   - name: GitLab CI
+    featured: true
+  - id: argo-cd
+    name: Argo CD
+    featured: true
+  - name: Flux CD
     featured: true
   - name: Jenkins
   - name: Concourse CI
@@ -680,9 +679,7 @@ skills:
     ru: Сборка и пакеты
   items:
   - name: Maven/Gradle/npm/pip/Cargo
-    featured: true
   - name: Artifactory/Nexus
-    featured: true
   - name: NuGet
   - name: Go modules
 
