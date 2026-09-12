@@ -204,6 +204,11 @@
 - Keep release and Pages deployment in one workflow.
 - Build before tagging: `version/plan` predicts the tag so a failed build leaves none behind.
 - Deploy Pages on every push to master; release PDFs only when a bump is warranted.
+- Only `feat`, `fix`, and a breaking change bump the version; `docs`, `test`, `refactor`,
+  `build`, `ci`, `perf`, `style`, and `chore` do not.
+- The Resume button points at `releases/latest/download`, so the downloadable PDFs stay on the
+  last released version while the site deploys on every push. Commit CV content that belongs in
+  the resume as `fix` or `feat`, or the site ships wording the PDFs still contradict.
 - Keep the build a separate workflow step between `version/plan` and `version/release`.
 - Do not move it into cog `pre_bump_hooks`: hooks never run on the non-bump pushes that
   still deploy Pages, a failing hook exits through a Rust panic, and the `|| true` in
