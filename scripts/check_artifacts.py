@@ -19,8 +19,12 @@ import yaml
 from pypdf import PdfReader
 
 from export_text import (
+    FIELD_LIMITS,
     KINDS,
+    LINKEDIN_SKILLS,
     output_name,
+    platform_blocks,
+    render_platform,
     render_education,
     render_experience,
     render_profile,
@@ -585,6 +589,10 @@ text_renderers = {
     "skills": render_skills,
     "experience": render_experience,
     "education": render_education,
+    "hh": render_platform("hh"),
+    "linkedin": render_platform("linkedin"),
+    "wellfound": render_platform("wellfound"),
+    "hirist": render_platform("hirist"),
 }
 expected_text_files = {
     output_name(cv, kind, lang)
@@ -621,6 +629,27 @@ for lang in LOCALES:
     ]
     for value in profile_values:
         check(value in profile, f"text profile {lang}: canonical value {value!r} is missing")
+
+    # A platform silently truncates a field that runs over its limit, so the
+    # packs have to fit before anyone pastes them.
+    for kind in ("hh", "linkedin", "wellfound", "hirist"):
+        name = output_name(cv, kind, lang)
+        for key, label, body in platform_blocks(kind, cv, ui, lang):
+            limit = FIELD_LIMITS.get(key)
+            if limit is not None:
+                check(len(body) <= limit,
+                      f"{name}: field {label!r} is {len(body)} characters, "
+                      f"{key} allows {limit}")
+        content = rendered.get(kind, "")
+        for value in (cv["target"]["position"][lang], cv["personal"]["email"]):
+            check(value in content, f"{name}: canonical value {value!r} is missing")
+
+    linkedin_skills = dict(
+        (label, body) for _, label, body in platform_blocks("linkedin", cv, ui, lang)
+    )[ui["exportFields"]["skills"][lang]].splitlines()
+    check(len(linkedin_skills) <= LINKEDIN_SKILLS,
+          f"linkedin {lang}: {len(linkedin_skills)} skills listed, LinkedIn accepts "
+          f"{LINKEDIN_SKILLS}")
 
     skill_text = rendered.get("skills", "")
     for group in cv["skills"]:

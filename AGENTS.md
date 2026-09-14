@@ -185,6 +185,15 @@
   languages, and How I work.
 - Those TXT files are a local convenience artifact for pasting into job boards and forms:
   they ship neither to the website nor to a GitHub Release, and nothing links to them.
+- Four of the packs target one platform each and name their fields the way that platform's
+  form does: `hh` (hh.ru), `linkedin`, `wellfound`, `hirist`. Both locales are generated for
+  every platform; the packs carry no annotations, so a field pastes whole.
+- `FIELD_LIMITS` in `scripts/export_text.py` holds what each platform accepts: LinkedIn's
+  headline 220, About 2600, one position description 2000 and 50 skills; Wellfound's
+  mini-resume 160. `scripts/check_artifacts.py` fails when a field runs over, because a
+  platform truncates silently instead of refusing the paste.
+- A role description that does not fit drops whole items rather than being cut mid-sentence:
+  responsibilities first, then achievements the CV does not mark as featured, last to first.
 - `make fmt`: format Typst.
 - `make lint`: YAML, Actions, and Typst lint.
 - `make ci VERSION=v1.0.0`: schema validation and complete reproducible build.

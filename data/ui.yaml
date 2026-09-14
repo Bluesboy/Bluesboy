@@ -121,6 +121,38 @@ exportAbout:
   en: About
   ru: О себе
 
+# Field names of the job platforms the clipboard packs target. They are the
+# labels of the form fields, so each locale uses the wording that platform's
+# interface uses.
+exportFields:
+  headline:
+    en: Headline
+    ru: Заголовок
+  about:
+    en: About
+    ru: Обо мне
+  skills:
+    en: Skills
+    ru: Навыки
+  keySkills:
+    en: Key skills
+    ru: Ключевые навыки
+  desiredPosition:
+    en: Desired position
+    ru: Желаемая должность
+  miniResume:
+    en: Mini-resume
+    ru: Мини-резюме
+  role:
+    en: Role
+    ru: Роль
+  profileSummary:
+    en: Profile summary
+    ru: О себе
+  workExperience:
+    en: Work experience
+    ru: Опыт работы
+
 # PDF only.
 earlier:
   en: Earlier experience
