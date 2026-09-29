@@ -30,7 +30,7 @@ jobs:
     steps:
     # A branch, not the tested SHA: cog refuses to bump outside the
     # branch_whitelist in cog.toml, and a detached HEAD is on no branch.
-    - uses: actions/checkout@v7
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
       with:
         ref: master
         fetch-depth: 0
@@ -45,28 +45,41 @@ jobs:
         else
           echo "master moved past $TESTED; its own CI run will tag it" >&2
         fi
-    # Installs the cog binary only; version/release drives it from the
-    # Makefile. Commit messages are validated in CI, where a malformed one
-    # turns the check red instead of blocking a release. install-only also
-    # skips the action's global git config, so the identity below holds.
+    # Installs cog alone, at the version mise.lock records; version/release
+    # drives it from the Makefile. Commit messages are validated in CI, where
+    # a malformed one turns the check red instead of blocking a release.
     - if: steps.current.outputs.tested
-      uses: cocogitto/cocogitto-action@v4.2.0
+      uses: jdx/mise-action@9149ea85001c7435d5a66bb127d6a1b6227cb0a5  # v5.0.0
       with:
-        install-only: true
+        # renovate: datasource=github-releases depName=jdx/mise
+        version: 2026.9.9
+        install_args: aqua:cocogitto/cocogitto
     - name: Configure release identity
       if: steps.current.outputs.tested
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-    - id: version
-      name: Create version tag
+    - name: Create version tag
       if: steps.current.outputs.tested
-      run: make --no-print-directory version/release >> "$GITHUB_OUTPUT"
+      run: make --no-print-directory version/release
+    # Asks about the latest tag, not only one created just now: a tag whose
+    # release never started, or failed, gets another attempt on the next
+    # green push instead of staying without a release for good.
+    - id: pending
+      name: Find a tag without a release
+      if: steps.current.outputs.tested
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        tag=$(git describe --tags --abbrev=0)
+        if ! gh release view "$tag" >/dev/null 2>&1; then
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+        fi
     # A tag pushed with GITHUB_TOKEN starts no workflow, to stop runs from
     # triggering each other forever; workflow_dispatch is the exception.
     - name: Start the release
-      if: steps.version.outputs.tag != ''
+      if: steps.pending.outputs.tag != ''
       env:
         GH_TOKEN: ${{ github.token }}
-        TAG: ${{ steps.version.outputs.tag }}
+        TAG: ${{ steps.pending.outputs.tag }}
       run: gh workflow run release.yml --ref "$TAG"

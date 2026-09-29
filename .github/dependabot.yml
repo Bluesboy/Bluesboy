@@ -1,0 +1,26 @@
+# Actions are pinned to commit SHAs with the release in a trailing comment;
+# Dependabot keeps both current, one grouped pull request a month.
+version: 2
+updates:
+# requirements*.txt are compiled from requirements*.in; Dependabot updates the
+# pins and their digests together.
+- package-ecosystem: pip
+  directory: /
+  schedule:
+    interval: monthly
+  commit-message:
+    prefix: build
+  groups:
+    python:
+      patterns: ['*']
+- package-ecosystem: github-actions
+  directories:
+  - /
+  - /.github/actions/*
+  schedule:
+    interval: monthly
+  commit-message:
+    prefix: ci
+  groups:
+    actions:
+      patterns: ['*']

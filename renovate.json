@@ -1,0 +1,26 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Tools only: Dependabot keeps GitHub Actions and Python packages current.",
+  "extends": ["config:recommended", ":semanticCommitTypeAll(build)"],
+  "enabledManagers": ["mise", "custom.regex"],
+  "schedule": ["* * 1 * *"],
+  "lockFileMaintenance": {"enabled": false},
+  "packageRules": [
+    {
+      "description": "One pull request a month for every tool update.",
+      "matchManagers": ["mise", "custom.regex"],
+      "groupName": "tools"
+    }
+  ],
+  "customManagers": [
+    {
+      "description": "The mise version the setup actions install.",
+      "customType": "regex",
+      "managerFilePatterns": ["/^\\.github/(workflows|actions)/.+\\.ya?ml$/"],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\s+version: (?<currentValue>\\S+)"
+      ],
+      "extractVersionTemplate": "^v?(?<version>.*)$"
+    }
+  ]
+}

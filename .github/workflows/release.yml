@@ -24,52 +24,25 @@ jobs:
     timeout-minutes: 20
     permissions:
       contents: write
-      pages: write
     env:
       TAG: ${{ github.ref_name }}
     steps:
-    - uses: actions/checkout@v7
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
       with:
         fetch-depth: 0
-    - uses: actions/setup-python@v7
-      with:
-        python-version: '3.13'
-    - uses: actions/setup-go@v7
-      with:
-        go-version: '1.25'
-        # Only used to build actionlint; there is no go.mod to cache against.
-        cache: false
-    - uses: peaceiris/actions-hugo@v3
-      with:
-        hugo-version: '0.165.0'
-        extended: true
-    # Pinned to a patch, unlike the other actions: upstream moves the v5 tag
-    # onto prereleases, and it currently points at v5.3.0b1. Bump this by
-    # hand once a stable v5.3.0 ships.
-    - uses: typst-community/setup-typst@v5.2.0
-      with:
-        typst-version: '0.15.1'
-
-    - id: tools
-      run: echo "key=$(make -s deps/versions)" >> "$GITHUB_OUTPUT"
-    - uses: actions/cache@v6
-      with:
-        path: |
-          ~/.cargo/bin/typstyle
-          ~/go/bin/actionlint
-        key: lint-tools-${{ runner.os }}-${{ steps.tools.outputs.key }}
-    - name: Install validators
-      run: make deps/install
-
+        # Publishing goes through gh and GH_TOKEN; git never pushes here.
+        persist-credentials: false
+    # Linting is skipped: it does not shape the artifacts, and CI already
+    # linted the commit a release tag names. Build and tests still run,
+    # since a tag pushed by hand has not been through CI.
+    - uses: ./.github/actions/setup
     - name: Build and test
-      run: make ci VERSION="$TAG"
+      run: make test/ci VERSION="$TAG"
     - name: Publish GitHub Release
       env:
         GH_TOKEN: ${{ github.token }}
       run: make release VERSION="$TAG"
-
-    - uses: actions/configure-pages@v6
-    - uses: actions/upload-pages-artifact@v5
+    - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9  # v5.0.0
       with:
         path: build/site
 
@@ -84,6 +57,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+    - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d  # v6.0.0
     - name: Deploy GitHub Pages
       id: deployment
-      uses: actions/deploy-pages@v5
+      uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346  # v5.0.1

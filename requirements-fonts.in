@@ -1,0 +1,4 @@
+# Direct dependencies of scripts/build_fonts.py, which runs only through
+# `make fonts/build`. Edit this file, then run `make deps/lock`.
+brotli
+fonttools

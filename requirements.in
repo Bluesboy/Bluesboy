@@ -1,0 +1,7 @@
+# Direct dependencies of the build, its tests and the YAML linter.
+# Edit this file, then run `make deps/lock` to regenerate requirements.txt.
+# format-nongpl: plain jsonschema silently skips `format` checks.
+jsonschema[format-nongpl]
+pypdf
+PyYAML
+yamllint

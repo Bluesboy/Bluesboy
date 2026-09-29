@@ -19,9 +19,14 @@ COG          ?= cog
 GH           ?= gh
 PYTHON       ?= python3
 PORT         ?= 1313
-PIP_PACKAGES ?= jsonschema[format-nongpl] PyYAML yamllint pypdf
-ACTIONLINT_VERSION ?= v1.7.7
-TYPSTYLE_VERSION   ?= 0.15.1
+UV           ?= uv
+MISE         ?= mise
+
+# mise.toml pins every tool. Put their directories ahead of PATH, so make
+# builds with the locked versions whether or not mise is activated in the
+# shell; without mise, or before `mise install`, PATH is left as it is.
+MISE_PATH    := $(shell $(MISE) bin-paths 2>/dev/null | paste -sd: -)
+export PATH  := $(if $(MISE_PATH),$(MISE_PATH):)$(PATH)
 
 PDF_EN := $(PDF_DIR)/shamil-sattarov-resume-en.pdf
 PDF_RU := $(PDF_DIR)/shamil-sattarov-resume-ru.pdf
@@ -51,7 +56,10 @@ help: ## Show this help
 .PHONY: build build/site build/pdf build/pdf/en build/pdf/ru build/text build/release
 
 #-- Build
-build: build/site build/pdf build/text ## Build CV website, both resumes and text exports
+# Validate the data before rendering it; the checks on the rendered files
+# live in test/build, which needs this build first. The single-format
+# targets below skip validation to keep the edit-and-rebuild loop quick.
+build: test/schema build/site build/pdf build/text ## Validate data, then build CV website, both resumes and text exports
 
 build/pdf/en: ## Build English PDF
 	@mkdir -p $(PDF_DIR)
@@ -143,14 +151,26 @@ check: lint test/schema ## Run static checks
 # =============================================================================
 # DEPENDENCIES
 # =============================================================================
-.PHONY: deps deps/install deps/verify deps/verify/version deps/verify/release deps/versions
+.PHONY: deps deps/install deps/install/tools deps/install/python deps/lock deps/verify deps/verify/version deps/verify/release
 
 #-- Dependencies
-deps/install: ## Install Python validation and lint dependencies
-	@$(PYTHON) -m pip install --user $(PIP_PACKAGES) \
-		|| $(PYTHON) -m pip install --user --break-system-packages $(PIP_PACKAGES)
-	@command -v actionlint >/dev/null || go install github.com/rhysd/actionlint/cmd/actionlint@$(ACTIONLINT_VERSION)
-	@command -v typstyle >/dev/null || cargo install typstyle --version $(TYPSTYLE_VERSION) --locked
+deps/install: deps/install/tools deps/install/python ## Install every tool and Python package
+
+deps/install/tools: ## Install the tools mise.toml pins, as mise.lock records them
+	$(MISE) install
+
+# requirements.txt pins the whole dependency tree with digests, so pip
+# refuses any file that differs from the one locked.
+deps/install/python: ## Install the Python packages the build and its tests need
+	@$(PYTHON) -m pip install --user --require-hashes -r requirements.txt \
+		|| $(PYTHON) -m pip install --user --break-system-packages --require-hashes -r requirements.txt
+
+deps/lock: ## Regenerate hashed Python lock files from their .in sources (needs uv)
+	@for lock in requirements requirements-fonts; do \
+		$(UV) pip compile --quiet --universal --generate-hashes \
+			--python-version $$($(PYTHON) -c 'import sys; print("%d.%d" % sys.version_info[:2])') \
+			--custom-compile-command "make deps/lock" $$lock.in -o $$lock.txt; \
+	done
 
 deps/verify: ## Verify the tools a build, its tests and the linters need
 	@for tool in $(HUGO) $(TYPST) $(PYTHON) sha256sum yamllint actionlint typstyle; do command -v $$tool >/dev/null || { echo "Missing dependency: $$tool" >&2; exit 1; }; done
@@ -162,9 +182,6 @@ deps/verify/version: ## Verify the tools only tagging needs
 deps/verify/release: ## Verify the tools only publishing needs
 	@for tool in $(GH); do command -v $$tool >/dev/null || { echo "Missing dependency: $$tool" >&2; exit 1; }; done
 
-deps/versions: ## Print pinned tool versions (CI builds its cache key from this)
-	@echo "actionlint-$(ACTIONLINT_VERSION)-typstyle-$(TYPSTYLE_VERSION)"
-
 deps: deps/install deps/verify ## Install and verify dependencies
 
 # =============================================================================
@@ -174,7 +191,7 @@ deps: deps/install deps/verify ## Install and verify dependencies
 
 #-- Assets
 fonts/build: ## Regenerate bundled IBM Plex Sans faces (needs fonttools, brotli)
-	$(PYTHON) -m pip install --quiet --disable-pip-version-check fonttools brotli
+	$(PYTHON) -m pip install --quiet --disable-pip-version-check --require-hashes -r requirements-fonts.txt
 	$(PYTHON) scripts/build_fonts.py
 
 # =============================================================================

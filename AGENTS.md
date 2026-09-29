@@ -60,6 +60,10 @@
 - Keep the semantic rules there in step with the renderers: period order, one open period,
   at least three responsibilities and achievements per detailed entry, URL shape.
 - Install `jsonschema[format-nongpl]`; plain `jsonschema` silently skips `format` checks.
+- Declare Python dependencies in `requirements.in` (build, tests, lint) and
+  `requirements-fonts.in` (`make fonts/build` only). Never edit the `.txt` lock files by hand:
+  `make deps/lock` compiles them with uv, pinning every transitive package with its digests
+  for the Python `mise.toml` pins, and pip installs them with `--require-hashes`.
 
 ## Content rules
 
@@ -187,7 +191,9 @@
 - Keep `deps/verify` to build, test and lint tools; `cog` and `gh` are gated by
   `deps/verify/version` and `deps/verify/release`, so a clone without them can still build and check the site.
 - `make preview`: Hugo development server.
-- `make build`: website, both PDFs, and bilingual TXT exports.
+- `make build`: validate the data through `test/schema`, then build the website, both PDFs,
+  and bilingual TXT exports. Checks on the rendered files stay in `test/build`, which depends
+  on `build`; the single-format `build/*` targets skip validation.
 - `make build/text`: generate profile, skills, experience, and education TXT files for EN and RU.
 - Profile TXT includes location, time zone, work format, business-travel availability, contacts,
   languages, and How I work.
@@ -214,8 +220,8 @@
 - Cocogitto creates a tag on the merge commit; it does not create a bump commit.
 - Validate commit messages in CI only, through `cog check` limited to `--from-latest-tag`;
   a malformed message turns the check red instead of blocking a deployment.
-- Keep `check-latest-tag-only` set on the action so the range is stated in the workflow,
-  not inferred from `from_latest_tag` in `cog.toml`.
+- Keep `--from-latest-tag` on the `cog check` command line so the range is stated in the
+  workflow, not inferred from `from_latest_tag` in `cog.toml`.
 - Keep `ignore_merge_commits` on; the synthetic subject GitHub builds for a pull request
   is not a conventional commit and would otherwise fail the check.
 - Keep versioning and releasing in separate workflows. `version.yml` runs after CI succeeds on a
@@ -224,16 +230,19 @@
   publishes both PDFs plus `SHA256SUMS`, and deploys Pages.
 - Tag only after CI passes: the tag names a commit already proven to build, so a release build
   can fail only transiently, and rerunning `release.yml` for the tag repairs it.
+- `version.yml` starts a release for the latest tag whenever that tag has no GitHub Release, so
+  a release that never started or failed before publishing retries on the next green push.
 - Start the release with `gh workflow run release.yml --ref <tag>`: a tag pushed with
   `GITHUB_TOKEN` triggers no workflow, and `workflow_dispatch` is the exception to that rule.
   Keep `on: push: tags` as well, so a tag pushed by hand releases too. Do not add a PAT.
 - `release.yml` refuses a manual run from a branch; release and deployment always name a tag.
 - Keep release and Pages deployment in one workflow. The `github-pages` environment must allow
-  `v*` tags as deployment refs.
+  `v*` tags as deployment refs. Only the `deploy` job holds `pages: write`, and it runs
+  `configure-pages` itself; the release job keeps `contents: write` alone.
 - Deploy Pages only together with a release: a push without a bump-worthy commit neither
   releases nor deploys.
-- Install cog in the version job with `install-only: true`: it must not re-check commits
-  there, and the skipped step is also the one that overwrites the git identity.
+- The version job installs cog alone through `mise-action` `install_args`; it does not
+  re-check commits, which CI already did.
 - Only `feat`, `fix`, and a breaking change bump the version; `docs`, `test`, `refactor`,
   `build`, `ci`, `perf`, `style`, and `chore` do not.
 - The Resume button pins the release the site was built with; deploying only on a release keeps
@@ -245,10 +254,22 @@
 - Hooks stay absent from `cog.toml`; `--dry-run` skips them, so the local `version/*` preview
   targets must remain free of side effects.
 - Grant `permissions` per job, never workflow-wide.
-- Keep pinned tool versions in the Makefile; CI derives its cache key from `deps/versions`.
-- Track the major tag of an action only while upstream keeps it on the newest stable release.
-  Pin a patch when it drifts: `typst-community/setup-typst@v5.2.0` because `v5` moves onto
-  prereleases, `cocogitto/cocogitto-action@v4.2.0` because `v4` is stale on cog 6.4.0.
+- Pin every build, lint and tagging tool in `mise.toml`: Python, Hugo, Typst, typstyle,
+  actionlint, cog, uv. `mise.lock` records each download's URL and checksum per platform, and
+  `locked = true` refuses a version the lock does not record. After changing a version, run
+  `mise lock` and commit both files; never edit `mise.lock` by hand.
+- Prefer the `aqua:` backend, which installs published binaries; never build a tool from source.
+- The Makefile puts `mise bin-paths` ahead of `PATH`, so `make` uses the pinned tools even in a
+  shell without mise activated. `make deps/install` runs `mise install`, then the Python packages.
+- Set up the build only through `.github/actions/setup`, which runs `jdx/mise-action` and the
+  Python packages, so CI and the release build with the same tools.
+- Renovate updates `mise.toml` and the mise version in the setup actions through a `renovate:`
+  comment; it is limited to those in `renovate.json`, leaving actions and pip to Dependabot.
+- `release.yml` runs `make test/ci`, not `make ci`: linting does not shape the artifacts, and a
+  tag pushed by hand still needs its build and tests.
+- Pin every action to a full commit SHA with its exact release in a trailing comment
+  (`@<sha>  # v7.0.1`). `.github/dependabot.yml` proposes updates monthly, covering the workflows
+  and `.github/actions/*`; merge them rather than pinning by hand.
 - Keep Git history checkout complete with `fetch-depth: 0`.
 - Do not add GoReleaser or tracked copies of generated PDFs.
 
