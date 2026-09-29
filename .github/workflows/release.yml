@@ -1,8 +1,11 @@
 name: Release and deploy
 
+# version.yml tags a commit once CI passes on it and starts this workflow
+# for the tag; a tag pushed by hand starts it too. Running it again for an
+# existing tag rebuilds and republishes that release.
 on:
   push:
-    branches: [master]
+    tags: ['v*']
   workflow_dispatch:
 
 # Pages accepts one deployment at a time, and a half-finished one should
@@ -14,42 +17,16 @@ concurrency:
 permissions: {}
 
 jobs:
-  # Pages follows the PDFs: a push deploys only when its commits warrant a
-  # release (feat, fix, or a breaking change), so the site never ships wording
-  # the downloadable resume still contradicts. This job needs only git and
-  # cog, so a push without a bump stops here instead of building for nothing.
-  plan:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    permissions:
-      contents: read
-    outputs:
-      tag: ${{ steps.plan.outputs.tag }}
-      # A manual run deploys without a bump, to republish the current site.
-      deploy: ${{ steps.plan.outputs.tag != '' || github.event_name == 'workflow_dispatch' }}
-    steps:
-    - uses: actions/checkout@v7
-      with:
-        fetch-depth: 0
-        persist-credentials: false
-    - uses: cocogitto/cocogitto-action@v4.2.0
-      with:
-        install-only: true
-    # Predict the tag without creating it, so the build runs first and a
-    # failed build cannot leave a tag behind.
-    - id: plan
-      run: echo "tag=$(make -s version/plan)" >> "$GITHUB_OUTPUT"
-
   release:
-    needs: plan
-    if: needs.plan.outputs.deploy == 'true'
+    # A manual run from a branch has no version to release; start it from a tag.
+    if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
       contents: write
       pages: write
     env:
-      TAG: ${{ needs.plan.outputs.tag }}
+      TAG: ${{ github.ref_name }}
     steps:
     - uses: actions/checkout@v7
       with:
@@ -72,14 +49,6 @@ jobs:
     - uses: typst-community/setup-typst@v5.2.0
       with:
         typst-version: '0.15.1'
-    # Installs the cog binary only; version/release drives it from the
-    # Makefile. Commit messages are validated in CI, where a
-    # malformed one turns the check red instead of blocking a deployment.
-    # install-only also skips the action's global git config, so the release
-    # identity set below stays in force.
-    - uses: cocogitto/cocogitto-action@v4.2.0
-      with:
-        install-only: true
 
     - id: tools
       run: echo "key=$(make -s deps/versions)" >> "$GITHUB_OUTPUT"
@@ -93,18 +62,8 @@ jobs:
       run: make deps/install
 
     - name: Build and test
-      run: make ci ${TAG:+VERSION=$TAG}
-
-    - name: Configure release identity
-      if: env.TAG != ''
-      run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-    - name: Create version tag
-      if: env.TAG != ''
-      run: make --no-print-directory version/release
+      run: make ci VERSION="$TAG"
     - name: Publish GitHub Release
-      if: env.TAG != ''
       env:
         GH_TOKEN: ${{ github.token }}
       run: make release VERSION="$TAG"

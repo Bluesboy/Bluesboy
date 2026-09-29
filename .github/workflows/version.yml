@@ -1,0 +1,72 @@
+name: Version
+
+# Tags a commit only once CI has built and tested it, so a tag never lands on
+# a commit that fails to build. Releasing is a separate workflow, started by
+# the tag: see release.yml.
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [master]
+
+# Two runs tagging at once would race cog for the same version.
+concurrency:
+  group: version
+  cancel-in-progress: false
+
+permissions: {}
+
+jobs:
+  tag:
+    # Pull request and manual CI runs prove nothing about master's history.
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      actions: write
+    steps:
+    # A branch, not the tested SHA: cog refuses to bump outside the
+    # branch_whitelist in cog.toml, and a detached HEAD is on no branch.
+    - uses: actions/checkout@v7
+      with:
+        ref: master
+        fetch-depth: 0
+    # When master has moved on, the newer push has its own CI run and tags
+    # everything up to it; tagging here would put a tag on untested code.
+    - id: current
+      env:
+        TESTED: ${{ github.event.workflow_run.head_sha }}
+      run: |
+        if [ "$(git rev-parse HEAD)" = "$TESTED" ]; then
+          echo "tested=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "master moved past $TESTED; its own CI run will tag it" >&2
+        fi
+    # Installs the cog binary only; version/release drives it from the
+    # Makefile. Commit messages are validated in CI, where a malformed one
+    # turns the check red instead of blocking a release. install-only also
+    # skips the action's global git config, so the identity below holds.
+    - if: steps.current.outputs.tested
+      uses: cocogitto/cocogitto-action@v4.2.0
+      with:
+        install-only: true
+    - name: Configure release identity
+      if: steps.current.outputs.tested
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+    - id: version
+      name: Create version tag
+      if: steps.current.outputs.tested
+      run: make --no-print-directory version/release >> "$GITHUB_OUTPUT"
+    # A tag pushed with GITHUB_TOKEN starts no workflow, to stop runs from
+    # triggering each other forever; workflow_dispatch is the exception.
+    - name: Start the release
+      if: steps.version.outputs.tag != ''
+      env:
+        GH_TOKEN: ${{ github.token }}
+        TAG: ${{ steps.version.outputs.tag }}
+      run: gh workflow run release.yml --ref "$TAG"

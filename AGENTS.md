@@ -96,8 +96,8 @@
   never to Pages copies. `layouts/partials/resume-url.html` builds the link from the same
   `resumeTag` param that `head.html` publishes as the `resume-version` meta tag.
 - `make build/site` passes `VERSION` and `RESUME_TAG` as `HUGO_PARAMS_VERSION` and
-  `HUGO_PARAMS_RESUMETAG`. `RESUME_TAG` is `VERSION` when that is a release tag, otherwise the
-  latest reachable tag; without any tag the buttons fall back to `releases/latest/download`.
+  `HUGO_PARAMS_RESUMETAG`. `RESUME_TAG` is the latest tag reachable from HEAD, the tag itself
+  in a release build; without any tag the buttons fall back to `releases/latest/download`.
 - Keep the site responsive, semantic, accessible, and JavaScript-free.
 - Keep mobile DOM order: identity, summary, contacts with languages, core stack, Selected Achievements,
   experience, How I work, education, additional technologies.
@@ -185,7 +185,7 @@
 - Recipes run under `bash -eu -o pipefail`; do not rely on a failed command being ignored.
 - `make lint` skips a missing linter, so gate CI on `deps/verify` instead.
 - Keep `deps/verify` to build, test and lint tools; `cog` and `gh` are gated by
-  `deps/verify/release`, so a clone without them can still build and check the site.
+  `deps/verify/version` and `deps/verify/release`, so a clone without them can still build and check the site.
 - `make preview`: Hugo development server.
 - `make build`: website, both PDFs, and bilingual TXT exports.
 - `make build/text`: generate profile, skills, experience, and education TXT files for EN and RU.
@@ -218,25 +218,32 @@
   not inferred from `from_latest_tag` in `cog.toml`.
 - Keep `ignore_merge_commits` on; the synthetic subject GitHub builds for a pull request
   is not a conventional commit and would otherwise fail the check.
-- Install cog in the release job with `install-only: true`: it must not re-check commits
-  there, and the skipped step is also the one that overwrites the git identity.
-- A merge to `master` builds, releases both PDFs plus `SHA256SUMS`, and deploys Pages.
-- Keep release and Pages deployment in one workflow.
-- Build before tagging: `version/plan` predicts the tag so a failed build leaves none behind.
+- Keep versioning and releasing in separate workflows. `version.yml` runs after CI succeeds on a
+  push to `master`, and only when that tested commit is still the tip: it tags through
+  `version/release`, then starts `release.yml` for the tag. `release.yml` builds the tag,
+  publishes both PDFs plus `SHA256SUMS`, and deploys Pages.
+- Tag only after CI passes: the tag names a commit already proven to build, so a release build
+  can fail only transiently, and rerunning `release.yml` for the tag repairs it.
+- Start the release with `gh workflow run release.yml --ref <tag>`: a tag pushed with
+  `GITHUB_TOKEN` triggers no workflow, and `workflow_dispatch` is the exception to that rule.
+  Keep `on: push: tags` as well, so a tag pushed by hand releases too. Do not add a PAT.
+- `release.yml` refuses a manual run from a branch; release and deployment always name a tag.
+- Keep release and Pages deployment in one workflow. The `github-pages` environment must allow
+  `v*` tags as deployment refs.
 - Deploy Pages only together with a release: a push without a bump-worthy commit neither
-  releases nor deploys. A manual `workflow_dispatch` run deploys without a bump.
-- Keep the `plan` job to checkout and cog, so a push without a bump builds nothing.
+  releases nor deploys.
+- Install cog in the version job with `install-only: true`: it must not re-check commits
+  there, and the skipped step is also the one that overwrites the git identity.
 - Only `feat`, `fix`, and a breaking change bump the version; `docs`, `test`, `refactor`,
   `build`, `ci`, `perf`, `style`, and `chore` do not.
 - The Resume button pins the release the site was built with; deploying only on a release keeps
   the site and the PDFs on the same version. Commit CV content as `fix` or `feat`, or it reaches
   neither the site nor the PDFs until the next bump.
-- Keep the build a separate workflow step after `version/plan` and before `version/release`.
-- Do not move it into cog `pre_bump_hooks`: hooks never run on the manual runs that
-  deploy Pages without a bump, a failing hook exits through a Rust panic, and the `|| true` in
-  `version/release` would report that panic as "no bump-worthy commits".
-- Hooks stay absent from `cog.toml`; `--dry-run` skips them, so `version/plan` and the
-  local `version/*` targets must remain free of side effects.
+- Do not move the build into cog `pre_bump_hooks`: CI already proves the commit builds, a failing
+  hook exits through a Rust panic, and the `|| true` in `version/release` would report that
+  panic as "no bump-worthy commits".
+- Hooks stay absent from `cog.toml`; `--dry-run` skips them, so the local `version/*` preview
+  targets must remain free of side effects.
 - Grant `permissions` per job, never workflow-wide.
 - Keep pinned tool versions in the Makefile; CI derives its cache key from `deps/versions`.
 - Track the major tag of an action only while upstream keeps it on the newest stable release.

@@ -26,10 +26,9 @@ TYPSTYLE_VERSION   ?= 0.15.1
 PDF_EN := $(PDF_DIR)/shamil-sattarov-resume-en.pdf
 PDF_RU := $(PDF_DIR)/shamil-sattarov-resume-ru.pdf
 
-# The release the website's Resume buttons link to: VERSION when it is a
-# release tag (CI passes the one it is about to create, before it exists),
-# otherwise the latest tag reachable from HEAD. Empty without any tag.
-RESUME_TAG ?= $(or $(shell printf '%s' '$(VERSION)' | grep -xE 'v[0-9]+\.[0-9]+\.[0-9]+'),$(shell git describe --tags --abbrev=0 2>/dev/null))
+# The release the website's Resume buttons link to: the latest tag reachable
+# from HEAD, which is the tag itself when a release builds. Empty without any.
+RESUME_TAG ?= $(shell git describe --tags --abbrev=0 2>/dev/null)
 
 # =============================================================================
 # HELP
@@ -144,7 +143,7 @@ check: lint test/schema ## Run static checks
 # =============================================================================
 # DEPENDENCIES
 # =============================================================================
-.PHONY: deps deps/install deps/verify deps/verify/release deps/versions
+.PHONY: deps deps/install deps/verify deps/verify/version deps/verify/release deps/versions
 
 #-- Dependencies
 deps/install: ## Install Python validation and lint dependencies
@@ -157,8 +156,11 @@ deps/verify: ## Verify the tools a build, its tests and the linters need
 	@for tool in $(HUGO) $(TYPST) $(PYTHON) sha256sum yamllint actionlint typstyle; do command -v $$tool >/dev/null || { echo "Missing dependency: $$tool" >&2; exit 1; }; done
 	@$(PYTHON) -c 'import jsonschema, pypdf, yaml'
 
-deps/verify/release: ## Verify the tools only tagging and publishing need
-	@for tool in $(COG) $(GH) git; do command -v $$tool >/dev/null || { echo "Missing dependency: $$tool" >&2; exit 1; }; done
+deps/verify/version: ## Verify the tools only tagging needs
+	@for tool in $(COG) git; do command -v $$tool >/dev/null || { echo "Missing dependency: $$tool" >&2; exit 1; }; done
+
+deps/verify/release: ## Verify the tools only publishing needs
+	@for tool in $(GH); do command -v $$tool >/dev/null || { echo "Missing dependency: $$tool" >&2; exit 1; }; done
 
 deps/versions: ## Print pinned tool versions (CI builds its cache key from this)
 	@echo "actionlint-$(ACTIONLINT_VERSION)-typstyle-$(TYPSTYLE_VERSION)"
@@ -178,7 +180,7 @@ fonts/build: ## Regenerate bundled IBM Plex Sans faces (needs fonttools, brotli)
 # =============================================================================
 # VERSIONING / RELEASE
 # =============================================================================
-.PHONY: version version/next version/plan version/patch version/minor version/major version/release release
+.PHONY: version version/next version/patch version/minor version/major version/release release
 
 #-- Versioning
 version: ## Show current version
@@ -196,14 +198,7 @@ version/minor: ## Preview minor version bump
 version/major: ## Preview major version bump
 	$(COG) bump --major --dry-run
 
-version/plan: ## Print the tag the next release would carry, or nothing
-	@if git describe --tags --abbrev=0 >/dev/null 2>&1; then \
-		$(COG) bump --auto --dry-run 2>/dev/null | grep -E '^v[0-9]' || true; \
-	else \
-		echo v1.0.0; \
-	fi
-
-version/release: deps/verify/release ## Create and push the next tag when commits warrant one
+version/release: deps/verify/version ## Create and push the next tag when commits warrant one
 	@if git describe --tags --abbrev=0 >/dev/null 2>&1; then \
 		before=$$(git describe --tags --abbrev=0); \
 		$(COG) bump --auto >&2 || true; \
