@@ -14,14 +14,42 @@ concurrency:
 permissions: {}
 
 jobs:
+  # Pages follows the PDFs: a push deploys only when its commits warrant a
+  # release (feat, fix, or a breaking change), so the site never ships wording
+  # the downloadable resume still contradicts. This job needs only git and
+  # cog, so a push without a bump stops here instead of building for nothing.
+  plan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    outputs:
+      tag: ${{ steps.plan.outputs.tag }}
+      # A manual run deploys without a bump, to republish the current site.
+      deploy: ${{ steps.plan.outputs.tag != '' || github.event_name == 'workflow_dispatch' }}
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        fetch-depth: 0
+        persist-credentials: false
+    - uses: cocogitto/cocogitto-action@v4.2.0
+      with:
+        install-only: true
+    # Predict the tag without creating it, so the build runs first and a
+    # failed build cannot leave a tag behind.
+    - id: plan
+      run: echo "tag=$(make -s version/plan)" >> "$GITHUB_OUTPUT"
+
   release:
+    needs: plan
+    if: needs.plan.outputs.deploy == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
       contents: write
       pages: write
-    outputs:
-      tag: ${{ steps.plan.outputs.tag }}
+    env:
+      TAG: ${{ needs.plan.outputs.tag }}
     steps:
     - uses: actions/checkout@v7
       with:
@@ -44,8 +72,8 @@ jobs:
     - uses: typst-community/setup-typst@v5.2.0
       with:
         typst-version: '0.15.1'
-    # Installs the cog binary only; version/plan and version/release drive it
-    # from the Makefile. Commit messages are validated in CI, where a
+    # Installs the cog binary only; version/release drives it from the
+    # Makefile. Commit messages are validated in CI, where a
     # malformed one turns the check red instead of blocking a deployment.
     # install-only also skips the action's global git config, so the release
     # identity set below stays in force.
@@ -64,30 +92,23 @@ jobs:
     - name: Install validators
       run: make deps/install
 
-    # Predict the tag without creating it, so the build runs first and a
-    # failed build cannot leave a tag behind.
-    - id: plan
-      run: echo "tag=$(make -s version/plan)" >> "$GITHUB_OUTPUT"
     - name: Build and test
-      env:
-        TAG: ${{ steps.plan.outputs.tag }}
       run: make ci ${TAG:+VERSION=$TAG}
 
     - name: Configure release identity
-      if: steps.plan.outputs.tag != ''
+      if: env.TAG != ''
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
     - name: Create version tag
-      if: steps.plan.outputs.tag != ''
+      if: env.TAG != ''
       run: make --no-print-directory version/release
     - name: Publish GitHub Release
-      if: steps.plan.outputs.tag != ''
+      if: env.TAG != ''
       env:
         GH_TOKEN: ${{ github.token }}
-      run: make release VERSION=${{ steps.plan.outputs.tag }}
+      run: make release VERSION="$TAG"
 
-    # The site deploys on every push to master; only the PDFs wait for a bump.
     - uses: actions/configure-pages@v6
     - uses: actions/upload-pages-artifact@v5
       with:
