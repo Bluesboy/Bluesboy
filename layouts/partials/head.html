@@ -34,6 +34,10 @@
 {{/* Matches --page. The theme is chosen in-page, not by the OS, so this
      tracks the light default rather than prefers-color-scheme. */}}
 <meta name="theme-color" content="#e8eeef">
+{{/* The release this site was built as, and the one its Resume buttons
+     download. */}}
+{{ with site.Params.version }}<meta name="version" content="{{ . }}">{{ end }}
+{{ with site.Params.resumeTag }}<meta name="resume-version" content="{{ . }}">{{ end }}
 {{ range .AllTranslations }}
 <link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}">
 {{ end }}

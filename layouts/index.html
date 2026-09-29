@@ -5,8 +5,7 @@
 {{ $title := partial "localized.html" (dict "value" $data.target.position "lang" $lang) }}
 {{ $location := partial "location.html" (dict "location" $data.personal.location "lang" $lang) }}
 {{ $businessTravel := partial "localized.html" (dict "value" $data.personal.business_travel "lang" $lang) }}
-{{ $pdfFile := cond (eq $lang "ru") "shamil-sattarov-resume-ru.pdf" "shamil-sattarov-resume-en.pdf" }}
-{{ $pdfURL := printf "%s/%s" site.Params.releaseDownloadURL $pdfFile }}
+{{ $pdfURL := partial "resume-url.html" $lang }}
 {{ $skillsByID := dict }}
 {{ range $data.skills }}
   {{ range .items }}

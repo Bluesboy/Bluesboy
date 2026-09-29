@@ -12,7 +12,12 @@ disableKinds = ["taxonomy", "term", "rss"]
 
 [params]
   siteName = "Shamil Sattarov CV"
-  releaseDownloadURL = "https://github.com/Bluesboy/Bluesboy/releases/latest/download"
+  releaseURL = "https://github.com/Bluesboy/Bluesboy/releases"
+  # Both set by `make build/site`, through HUGO_PARAMS_VERSION and
+  # HUGO_PARAMS_RESUMETAG. An empty resumeTag means no release exists yet,
+  # and the Resume buttons fall back to releases/latest/download.
+  version = ""
+  resumeTag = ""
 
 [languages]
   [languages.en]

@@ -1,0 +1,7 @@
+{{/* The Resume PDF for one language, from the release named in the
+     resume-version meta tag (head.html): both read site.Params.resumeTag,
+     so the link and the metadata cannot name different releases. */}}
+{{ $file := printf "shamil-sattarov-resume-%s.pdf" . }}
+{{ $release := "latest/download" }}
+{{ with site.Params.resumeTag }}{{ $release = printf "download/%s" . }}{{ end }}
+{{ return printf "%s/%s/%s" site.Params.releaseURL $release $file }}

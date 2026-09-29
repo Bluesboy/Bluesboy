@@ -26,6 +26,11 @@ TYPSTYLE_VERSION   ?= 0.15.1
 PDF_EN := $(PDF_DIR)/shamil-sattarov-resume-en.pdf
 PDF_RU := $(PDF_DIR)/shamil-sattarov-resume-ru.pdf
 
+# The release the website's Resume buttons link to: VERSION when it is a
+# release tag (CI passes the one it is about to create, before it exists),
+# otherwise the latest tag reachable from HEAD. Empty without any tag.
+RESUME_TAG ?= $(or $(shell printf '%s' '$(VERSION)' | grep -xE 'v[0-9]+\.[0-9]+\.[0-9]+'),$(shell git describe --tags --abbrev=0 2>/dev/null))
+
 # =============================================================================
 # HELP
 # =============================================================================
@@ -62,7 +67,7 @@ build/pdf: build/pdf/en build/pdf/ru ## Build both resumes
 
 build/site: ## Build production Hugo website
 	@rm -rf $(SITE_DIR)
-	$(HUGO) --destination $(abspath $(SITE_DIR))
+	HUGO_PARAMS_VERSION='$(VERSION)' HUGO_PARAMS_RESUMETAG='$(RESUME_TAG)' $(HUGO) --destination $(abspath $(SITE_DIR))
 # English lives at /, but Hugo still writes a meta-refresh page at /en/, and
 # disableAliases does not cover it: that page comes from the multilingual
 # layout, not from front-matter aliases. sitemap.xml still indexes
@@ -114,7 +119,7 @@ test/build: build ## Verify generated artifacts against the rendering rules
 	test -s $(SITE_DIR)/ru/index.html
 	test -s $(TEXT_DIR)/shamil-sattarov-profile-en.txt
 	test -s $(TEXT_DIR)/shamil-sattarov-profile-ru.txt
-	$(PYTHON) scripts/check_artifacts.py
+	VERSION='$(VERSION)' RESUME_TAG='$(RESUME_TAG)' $(PYTHON) scripts/check_artifacts.py
 
 test/ci: test/schema test/build ## Run CI test suite
 
@@ -215,7 +220,7 @@ version/release: deps/verify/release ## Create and push the next tag when commit
 	printf 'tag=%s\n' "$$tag"
 
 release: deps/verify/release ## Publish built PDFs and checksums to GitHub Release
-	@test "$(VERSION)" != "dev" || { echo "VERSION must be a release tag" >&2; exit 1; }
+	@printf '%s' '$(VERSION)' | grep -qxE 'v[0-9]+\.[0-9]+\.[0-9]+' || { echo "VERSION must be a release tag" >&2; exit 1; }
 # Upload what the checksums describe: this target consumes build/pdf without
 # rebuilding it, so a stale SHA256SUMS would ship as the published digest.
 	@cd $(PDF_DIR) && sha256sum -c SHA256SUMS

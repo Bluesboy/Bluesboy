@@ -92,7 +92,12 @@
 - English lives at `/`; Russian lives at `/ru/`.
 - Production URL is `https://cv.shamil.pro/`; preserve `static/CNAME`.
 - Do not show the website URL as a contact linking to the current page.
-- Resume buttons point to stable GitHub Release assets, not Pages copies.
+- Resume buttons link to `releases/download/<tag>/` for the release the site was built with,
+  never to Pages copies. `layouts/partials/resume-url.html` builds the link from the same
+  `resumeTag` param that `head.html` publishes as the `resume-version` meta tag.
+- `make build/site` passes `VERSION` and `RESUME_TAG` as `HUGO_PARAMS_VERSION` and
+  `HUGO_PARAMS_RESUMETAG`. `RESUME_TAG` is `VERSION` when that is a release tag, otherwise the
+  latest reachable tag; without any tag the buttons fall back to `releases/latest/download`.
 - Keep the site responsive, semantic, accessible, and JavaScript-free.
 - Keep mobile DOM order: identity, summary, contacts with languages, core stack, Selected Achievements,
   experience, How I work, education, additional technologies.
@@ -143,11 +148,14 @@
 - The resume uses standard Typst elements: no theme, no package import, nothing to vendor.
 - Never add a package import; the PDF build must work offline and stay free of upstream drift.
 - Keep all resume presentation in `resume.typ`.
-- Preserve EN/RU output names:
+- Every release uploads its own PDFs and `SHA256SUMS`; asset names carry no version.
+- Preserve EN/RU output names, in `build/pdf` and in the release assets alike:
   - `shamil-sattarov-resume-en.pdf`
   - `shamil-sattarov-resume-ru.pdf`
 - Show the web URL as its linked domain, derived from `site.url`.
-- Keep PDF metadata free of build identifiers; keywords carry the core skills and the CV domain.
+- Keep PDF keywords free of build identifiers; they carry the core skills and the CV domain.
+- Do not post-process PDFs to add a version: Typst's `document` has no field for it, and the
+  site's `resume-version` meta tag already names the release a PDF came from.
 - Keep a compact textual contact bar: email and visible profile network labels, followed by the domain.
 - Keep contacts clickable; allow wrapping rather than shrinking text or clipping.
 - Put location and work format on a separate compact line; no photo, salary, or citizenship in PDF.
@@ -220,7 +228,7 @@
 - Keep the `plan` job to checkout and cog, so a push without a bump builds nothing.
 - Only `feat`, `fix`, and a breaking change bump the version; `docs`, `test`, `refactor`,
   `build`, `ci`, `perf`, `style`, and `chore` do not.
-- The Resume button points at `releases/latest/download`; deploying only on a release keeps
+- The Resume button pins the release the site was built with; deploying only on a release keeps
   the site and the PDFs on the same version. Commit CV content as `fix` or `feat`, or it reaches
   neither the site nor the PDFs until the next bump.
 - Keep the build a separate workflow step after `version/plan` and before `version/release`.
@@ -246,7 +254,7 @@
   core-skill keywords, clickable contacts per locale, the two-page budget, identity footers,
   embedded fonts, duplicated lines, EN/RU parity, complete website content, canonical/social metadata,
   grouped earlier experience, Selected Achievements references and anchors, JSON-LD, heading levels, image alt text,
-  404 indexing, and complete bilingual TXT exports.
+  404 indexing, the version in site metadata, Resume links that follow it, and complete bilingual TXT exports.
 - Inspect the rendered pages for what no check can see: spacing, widows, and where pages break.
 - For link changes, verify PDF annotations and generated Hugo URLs.
 - Do not commit, tag, push, or create a release unless explicitly requested.

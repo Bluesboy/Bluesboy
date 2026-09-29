@@ -11,8 +11,10 @@ Run through `make test/build`, which builds the artifacts first.
 
 import html.parser
 import json
+import os
 import re
 import sys
+import tomllib
 from pathlib import Path
 
 import yaml
@@ -44,6 +46,8 @@ with (root / "data/ui.yaml").open(encoding="utf-8") as source:
     ui = yaml.safe_load(source)
 
 build = root / "build"
+# The version `make` built the site as; head.html records it.
+version = os.environ.get("VERSION", "")
 problems: list[str] = []
 
 
@@ -361,6 +365,8 @@ class Page(html.parser.HTMLParser):
 
 
 site_shape: dict[str, tuple[int, int, int, int]] = {}
+with (root / "hugo.toml").open("rb") as source:
+    releases = tomllib.load(source)["params"]["releaseURL"]
 site = build / "site"
 # English lives at /, and the redirect Hugo writes at /en/ is removed by the
 # build; a reappearance means that step was dropped.
@@ -412,6 +418,16 @@ for lang in LOCALES:
               f"{where}: {key} does not match the canonical data")
     check(page.meta.get("twitter:image") == page.property_meta.get("og:image"),
           f"{where}: Twitter and OpenGraph images differ")
+    # The site names its own version and the release its Resume button
+    # downloads; the button must follow that meta tag, not a second source.
+    tag = os.environ.get("RESUME_TAG", "")
+    check(page.meta.get("version") == version,
+          f"{where}: version meta is {page.meta.get('version')!r}, expected {version!r}")
+    check(page.meta.get("resume-version", "") == tag,
+          f"{where}: resume-version meta is {page.meta.get('resume-version')!r}, expected {tag!r}")
+    resume = f"{releases}/{f'download/{tag}' if tag else 'latest/download'}/shamil-sattarov-resume-{lang}.pdf"
+    buttons = [a["href"] for a in page.anchors if "download-link" in a.get("class", "").split()]
+    check(buttons == [resume], f"{where}: Resume links are {buttons}, expected [{resume!r}]")
     check(page.summaries == len(cv["summary"]),
           f"{where}: {page.summaries} summary paragraphs rendered, "
           f"{len(cv['summary'])} in the data")
