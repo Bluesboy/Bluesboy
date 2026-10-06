@@ -4,3 +4,8 @@ branch_whitelist = ["master"]
 disable_changelog = true
 disable_bump_commit = true
 ignore_merge_commits = true
+
+# Renovate and Dependabot commit tool and package updates as `build`; a patch
+# bump releases them, so the site and the PDFs are rebuilt with the new tools.
+[commit_types]
+build = { changelog_title = "Build", bump_patch = true }

@@ -243,8 +243,9 @@
   releases nor deploys.
 - The version job installs cog alone through `mise-action` `install_args`; it does not
   re-check commits, which CI already did.
-- Only `feat`, `fix`, and a breaking change bump the version; `docs`, `test`, `refactor`,
-  `build`, `ci`, `perf`, `style`, and `chore` do not.
+- Only `feat`, `fix`, `build`, and a breaking change bump the version; `docs`, `test`,
+  `refactor`, `ci`, `perf`, `style`, and `chore` do not. `build` bumps the patch through
+  `[commit_types]` in `cog.toml`, so a Renovate or Dependabot pip update releases and deploys.
 - The Resume button pins the release the site was built with; deploying only on a release keeps
   the site and the PDFs on the same version. Commit CV content as `fix` or `feat`, or it reaches
   neither the site nor the PDFs until the next bump.
