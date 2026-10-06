@@ -3,7 +3,7 @@
 # checksum per platform; Renovate proposes the updates.
 # Python packages are locked separately, in requirements*.txt.
 [tools]
-python = "3.13"
+python = "3.13.15"
 "aqua:gohugoio/hugo/hugo-extended" = "0.167.0"
 "aqua:typst/typst" = "0.15.1"
 "aqua:typstyle-rs/typstyle" = "0.15.1"
