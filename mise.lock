@@ -3,14 +3,14 @@
 lockfile_version = 2
 
 [[tools."aqua:astral-sh/uv"]]
-version = "0.12.23"
+version = "0.13.8"
 backend = "aqua:astral-sh/uv"
-specifiers = ["0.12.23"]
+specifiers = ["0.13.8"]
 
 [tools."aqua:astral-sh/uv"."platforms.linux-x64"]
-checksum = "sha256:9167d72b3319674b6303c4cbe071854bba13ebdf3d76b1a7cbdc175471fb66d6"
-url = "https://github.com/astral-sh/uv/releases/download/0.12.23/uv-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/astral-sh/uv/releases/assets/608232628"
+checksum = "sha256:5acfd9177cfecf0bf87578f059728215ccc884388988f55f7a65041b57387d91"
+url = "https://github.com/astral-sh/uv/releases/download/0.13.8/uv-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/astral-sh/uv/releases/assets/740313966"
 provenance = "github-attestations"
 
 [[tools."aqua:cocogitto/cocogitto"]]
@@ -24,14 +24,15 @@ url = "https://github.com/cocogitto/cocogitto/releases/download/7.0.0/cocogitto-
 url_api = "https://api.github.com/repos/cocogitto/cocogitto/releases/assets/366659350"
 
 [[tools."aqua:gohugoio/hugo/hugo-extended"]]
-version = "0.167.0"
+version = "0.170.0"
 backend = "aqua:gohugoio/hugo/hugo-extended"
-specifiers = ["0.167.0"]
+specifiers = ["0.170.0"]
 
 [tools."aqua:gohugoio/hugo/hugo-extended"."platforms.linux-x64"]
-checksum = "sha256:0163f5c3deddac1f494a1629ddc40c65d18de9d5794facd98f7f96ac2c7d8957"
-url = "https://github.com/gohugoio/hugo/releases/download/v0.167.0/hugo_extended_0.167.0_linux-amd64.tar.gz"
-url_api = "https://api.github.com/repos/gohugoio/hugo/releases/assets/595700466"
+checksum = "sha256:0930754ec22ad2dd1a252f8c31a5e57faccc9d15f1c3d381ddafcb96eeb8aef0"
+checksum_source = "mise-versions"
+url = "https://github.com/gohugoio/hugo/releases/download/v0.170.0/hugo_extended_0.170.0_linux-amd64.tar.gz"
+url_api = "https://api.github.com/repos/gohugoio/hugo/releases/assets/744015909"
 
 [[tools."aqua:rhysd/actionlint"]]
 version = "1.7.12"
@@ -55,21 +56,22 @@ url = "https://github.com/typst/typst/releases/download/v0.15.1/typst-x86_64-unk
 url_api = "https://api.github.com/repos/typst/typst/releases/assets/480300761"
 
 [[tools."aqua:typstyle-rs/typstyle"]]
-version = "0.15.1"
+version = "0.15.2"
 backend = "aqua:typstyle-rs/typstyle"
-specifiers = ["0.15.1"]
+specifiers = ["0.15.2"]
 
 [tools."aqua:typstyle-rs/typstyle"."platforms.linux-x64"]
-checksum = "sha256:213c11bc2c64f7237c382b4bb1d06991530ed9d44d3a05204ca3c19615d55b99"
-url = "https://github.com/typstyle-rs/typstyle/releases/download/v0.15.1/typstyle-x86_64-unknown-linux-gnu"
-url_api = "https://api.github.com/repos/typstyle-rs/typstyle/releases/assets/498612914"
+checksum = "sha256:ea790059cd05016a6f4282386ab7b4fc92f83faa0f5126d8216df2562d7596fd"
+checksum_source = "mise-versions"
+url = "https://github.com/typstyle-rs/typstyle/releases/download/v0.15.2/typstyle-x86_64-unknown-linux-gnu"
+url_api = "https://api.github.com/repos/typstyle-rs/typstyle/releases/assets/632370088"
 
 [[tools.python]]
-version = "3.14.8"
+version = "3.15.2"
 backend = "core:python"
-specifiers = ["3.14.8"]
+specifiers = ["3.15.2"]
 
 [tools.python."platforms.linux-x64"]
-checksum = "sha256:d9ec7a6935ade8b671a57ebaf111083d7314eab8dae5071d167054dadd2b97d6"
-url = "https://github.com/astral-sh/python-build-standalone/releases/download/20261003/cpython-3.14.8+20261003-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz"
+checksum = "sha256:ad23d1b73fac26440b0306ae06911031344c49a90ec19716c8362e7fa40cae43"
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20261110/cpython-3.15.2+20261110-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz"
 provenance = "github-attestations"
