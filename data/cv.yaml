@@ -48,14 +48,14 @@ summary:
   ru: Работаю со всем жизненным циклом платформы — от подготовки инфраструктуры и миграций до доставки приложений и эксплуатации. Предпочитаю стандартные инструменты и декларативные процессы, чтобы изменения платформы и эксплуатационные знания оставались в Git, а ручных операций было меньше.
 
 selected_work:
-- achievement_id: funnelflux-migration
+- achievement_id: aurox-migration
   title:
     en: Zero-downtime platform migrations
     ru: Миграции платформы без простоя
   outcome:
-    en: ~300 RPS · zero downtime
-    ru: ~300 RPS · без простоя
-  skill_ids: [docker-swarm, ansible, gke, terraform]
+    en: From VPS to Docker Swarm and AWS EKS
+    ru: С VPS в Docker Swarm и AWS EKS
+  skill_ids: [docker-swarm, ansible, aws, terraform]
 - achievement_id: cloud-cost
   title:
     en: Lower infrastructure cost
@@ -63,18 +63,18 @@ selected_work:
   outcome:
     en: Almost five-fold cost reduction
     ru: Снижение расходов почти в пять раз
-  skill_ids: [gke, kubernetes-operators, clickhouse]
-- achievement_id: rossko-delivery
+  skill_ids: [gke, kubernetes-operators]
+- achievement_id: toptierauth-delivery
   title:
-    en: One path to production
-    ru: Единый путь в продакшен
+    en: Faster releases
+    ru: Быстрые выпуски
   outcome:
-    en: 15+ microservices · 8 developers
-    ru: 15+ микросервисов · 8 разработчиков
-  skill_ids: [docker, docker-swarm, ansible]
+    en: 1.5–2 min deploys · 5–7 releases a day
+    ru: Выкатка за 1,5–2 мин · 5–7 выпусков в день
+  skill_ids: [argo-cd]
 
 experience:
-- id: funnelflux
+- id: funnelflux-platform
   company:
     en: Funnelflux
     ru: Funnelflux
@@ -86,54 +86,189 @@ experience:
   remote: true
   website: funnelflux.com
   period:
-    start: '2020-01'
+    start: '2026-01'
     end: null
   position:
     en: Senior Platform Engineer
     ru: Senior Platform Engineer
   detailed: true
   scope:
-    en: "Own the multi-region Kubernetes production platform used by a six-developer team and its application delivery infrastructure: CI/CD, GitOps, reliability, observability, secrets, and stateful services. The current implementation runs on GCP/GKE."
-    ru: "Отвечаю за многорегиональную Kubernetes-платформу для команды из шести разработчиков и за инфраструктуру сборки и развёртывания приложений: CI/CD, GitOps, отказоустойчивость, наблюдаемость, секреты и сервисы с состоянием. Текущая реализация работает на GCP/GKE."
+    en: "Own the multi-region Kubernetes platform and application delivery for an eight-developer team: CI/CD, GitOps, reliability, observability, secrets, and stateful services."
+    ru: "Отвечаю за многорегиональную Kubernetes-платформу и доставку приложений для команды из восьми разработчиков: CI/CD, GitOps, отказоустойчивость, наблюдаемость, секреты и сервисы с состоянием."
   responsibilities:
-  - en: "Coach team members in DevOps practices: IaC, branching strategies, and twelve-factor application development."
-    ru: "Обучение команды практикам DevOps: IaC, стратегии ветвления и разработка 12-факторных приложений."
   - en: "Ensure application resilience and high availability; configure cloud infrastructure: GCP, GKE, GCLB, and Cloudflare."
     ru: "Обеспечение отказоустойчивости и высокой доступности приложений; настройка облачной инфраструктуры: GCP, GKE, GCLB и Cloudflare."
-  - en: "Deploy supporting services and databases through operators: ExternalDNS, cert-manager, Prometheus, Jaeger, Elasticsearch, ClickHouse, Dragonfly, and PostgreSQL."
-    ru: "Развёртывание вспомогательных служб и баз данных через Kubernetes-операторы: ExternalDNS, cert-manager, Prometheus, Jaeger, Elasticsearch, ClickHouse, Dragonfly и PostgreSQL."
+    featured: true
+  - en: Deploy ExternalDNS and cert-manager controllers and operator-managed Prometheus and Jaeger services.
+    ru: Развёртывание контроллеров ExternalDNS и cert-manager, а также Prometheus и Jaeger под управлением операторов.
   - en: "Help developers prepare applications for cloud operations: monitoring, logging, and tracing."
     ru: "Помощь разработчикам в подготовке приложений к эксплуатации в облаке: мониторинг, журналирование и трассировка."
+    featured: true
+  - en: Regularly verify backups, eliminate recurring incidents, and safely update platform components.
+    ru: Регулярная проверка резервных копий, устранение повторяющихся инцидентов и безопасное обновление компонентов платформы.
+    featured: true
   achievements:
-  - id: funnelflux-migration
-    en: Migrated a ~300 RPS platform from a manually configured VPS to Docker Swarm provisioned with Ansible, then to GKE managed with Terraform; completed both migrations without downtime.
-    ru: Перенёс платформу с нагрузкой ~300 RPS с настроенного вручную VPS в Docker Swarm под управлением Ansible, затем в GKE под управлением Terraform; обе миграции прошли без простоя.
-    featured: true
-  - id: multi-region-platform
-    en: Built four production GKE clusters across four regions plus dedicated staging and infrastructure clusters, and linked the production clusters through a Multi-Cluster Gateway.
-    ru: Развернул четыре продакшен-кластера GKE в четырёх регионах и отдельные кластеры стейджинга и инфраструктуры; связал продакшен-кластеры через Multi-Cluster Gateway.
-    featured: true
-  - id: gitops-platform
-    en: Introduced Argo CD GitOps for 20+ services and internal tools; cut deployment time from five minutes to a minute and a half and increased release frequency from two or three a week to as many as ten a day. Rollback requires reverting a single Git commit and completes in under two minutes.
-    ru: "Внедрил GitOps на Argo CD для 20+ сервисов и внутренних инструментов: сократил время развёртывания с пяти минут до полутора и увеличил частоту выпусков с двух-трёх в неделю до десяти в день. Откат выполняется отменой одного коммита в Git и занимает менее двух минут."
-    featured: true
   - id: cloud-cost
-    en: "Achieved an almost five-fold reduction in monthly cloud spend by moving suitable workloads onto spot nodes and replacing SaaS ClickHouse, PostgreSQL, and Dragonfly with operator-managed clusters."
-    ru: "Сократил ежемесячные расходы на облако почти в пять раз: перевёл подходящие нагрузки на spot-узлы и заменил SaaS-версии ClickHouse, PostgreSQL и Dragonfly кластерами под управлением операторов."
+    en: "Reduced monthly cloud spend almost five-fold: optimized workloads, ran suitable services on spot nodes, and moved paid SaaS databases under Kubernetes operators."
+    ru: "Сократил ежемесячные расходы на облако почти в пять раз: оптимизировал нагрузки, перевёл подходящие сервисы на spot-узлы, а платные SaaS-базы — под управление Kubernetes-операторов."
     featured: true
-  - id: crossplane-infrastructure
-    en: "Unified application and infrastructure management under GitOps by moving infrastructure from Terraform to Crossplane: resources are plain YAML manifests in the Kubernetes API, and the controller continuously reconciles them to the desired state."
-    ru: "Объединил управление приложениями и инфраструктурой в один процесс GitOps, переведя инфраструктуру с Terraform на Crossplane: ресурсы описаны YAML-манифестами в Kubernetes API, а контроллер непрерывно приводит их к заданному состоянию."
-    featured: true
-  - en: Replaced Helm template rendering in Argo CD with pre-rendered YAML manifests (Rendered Manifests Pattern). Changes are visible in plain YAML diffs, and Argo CD does not spend resources rendering templates.
-    ru: Заменил рендеринг Helm-шаблонов в Argo CD готовыми YAML-манифестами (Rendered Manifests Pattern). Изменения видны в обычных YAML-диффах, а Argo CD не тратит ресурсы на рендеринг шаблонов.
-  - en: Moved secret synchronization configuration into GitOps with External Secrets Operator while keeping secret values outside Git.
-    ru: Перенёс конфигурацию синхронизации секретов в GitOps через External Secrets Operator, оставив значения вне Git.
   - en: Unified lifecycle management for PostgreSQL, ClickHouse, Redis (now Dragonfly), and Elasticsearch under Kubernetes operators; migrated Kafka from SaaS to a Strimzi-managed cluster.
     ru: Унифицировал управление жизненным циклом PostgreSQL, ClickHouse, Redis (сейчас Dragonfly) и Elasticsearch через Kubernetes-операторы; Kafka перенёс из SaaS в кластер Strimzi.
     featured: true
+  - id: crossplane-infrastructure
+    en: Brought application and infrastructure management under one Argo CD and Crossplane GitOps workflow, replacing Terraform with continuous reconciliation of infrastructure to the desired state in the Kubernetes API.
+    ru: Свёл управление приложениями и инфраструктурой в единый GitOps-процесс на Argo CD и Crossplane, заменив Terraform непрерывным согласованием инфраструктуры с желаемым состоянием в Kubernetes API.
+    featured: true
+  - en: "Replaced Helm rendering in Argo CD with pre-rendered manifests (Rendered Manifests Pattern): every resulting manifest change is visible in the Git history, and Argo CD memory usage fell almost three-fold."
+    ru: "Заменил рендеринг Helm в Argo CD готовыми манифестами (Rendered Manifests Pattern): каждое итоговое изменение манифестов сразу видно в истории Git, а потребление памяти Argo CD снизилось почти втрое."
+    featured: true
+- id: toptierauth
+  company:
+    en: TopTierAuthentics
+    ru: TopTierAuthentics
+  location:
+    country:
+      en: United States
+      ru: США
+    country_code: US
+  remote: true
+  website: www.toptierauth.com
+  period:
+    start: '2024-12'
+    end: '2026-01'
+  position:
+    en: Cloud Engineer
+    ru: Cloud Engineer
+  detailed: true
+  scope:
+    en: Supported the move from a monolith to about ten microservices, owning the infrastructure and the path to production.
+    ru: Обеспечивал переход с монолита на микросервисную архитектуру из порядка десяти сервисов, отвечая за инфраструктуру и путь в продакшен.
+  responsibilities:
+  - en: "Developed the cloud infrastructure and its code: Terraform and Terragrunt, later Crossplane."
+    ru: "Развитие облачной инфраструктуры и её кода: Terraform и Terragrunt, затем Crossplane."
+    featured: true
+  - en: Maintained CI/CD and GitOps delivery of the microservices with Argo CD, including releases and rollbacks.
+    ru: Сопровождение CI/CD и GitOps-доставки микросервисов на Argo CD, включая выпуски и откаты.
+    featured: true
+  - en: Kept Helm charts and container image builds up to date for the services.
+    ru: Поддержка Helm-чартов и сборки образов контейнеров для сервисов.
+    featured: true
+  achievements:
+  - id: toptierauth-delivery
+    en: Cut deployment time from 15–20 minutes to 1.5–2 minutes and increased release frequency from two or three a week to five to seven a day; made rollback a single commit in the GitOps repository.
+    ru: Сократил время выкатки с 15–20 минут до 1,5–2 минут и увеличил частоту выпусков с двух-трёх в неделю до пяти-семи в день; свёл откат к одному коммиту в GitOps-репозитории.
+    featured: true
+  - id: toptierauth-platform
+    en: Prepared the complete infrastructure for the microservices, the repository templates, and the deployment procedure, so every new service started from a ready baseline.
+    ru: "Полностью подготовил инфраструктуру для микросервисов, шаблоны репозиториев и порядок развёртывания: каждый новый сервис начинался с готовой основы."
+    featured: true
+  - id: toptierauth-crossplane
+    en: Replaced Terraform and Terragrunt run through GitHub Actions with Crossplane across the infrastructure, which now ships through the same GitOps flow as applications.
+    ru: Заменил Terraform и Terragrunt в GitHub Actions на Crossplane во всей инфраструктуре; она проходит тот же GitOps-процесс, что и приложения.
+    featured: true
+  - id: toptierauth-gitops
+    en: Introduced Argo CD with the App of Apps pattern and pre-rendered manifests.
+    ru: Внедрил Argo CD с паттерном App of Apps и готовыми отрендеренными манифестами.
+    featured: true
+- id: funnelflux-devops
+  company:
+    en: Funnelflux
+    ru: Funnelflux
+  location:
+    city:
+      en: Hong Kong
+      ru: Гонконг
+    country_code: HK
+  remote: true
+  website: funnelflux.com
+  period:
+    start: '2021-09'
+    end: '2024-12'
+  position:
+    en: Senior DevOps Engineer
+    ru: Senior DevOps Engineer
+  detailed: true
+  scope:
+    en: Built the multi-region GKE platform and its GitOps delivery for a six-developer team.
+    ru: Построил многорегиональную платформу на GKE и GitOps-доставку для команды из шести разработчиков.
+  responsibilities:
+  - en: "Coached team members in DevOps practices: IaC, branching strategies, and twelve-factor application development."
+    ru: "Обучение команды практикам DevOps: IaC, стратегии ветвления и разработка 12-факторных приложений."
+    featured: true
+  - en: Operated multi-region GKE clusters and the traffic routing between them.
+    ru: Эксплуатация многорегиональных кластеров GKE и маршрутизации трафика между ними.
+    featured: true
+  - en: Maintained GitOps delivery with Argo CD, including the release process and rollbacks.
+    ru: Сопровождение GitOps-доставки на Argo CD, включая процесс выпуска и откаты.
+    featured: true
+  - en: Managed application secrets and static file delivery.
+    ru: Управление секретами приложений и раздачей статических файлов.
+  achievements:
+  - id: multi-region-platform
+    en: Built four production GKE clusters across four regions to reduce latency for a ~300 RPS platform, plus dedicated staging and infrastructure clusters, and linked the production clusters through a Multi-Cluster Gateway.
+    ru: Развернул четыре продакшен-кластера GKE в четырёх регионах для снижения задержек на платформе с нагрузкой ~300 RPS и отдельные кластеры стейджинга и инфраструктуры; связал продакшен-кластеры через Multi-Cluster Gateway.
+    featured: true
+  - id: gitops-platform
+    en: Introduced Argo CD GitOps for 20+ services and internal tools; cut deployment time from five minutes to a minute and a half, raised releases from two or three a week to as many as ten a day, and made rollback a single Git revert taking under two minutes.
+    ru: "Внедрил GitOps на Argo CD для 20+ сервисов и внутренних инструментов: развёртывание ускорилось с пяти минут до полутора, выпуски участились с двух-трёх в неделю до десяти в день, а откат свёлся к отмене коммита за менее чем две минуты."
+    featured: true
+  - en: Migrated CI from self-hosted Concourse CI to GitHub Actions, eliminating the need to maintain dedicated CI infrastructure.
+    ru: Перевёл CI с самостоятельно размещённого Concourse CI на GitHub Actions, устранив необходимость сопровождать собственную CI-инфраструктуру.
+    featured: true
+  - en: Deployed Vault through the Bank-Vaults operator as the secret store and moved secret synchronization into GitOps with External Secrets Operator, keeping secret values outside Git.
+    ru: Развернул Vault через оператор Bank-Vaults как хранилище секретов и перенёс синхронизацию секретов в GitOps через External Secrets Operator, оставив значения вне Git.
+    featured: true
   - en: "Moved static file serving from Nginx to Google Cloud Storage behind a CDN: updates no longer serve stale files, and the Nginx configuration no longer needs to be maintained."
     ru: "Перенёс раздачу статики из Nginx в Google Cloud Storage за CDN: после обновлений старые файлы больше не отдаются, а конфигурацию Nginx больше не нужно сопровождать."
+- id: aurox
+  company:
+    en: Aurox
+    ru: Aurox
+  location:
+    country:
+      en: United States
+      ru: США
+    country_code: US
+  remote: true
+  website: ''
+  period:
+    start: '2020-01'
+    end: '2021-09'
+  position:
+    en: DevOps Engineer
+    ru: DevOps Engineer
+  detailed: true
+  scope:
+    en: Built the infrastructure and delivery foundation from scratch for a product of almost 30 microservices and a team of about ten.
+    ru: Построил с нуля инфраструктурную основу и доставку для продукта из почти 30 микросервисов и команды около десяти человек.
+  responsibilities:
+  - en: "Developed the infrastructure as code: Terraform for AWS, Ansible for VPS and landing sites."
+    ru: "Развитие инфраструктуры как кода: Terraform для AWS, Ansible для VPS и лендингов."
+    featured: true
+  - en: Maintained CI/CD of the microservices on Bitbucket Pipelines.
+    ru: Поддержка CI/CD микросервисов на Bitbucket Pipelines.
+  - en: "Operated the production environments: Docker Swarm on VPS, then AWS EKS."
+    ru: "Эксплуатация продакшен-окружений: Docker Swarm на VPS, затем AWS EKS."
+    featured: true
+  - en: Helped developers keep the microservices to a single twelve-factor standard.
+    ru: Помощь разработчикам в соблюдении единого стандарта 12-факторных приложений для микросервисов.
+    featured: true
+  achievements:
+  - id: aurox-migration
+    en: Migrated a high-load service from manually configured VPS to Docker Swarm provisioned with Ansible and delivered through Bitbucket Pipelines, then to AWS EKS managed with Terraform; completed both migrations without downtime.
+    ru: Перенёс высоконагруженный сервис с настроенных вручную VPS в Docker Swarm под управлением Ansible с доставкой через Bitbucket Pipelines, затем в AWS EKS под управлением Terraform; обе миграции прошли без простоя.
+    featured: true
+  - id: aurox-terraform
+    en: Introduced Terraform with Terraform Cloud as the infrastructure-as-code standard.
+    ru: Внедрил Terraform с Terraform Cloud как стандарт инфраструктуры как кода.
+  - id: aurox-ci
+    en: Replaced manual deployment of almost 30 microservices with CI built from scratch on Bitbucket Pipelines.
+    ru: Заменил ручное развёртывание почти 30 микросервисов на CI, построенный с нуля на Bitbucket Pipelines.
+    featured: true
+  - id: aurox-postgres
+    en: Moved manually managed PostgreSQL to the Crunchy Data Postgres Operator.
+    ru: Перевёл управляемый вручную PostgreSQL на Crunchy Data Postgres Operator.
+    featured: true
 - id: rossko
   company:
     en: Rossko
@@ -161,10 +296,12 @@ experience:
   responsibilities:
   - en: "Maintained CI/CD for the portal services: build, test, and release pipelines."
     ru: "Сопровождение CI/CD сервисов портала: сборка, тестирование и выкладка."
+    featured: true
   - en: Containerized web applications and infrastructure services, maintained Docker Swarm clusters, and helped the team adopt twelve-factor principles.
     ru: Контейнеризация веб-приложений и инфраструктурных сервисов, обслуживание кластеров Docker Swarm, помощь команде в переходе на принципы 12-факторных приложений.
   - en: "Trained the system and network administration team in DevOps practices: IaC, configuration management, CI/CD, and Git."
     ru: "Обучение команды системных и сетевых администраторов практикам DevOps: IaC, управлению конфигурациями, CI/CD и работе с Git."
+    featured: true
   achievements:
   - en: Automated provisioning for 20+ vSphere hosts and ~100 VMs with Ansible, Ansible Tower (AWX), and Terraform, replacing manual server configuration.
     ru: Перевёл 20+ хостов vSphere и ~100 виртуальных машин на воспроизводимое развёртывание через Ansible, Ansible Tower (AWX) и Terraform вместо ручной настройки.
@@ -205,10 +342,12 @@ experience:
   responsibilities:
   - en: Maintained the Java build and release process for Liferay and OSGi applications, including versions and dependencies.
     ru: "Сопровождение сборки и выпуска Java-приложений на Liferay и OSGi: управление версиями и зависимостями."
+    featured: true
   - en: Deployed servers with OpenStack Heat through its AWS CloudFormation-compatible API, Ansible, and shell/Python.
     ru: Развёртывание серверов через OpenStack Heat по API, совместимому с AWS CloudFormation, Ansible и shell/Python.
   - en: Operated Docker and Kubernetes-based container infrastructure.
     ru: Эксплуатация контейнерной инфраструктуры на Docker и Kubernetes.
+    featured: true
   - en: Designed and maintained LDAP and PKI infrastructure with FreeIPA.
     ru: Проектирование и сопровождение инфраструктуры LDAP и PKI на FreeIPA.
   - en: Deployed SDN with OpenStack Neutron and Flannel.
@@ -582,7 +721,8 @@ skills:
   - name: Google Cloud Storage
   - id: docker-swarm
     name: Docker Swarm
-  - name: AWS
+  - id: aws
+    name: AWS
     featured: true
   - name: Azure
   - name: Alibaba Cloud
@@ -598,6 +738,8 @@ skills:
     featured: true
   - id: terraform
     name: Terraform
+    featured: true
+  - name: Terragrunt
     featured: true
   - id: ansible
     name: Ansible
@@ -627,13 +769,14 @@ skills:
   - name: Jenkins
   - name: Concourse CI
   - name: Bitbucket Pipelines
+    featured: true
   - name: Tekton
 
 - area:
     en: Data
     ru: Данные
   items:
-  - name: PostgreSQL (CloudNativePG)
+  - name: PostgreSQL (CloudNativePG/Crunchy Data)
     featured: true
   - name: Kafka (Strimzi)
     featured: true

@@ -22,6 +22,7 @@
 - Every localized field must contain both `en` and `ru`.
 - Store months as `YYYY-MM`; use `end: null` for current employment.
 - Store every location as `city` plus ISO-3166-1 alpha-2 `country_code`, with `country` localized.
+- Omit `city` for a distributed employer with no single office; then `country` is required.
 - Add `remote: true` only to remote entries; an absent flag means on-site.
 - Read it as `item.at("remote", default: false)` in Typst, which panics on a missing key.
 - Omit `country` only when the city is its own territory, as for Hong Kong.
@@ -33,9 +34,10 @@
 - Keep `minItems` a contract, never a snapshot of how much data exists today.
 - Do not keep a field no renderer reads: either render it or drop it.
 - Store skills once as `{id?, name, featured?}`; names are unlocalized, group headings are localized.
-- Achievements store `{id?, en, ru, featured?}`. IDs are stable and language-independent;
-  in both models absent `featured` means false.
-- PDF selects skills and achievements by `featured: true`, never by position or text matching.
+- Skill names carry no comma; renderers join them with commas, so alternatives use `/`.
+- Achievements store `{id?, en, ru, featured?}` and responsibilities `{en, ru, featured?}`.
+  IDs are stable and language-independent; in every model absent `featured` means false.
+- PDF selects skills, achievements, and responsibilities by `featured: true`, never by position or text matching.
 - Hugo shows every skill once: featured items in Core stack, others in Additional technologies.
 - Keep Additional technologies expanded, visually secondary, and full-width after Education.
 - Render skill groups as compact semantic definition lists with comma-separated technology names,
@@ -75,7 +77,8 @@
 - Write `summary` as first-person prose in both languages; keep every list item verb-first with no subject.
 - Keep `summary` about the person and the work he does. Project results and their figures
   belong to Selected Achievements and the experience entries; the summary must not recite them.
-- PDF detailed roles render a short scope and selected achievements; full responsibilities stay on the website.
+- PDF detailed roles render a short scope, featured achievements, and featured responsibilities;
+  the rest stay on the website. Every detailed role needs at least two featured responsibilities.
 - Do not store or render salary or citizenship; neither has a public CV use case.
 - Avatar and About are website-only; preserve useful context without repeating the summary.
 - Present About as How I work; keep unique factual information when removing repeated points.
@@ -179,7 +182,7 @@
   year range and localized group label. Do not expand their responsibilities or achievements.
 - Render each education entry as one compact `year — institution — specialization` line; omit level in PDF only.
 - Language proficiency is plain text (language — level), without dots or progress bars.
-- Target two readable pages per language through natural pagination, not forced page breaks or tiny type.
+- Target three readable pages per language through natural pagination, not forced page breaks or tiny type.
 - Page one prioritizes the header, summary, core skills, and recent experience; no fixed page-one contract.
 - Keep both PDFs concise, readable, and free of unnecessary page breaks; preserve clickable links.
 
@@ -280,7 +283,7 @@
 - Run `git diff --check` before completion.
 - For PDF changes, verify page counts and visually inspect every page in EN and RU.
 - `make test/build` runs `scripts/check_artifacts.py` over the built files: section order, literal
-  core-skill keywords, clickable contacts per locale, the two-page budget, identity footers,
+  core-skill keywords, clickable contacts per locale, the three-page budget, identity footers,
   embedded fonts, duplicated lines, EN/RU parity, complete website content, canonical/social metadata,
   grouped earlier experience, Selected Achievements references and anchors, JSON-LD, heading levels, image alt text,
   404 indexing, the version in site metadata, Resume links that follow it, and complete bilingual TXT exports.

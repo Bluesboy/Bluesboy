@@ -88,7 +88,8 @@
     "location": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["city", "country_code"],
+      "required": ["country_code"],
+      "anyOf": [{ "required": ["city"] }, { "required": ["country"] }],
       "properties": {
         "city": { "$ref": "#/$defs/i18nString" },
         "country": { "$ref": "#/$defs/i18nString" },
@@ -109,6 +110,16 @@
           "default": ["en", "ru"]
         },
         "url": { "type": "string", "format": "uri", "pattern": "^https?://" }
+      }
+    },
+    "responsibilityItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["en", "ru"],
+      "properties": {
+        "en": { "type": "string", "minLength": 1 },
+        "ru": { "type": "string", "minLength": 1 },
+        "featured": { "type": "boolean", "default": false }
       }
     },
     "achievementItem": {
@@ -186,7 +197,7 @@
         "position": { "$ref": "#/$defs/i18nString" },
         "detailed": { "type": "boolean" },
         "scope": { "$ref": "#/$defs/i18nString" },
-        "responsibilities": { "$ref": "#/$defs/i18nStringArray" },
+        "responsibilities": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/responsibilityItem" } },
         "achievements": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/achievementItem" } }
       }
     },

@@ -4,7 +4,8 @@
   data/cv.yaml stores city and country separately so JSON-LD can emit a
   real PostalAddress; this is the one place they get joined back for
   reading. `country` is optional — a city that is its own territory
-  (Hong Kong) omits it rather than repeating itself.
+  (Hong Kong) omits it rather than repeating itself. `city` is optional too,
+  for an employer with no single office: the country alone is shown.
 
   Params:
     location  a location object from cv.yaml
@@ -12,8 +13,12 @@
 */}}
 {{- $location := .location -}}
 {{- $lang := .lang -}}
-{{- $text := partial "localized.html" (dict "value" $location.city "lang" $lang) -}}
-{{- with $location.country -}}
-  {{- $text = printf "%s, %s" $text (partial "localized.html" (dict "value" . "lang" $lang)) -}}
+{{- $parts := slice -}}
+{{- with $location.city -}}
+  {{- $parts = $parts | append (partial "localized.html" (dict "value" . "lang" $lang)) -}}
 {{- end -}}
+{{- with $location.country -}}
+  {{- $parts = $parts | append (partial "localized.html" (dict "value" . "lang" $lang)) -}}
+{{- end -}}
+{{- $text := delimit $parts ", " -}}
 {{- return $text -}}

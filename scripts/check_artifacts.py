@@ -109,7 +109,7 @@ for lang in LOCALES:
     page_squeezed = [squeeze(page) for page in pages]
     flat_squeezed = squeeze(flat)
 
-    check(len(pages) == 2, f"{name}: {len(pages)} pages, expected two")
+    check(len(pages) == 3, f"{name}: {len(pages)} pages, expected three")
 
     positions = []
     for key in PDF_SECTIONS:
@@ -156,6 +156,17 @@ for lang in LOCALES:
                 role_parts.append(achievement)
                 check(achievement in flat_squeezed,
                       f"{name}: featured achievement of {company!r} is missing")
+        # The PDF lists only the responsibilities marked featured; the rest
+        # stay on the website.
+        for item in job["responsibilities"]:
+            responsibility = squeeze(item[lang])
+            if item.get("featured", False):
+                role_parts.append(responsibility)
+                check(responsibility in flat_squeezed,
+                      f"{name}: featured responsibility of {company!r} is missing")
+            else:
+                check(responsibility not in flat_squeezed,
+                      f"{name}: responsibility of {company!r} is not featured but rendered")
         check(any(all(part in page for part in role_parts) for page in page_squeezed),
               f"{name}: detailed role {company!r} is split across pages")
 
@@ -437,7 +448,9 @@ for lang in LOCALES:
     check(page.open_details == 0,
           f"{where}: {page.open_details} details blocks are initially open")
 
-    selected_text = flatten(" ".join(page.selected_work_text))
+    # Cards bold the figures, so "15–20" arrives as three text nodes; the
+    # parser joins nodes with spaces, hence compare with whitespace squeezed.
+    selected_text = squeeze("".join(page.selected_work_text))
     skill_by_id = {item["id"]: item["name"] for group in cv["skills"]
                    for item in group["items"] if "id" in item}
     achievement_by_id = {
@@ -462,7 +475,7 @@ for lang in LOCALES:
         achievement, role_id = achievement_by_id[item["achievement_id"]]
         for value in (item["title"][lang], item["outcome"][lang], achievement[lang],
                       *(skill_by_id[skill_id] for skill_id in item["skill_ids"])):
-            check(flatten(value) in selected_text,
+            check(squeeze(value) in selected_text,
                   f"{where}: Selected Achievements value {value!r} is missing")
         check(f"#{role_id}" in page.hrefs,
               f"{where}: Selected Achievements item {item['achievement_id']!r} does not link to its role")

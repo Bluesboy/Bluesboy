@@ -33,7 +33,7 @@ def section(label: str, lines: list[str]) -> str:
 
 
 def place(location: dict, lang: str) -> str:
-    parts = [localized(location["city"], lang)]
+    parts = [localized(location["city"], lang)] if "city" in location else []
     if "country" in location:
         parts.append(localized(location["country"], lang))
     return ", ".join(parts)

@@ -105,6 +105,10 @@ for i, job in enumerate(cv["experience"]):
     check("scope" in job, f"experience[{i}].scope: detailed entries need a role scope")
     check(any(item.get("featured", False) for item in job["achievements"]),
           f"experience[{i}].achievements: detailed entries need a featured achievement")
+    # A "Responsibilities" heading over a single bullet reads as a layout slip.
+    featured_duties = sum(item.get("featured", False) for item in job["responsibilities"])
+    check(featured_duties >= 2,
+          f"experience[{i}].responsibilities: detailed entries need at least 2 featured, found {featured_duties}")
 
 check(len(job_ids) == len(set(job_ids)), "experience: ids must not be duplicated")
 for group, indices in resume_groups.items():
@@ -126,6 +130,10 @@ for lang in ("en", "ru"):
 skill_items = [item for group in cv["skills"] for item in group["items"]]
 skill_names = [item["name"] for item in skill_items]
 check(len(skill_names) == len(set(skill_names)), "skills: names must not be duplicated")
+# Both renderers join a group with commas, so a comma inside a name would read
+# as two skills; alternatives inside one name use a slash instead.
+for name in skill_names:
+    check("," not in name, f"skills: {name!r} contains a comma; separate alternatives with '/'")
 skill_ids = [item["id"] for item in skill_items if "id" in item]
 check(len(skill_ids) == len(set(skill_ids)), "skills: ids must not be duplicated")
 check(any(item.get("featured", False) for item in skill_items),

@@ -5,8 +5,10 @@
 #let l(key) = t(ui.at(key))
 #let featured(item) = item.at("featured", default: false)
 #let place(value) = {
-  let city = t(value.city)
-  if "country" in value { city + ", " + t(value.country) } else { city }
+  let parts = ()
+  if "city" in value { parts.push(t(value.city)) }
+  if "country" in value { parts.push(t(value.country)) }
+  parts.join(", ")
 }
 #let month(value) = {
   let parts = value.split("-")
@@ -46,8 +48,10 @@
   lang: lang,
   hyphenate: false,
 )
-#set par(leading: 0.66em, spacing: 0.6em)
-#set list(indent: 0pt, body-indent: 1em, tight: false, spacing: 0.45em)
+// Lines inside an item sit closer than items do, so a wrapped line reads as
+// part of its bullet: list spacing must stay above the paragraph leading.
+#set par(leading: 0.5em, spacing: 0.6em)
+#set list(indent: 0pt, body-indent: 1em, tight: false, spacing: 0.75em)
 #show link: set text(fill: accent)
 #show heading.where(level: 1): it => block(
   above: 0.9em,
@@ -87,8 +91,11 @@
 #set par(spacing: 0.6em)
 
 #heading(level: 1, l("summary"))
-#for paragraph in source.summary {
-  par(t(paragraph))
+// Summary paragraphs need a gap clearly wider than the line leading,
+// or the two read as one block.
+#{
+  set par(spacing: 1em)
+  for paragraph in source.summary { par(t(paragraph)) }
 }
 
 #heading(level: 1, l("coreSkills"))
@@ -110,7 +117,7 @@
   // it no longer fits rather than splitting its results off the heading.
   block(
     breakable: false,
-    above: if index == 0 { 0pt } else { 1.8em },
+    above: if index == 0 { 0pt } else { 1.4em },
     {
       let company = if job.website == "" { t(job.company) } else {
         link("https://" + job.website, t(job.company))
@@ -123,6 +130,16 @@
       ]
       block(above: 0pt, below: 0.55em, t(job.scope))
       list(..achievements)
+      block(above: 0.9em, below: 0.6em, text(
+        size: 9.5pt,
+        weight: "bold",
+        fill: muted,
+        l("responsibilities"),
+      ))
+      {
+        set text(size: 10.5pt)
+        list(..job.responsibilities.filter(featured).map(t))
+      }
     },
   )
 }
@@ -130,7 +147,7 @@
 #heading(level: 1, l("earlier"))
 #let earlier = source.experience.filter(item => not item.detailed)
 #for job in earlier.filter(item => "resume_group" not in item) {
-  block(breakable: false, above: 0pt, below: 0.7em)[
+  block(breakable: false, above: 0pt, below: 0.5em)[
     #text(fill: muted, period(job.period)) — #strong(t(job.at("resume_company", default: job.company))) — #t(job.position)
   ]
 }
@@ -141,7 +158,7 @@
   if jobs.len() > 0 {
     let newest = jobs.first()
     let oldest = jobs.last()
-    block(breakable: false, above: 0pt, below: 0.7em)[
+    block(breakable: false, above: 0pt, below: 0.5em)[
       #text(fill: muted, oldest.period.start.slice(0, 4) + "–" + newest.period.end.slice(0, 4)) — #strong(t(label))
     ]
   }
@@ -149,7 +166,7 @@
 
 #heading(level: 1, l("education"))
 #for item in source.education {
-  block(breakable: false, above: 0pt, below: 0.7em)[
+  block(breakable: false, above: 0pt, below: 0.5em)[
     #item.year — #strong(t(item.institution)) — #t(item.specialization)
   ]
 }

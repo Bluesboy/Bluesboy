@@ -21,7 +21,10 @@
     {{ with partial "website-url.html" (dict "url" .website) }}
       {{ $org = merge $org (dict "url" .) }}
     {{ end }}
-    {{ $org = merge $org (dict "address" (dict "@type" "PostalAddress" "addressLocality" (partial "localized.html" (dict "value" .location.city "lang" $lang)) "addressCountry" .location.country_code)) }}
+    {{ $org = merge $org (dict "address" (dict "@type" "PostalAddress" "addressCountry" .location.country_code)) }}
+    {{ with .location.city }}
+      {{ $org = merge $org (dict "address" (dict "addressLocality" (partial "localized.html" (dict "value" . "lang" $lang)))) }}
+    {{ end }}
     {{ $profile = merge $profile (dict "worksFor" $org) }}
   {{ end }}
 {{ end }}
