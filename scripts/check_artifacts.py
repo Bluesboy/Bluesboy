@@ -21,6 +21,8 @@ import yaml
 from pypdf import PdfReader
 
 from export_text import (
+    BULLET,
+    BULLETS,
     FIELD_LIMITS,
     KINDS,
     LINKEDIN_SKILLS,
@@ -672,6 +674,11 @@ for lang in LOCALES:
         content = rendered.get(kind, "")
         for value in (cv["target"]["position"][lang], cv["personal"]["email"]):
             check(value in content, f"{name}: canonical value {value!r} is missing")
+        # A platform that rejects the bullet gets its own marker, and the
+        # bullet must not slip into its pack anywhere.
+        if kind in BULLETS:
+            check(BULLET not in content, f"{name}: contains {BULLET!r}, which the platform rejects")
+            check(f"{BULLETS[kind]} " in content, f"{name}: list items lack the {BULLETS[kind]!r} marker")
 
     linkedin_skills = dict(
         (label, body) for _, label, body in platform_blocks("linkedin", cv, ui, lang)

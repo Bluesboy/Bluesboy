@@ -205,6 +205,8 @@
 - Four of the packs target one platform each and name their fields the way that platform's
   form does: `hh` (hh.ru), `linkedin`, `wellfound`, `hirist`. Both locales are generated for
   every platform; the packs carry no annotations, so a field pastes whole.
+- The `hh` pack marks list items with `—`: hh.ru rejects `•`. `BULLETS` in
+  `scripts/export_text.py` holds per-platform markers; other packs keep `•`.
 - `FIELD_LIMITS` in `scripts/export_text.py` holds what each platform accepts: LinkedIn's
   headline 220, About 2600, one position description 2000 and 50 skills; Wellfound's
   mini-resume 160. `scripts/check_artifacts.py` fails when a field runs over, because a

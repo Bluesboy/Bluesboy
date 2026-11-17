@@ -21,6 +21,10 @@ FIELD_LIMITS = {
     "wellfound.mini_resume": 160,
 }
 LINKEDIN_SKILLS = 50
+# hh.ru does not accept "•" in its text fields, so its pack marks list items
+# with an em dash; every other export keeps the bullet.
+BULLET = "•"
+BULLETS = {"hh": "—"}
 ROOT = Path(__file__).resolve().parent.parent
 
 
@@ -148,8 +152,8 @@ def render_education(cv: dict, ui: dict, lang: str) -> str:
 
 
 
-def bullets(items: list[str]) -> list[str]:
-    return [f"• {item}" for item in items]
+def bullets(items: list[str], marker: str = BULLET) -> list[str]:
+    return [f"{marker} {item}" for item in items]
 
 
 def role_heading(job: dict, ui: dict, lang: str) -> str:
@@ -166,7 +170,8 @@ def role_heading(job: dict, ui: dict, lang: str) -> str:
     return " — ".join(parts)
 
 
-def role_body(job: dict, ui: dict, lang: str, limit: int | None = None) -> str:
+def role_body(job: dict, ui: dict, lang: str, limit: int | None = None,
+              marker: str = BULLET) -> str:
     """Scope, achievements and responsibilities, trimmed to fit a field.
 
     A platform that caps a description silently truncates whatever does not
@@ -185,12 +190,12 @@ def role_body(job: dict, ui: dict, lang: str, limit: int | None = None) -> str:
         if achievements:
             blocks.append("\n".join((
                 localized(ui["highlights"], lang) + ":",
-                *bullets([text for text, _ in achievements]),
+                *bullets([text for text, _ in achievements], marker),
             )))
         if responsibilities:
             blocks.append("\n".join((
                 localized(ui["responsibilities"], lang) + ":",
-                *bullets(responsibilities),
+                *bullets(responsibilities, marker),
             )))
         return "\n\n".join(blocks)
 
@@ -251,11 +256,11 @@ def field_label(ui: dict, key: str, lang: str) -> str:
     return localized(ui["exportFields"][key], lang)
 
 
-def about_text(cv: dict, lang: str, skip_lead: bool = False) -> str:
+def about_text(cv: dict, lang: str, skip_lead: bool = False, marker: str = BULLET) -> str:
     """Summary followed by the How I work points, as one field of prose."""
     summary = cv["summary"][1:] if skip_lead else cv["summary"]
     paragraphs = [localized(item, lang) for item in summary]
-    paragraphs.extend(bullets([localized(item, lang) for item in cv["about"]]))
+    paragraphs.extend(bullets([localized(item, lang) for item in cv["about"]], marker))
     return "\n\n".join(paragraphs)
 
 
@@ -289,9 +294,12 @@ def platform_blocks(kind: str, cv: dict, ui: dict, lang: str) -> list[tuple[str,
         blocks.append(("", field_label(ui, "desiredPosition", lang), position))
         blocks.append(("", field_label(ui, "keySkills", lang),
                        "\n".join(skill_names(cv, featured=True))))
-        blocks.append(("", field_label(ui, "profileSummary", lang), about_text(cv, lang)))
+        marker = BULLETS["hh"]
+        blocks.append(("", field_label(ui, "profileSummary", lang),
+                       about_text(cv, lang, marker=marker)))
         for job in cv["experience"]:
-            blocks.append(("", role_heading(job, ui, lang), role_body(job, ui, lang)))
+            blocks.append(("", role_heading(job, ui, lang),
+                           role_body(job, ui, lang, marker=marker)))
     elif kind == "wellfound":
         blocks.append(("", field_label(ui, "role", lang), position))
         blocks.append(("wellfound.mini_resume", field_label(ui, "miniResume", lang), lead))
